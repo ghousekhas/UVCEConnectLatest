@@ -1,13 +1,17 @@
 package com.uvce.uvceconnect;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar mToolbar;
     DrawerLayout mDrawerLayout;
@@ -26,8 +30,33 @@ public class MainActivity extends AppCompatActivity {
         //Following lines are used to link navigation drawer
         mDrawerLayout=findViewById(R.id.navigation_drawer_main);
         mNavigationView=findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open_navigation_drawer,R.string.close_navigation_drawer);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+
+    //This function handles Navigation Drawer Click Listener
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id;
+        id=item.getItemId();
+        if(id==R.id.menu_qp_and_syllabus)
+        {
+            Toast.makeText(this,"Question Paper and Syllabys",Toast.LENGTH_SHORT).show();
+        }
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    //This function closes navigation drawer if back is pressed when it is open
+    @Override
+    public void onBackPressed() {
+
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START))
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
     }
 }
