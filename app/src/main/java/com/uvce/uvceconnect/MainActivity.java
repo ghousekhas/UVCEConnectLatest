@@ -37,14 +37,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    //This function handles Navigation Drawer Click Listener
+    //This function handles Navigation Drawer onClick Listener
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id;
         id=item.getItemId();
-        if(id==R.id.menu_qp_and_syllabus)
+        switch (id)
         {
-            Toast.makeText(this,"Question Paper and Syllabys",Toast.LENGTH_SHORT).show();
+            case R.id.menu_qp_and_syllabus:
+                Toast.makeText(this,"Question Paper and Syllabus",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_about_uvce:
+                Toast.makeText(this,"About UVCE",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_activities:
+                Toast.makeText(this,"Activities",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_associations:
+                Toast.makeText(this,"Associations",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_fest:
+                Toast.makeText(this,"Fests",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_placement_office:
+                Toast.makeText(this,"Placement Office",Toast.LENGTH_SHORT).show();
+                break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;

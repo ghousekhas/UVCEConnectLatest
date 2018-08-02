@@ -3,7 +3,30 @@
 
     <item android:id="@+id/menu_qp_and_syllabus"
         android:title="Question Paper and Syllabus"
-        android:icon="@drawable/icon_drawable"
-        />
+        android:icon="@drawable/icon_drawable" />
 
+    <item
+        android:id="@+id/menu_about_uvce"
+        android:title="About UVCE"
+        android:icon="@drawable/icon_about_uvce"/>
+
+    <item
+        android:id="@+id/menu_associations"
+        android:title="Associations"
+        android:icon="@drawable/icon_associations"/>
+
+    <item
+        android:id="@+id/menu_placement_office"
+        android:title="Placement Office"
+        android:icon="@drawable/icon_placement_office"/>
+
+    <item
+        android:id="@+id/menu_activities"
+        android:title="Activities"
+        android:icon="@drawable/icon_activities"/>
+
+    <item
+        android:id="@+id/menu_fest"
+        android:title="Fest"
+        android:icon="@drawable/icon_fest"/>
 </menu>
