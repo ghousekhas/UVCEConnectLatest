@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer_main);
 
-        //Setting my custom toolbar as Action bar.
+        //Setting the custom toolbar as Action bar.
         //Any toolbar related code should be done after these lines
         mToolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
