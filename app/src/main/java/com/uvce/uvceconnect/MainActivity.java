@@ -1,5 +1,6 @@
 package com.uvce.uvceconnect;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_about_uvce:
+                Intent intent = new Intent(this,about_uvce.class);
+                startActivity(intent);
                 Toast.makeText(this,"About UVCE",Toast.LENGTH_SHORT).show();
                 break;
 

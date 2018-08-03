@@ -2,4 +2,5 @@
     <string name="app_name">UVCE Connect</string>
     <string name="open_navigation_drawer">Open Navigation Drawer</string>
     <string name="close_navigation_drawer">Close Navigation Drawer</string>
+    <string name="title_activity_about_uvce">about_uvce</string>
 </resources>
