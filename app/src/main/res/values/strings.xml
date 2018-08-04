@@ -3,4 +3,25 @@
     <string name="open_navigation_drawer">Open Navigation Drawer</string>
     <string name="close_navigation_drawer">Close Navigation Drawer</string>
     <string name="title_activity_about_uvce">about_uvce</string>
+
+
+
+
+    <string name="about_uvce_card1">
+        UVCE then called ‘College of Engineering’ was established at Bengaluru in 1917 just a year after the University of Mysore was established, giving a fillip to higher education and to enable the students of Mysore State to play their part in the Engineering field.
+
+    </string>
+    <string name="about_uvce_card2">
+        Initially, two branches of engineering namely, Civil and Mechanical Engineering were started. College of Engineering (UVCE) was the 5th Engineering College of the country and first in the Princely State of Mysore.
+    </string>
+    <string name="about_uvce_card3">
+                UVCE currently offers \n\n
+        1.	Seven Undergraduate (B.E/B.Arch) \n
+        2.	Twenty-Four Postgraduate (M.E/M.Arch.) \n
+        3.	Three Part time BE evening under graduate courses. \n
+        4.	M.Sc. (Engineering) byResearch, \n
+        5.	Three-Year full time Ph.D., \n
+        6.	Four-Year part time Ph.D. programmes in all disciplines. \n
+        7.	Ph.D. (QIP) programme in Civil Engineering\n \nThe total intake of the college is about 1200 students a year.
+    </string>
 </resources>
