@@ -8,17 +8,25 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar mToolbar;
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
+    RecyclerView recyclerView;
+    List<Hompage_ListItem> list = new ArrayList<>();
+    HomePage_Adapter adapter;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     @Override
@@ -38,6 +46,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open_navigation_drawer,R.string.close_navigation_drawer);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        //Following Lines used to populate the recycler list
+        recyclerView = findViewById(R.id.homepage_recyclerview);
+        adapter = new HomePage_Adapter(list);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(adapter);
+        prepareHomePageData();
+    }
+
+    //Function to populate the list (Dummy for now)
+    void prepareHomePageData() {
+        for(int i=0; i<20;i++) {
+            Hompage_ListItem item = new Hompage_ListItem("", Integer.toString(i), Integer.toString(i+1), "", Integer.toString(i+2));
+            list.add(item);
+            adapter.notifyDataSetChanged();
+        }
     }
 
 
