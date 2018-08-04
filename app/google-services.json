@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "551380614604",
+    "firebase_url": "https://uvceconnectlatest.firebaseio.com",
+    "project_id": "uvceconnectlatest",
+    "storage_bucket": "uvceconnectlatest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551380614604:android:0c32f79c420ecc4a",
+        "android_client_info": {
+          "package_name": "com.uvce.uvceconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551380614604-k6ltma1110kgblpd7pg0qigoj1kl8v38.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uvce.uvceconnect",
+            "certificate_hash": "40174da76f1d5341df3eb780d1dd508530569385"
+          }
+        },
+        {
+          "client_id": "551380614604-nt9c9u1cvfiv0k1874gfh8k081u96888.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkoLMWZgzBUyYvZLmZ7x88pHmt_kq_a9k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551380614604-nt9c9u1cvfiv0k1874gfh8k081u96888.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
