@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id;
+        Intent intent;
         id=item.getItemId();
         switch (id)
         {
@@ -78,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_about_uvce:
-                Intent intent = new Intent(this,about_uvce.class);
+                intent = new Intent(this,about_uvce.class);
                 startActivity(intent);
-                Toast.makeText(this,"About UVCE",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this,"About UVCE",Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.menu_activities:
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_associations:
+                intent = new Intent(this,associations.class);
+                startActivity(intent);
                 Toast.makeText(this,"Associations",Toast.LENGTH_SHORT).show();
                 break;
 

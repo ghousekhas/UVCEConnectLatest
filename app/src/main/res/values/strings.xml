@@ -5,8 +5,6 @@
     <string name="title_activity_about_uvce">about_uvce</string>
 
 
-
-
     <string name="about_uvce_card1">
         UVCE then called ‘College of Engineering’ was established at Bengaluru in 1917 just a year after the University of Mysore was established, giving a fillip to higher education and to enable the students of Mysore State to play their part in the Engineering field.
 
@@ -24,4 +22,10 @@
         6.	Four-Year part time Ph.D. programmes in all disciplines. \n
         7.	Ph.D. (QIP) programme in Civil Engineering\n \nThe total intake of the college is about 1200 students a year.
     </string>
+    <string name="title_activity_associations">ASSOCIATIONS</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

@@ -19,9 +19,14 @@
         <activity
             android:name=".about_uvce"
             android:label="ABOUT UVCE"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".associations"
+            android:label="@string/title_activity_associations"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>
