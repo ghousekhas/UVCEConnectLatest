@@ -40,8 +40,7 @@
     6.	Community service
     </string>
     <string name="alumini_card3">
-    The alumni association strives to keep its members informed about the activities that happen in the college through its newsletter. \n\n
-    Website: http://uvcealumni.org/index.html
+    The alumni association strives to keep its members informed about the activities that happen in the college through its newsletter. \n\nWebsite: http://uvcealumni.org/index.html
     </string>
 
 
@@ -74,4 +73,44 @@
     <string name="vision_card4">
         Website:  http://www.visionuvce.in \n\nEmail: contact@visionuvce.in\n\nContact:  +91-9740111552
     </string>
-    </resources>
+
+
+
+    <string name="placement_card1">
+        Training and Placement Office is the power house of UVCE where, Student coordinators take the responsibility to interact with companies under the guidance of Placement Officer Dr. Thriveni. Placement Office was established in the year 1989, and has been consistently working as a liaison between the industry and students in order to fulfil the ambition of the students in getting the right job.
+    </string>
+    <string name="placement_card2">
+        About 90% of our students are placed in globally recognized companies with attractive offers. Batch of 2016 witnessed an all-time record of grabbing around 1060 offers.
+    </string>
+    <string name="placement_card3">
+        Email: info@campusuvce.in  \nContact:  +91 789903 7717 / 080-22276070 \nWebsite: http://campusuvce.in/
+    </string>
+
+
+
+
+    <string name="uvce_jaathre">
+         As the name indicates, it\'s a colourful one day event organised by 2nd year students during the month of Oct every year. During this event various collegiate clubs\’ setup their stall at quadrangle of main campus and conduct fun games, thereby helping freshers to know about UVCE.
+    </string>
+    <string name="fiesta">
+        It\'s a one day intra collegiate Cultural fest of UVCE organised by 3rd year students in odd semester. It\'s a Cultural extravaganza which accelerates UVCEians to participate in widespread events. Students from every department of UVCE participate in this fest.
+    </string>
+    <string name="civista">
+        This event is similar to fiesta but this being celebrated by Civil Students at Jnana Bharathi campus. Civista is the annual Cultural fest of Civil department and is organised by 3rd year students. It attracts huge number of participants from the Bangalore University campus.
+    </string>
+    <string name="esportivo">
+        Sports has a high calibre in UVCE. The craze setup for football and cricket is everlasting in the century old college. Esportivo is a week-long event organised by sports geeks to uphold the sportsmanship sprit among various teams across Bengaluru.
+    </string>
+    <string name="milagro">
+        MILAGRO is the biggest cultural festival in UVCE organised by final year students which spans over two days. However, the entire week will be called as Milagro Week and various events are held to entertain the students. With the history of two decades, it provides a platform where every individual in college comes together to create a difference. It upholds the pride of UVCE and culture of Karnataka. It has always been dealt with grandeur and festivity.
+    </string>
+    <string name="kagada">
+        It\'s a National level technical symposium, organised by Team IEEE UVCE. Students across the country take part in this event where they get to showcase their technical knowledge and research by means of Paper and Poster presentation. The best paper and posters are awarded.
+    </string>
+    <string name="inspiron">
+        Inspiron is an inter college technical fest organized by The Training and Placement Office, UVCE. It is an entrepreneurship and management extravaganza which has various events that requires one to showcase technical, entrepreneurship and managerial skills.  It is conducted every year in odd semester.
+    </string>
+    <string name="impetus">
+        IMPETUS is a National Level Technical Extravaganza organized by IEEE UVCE. IMPETUS is a technical fest designed for a change and with a vivid difference. Unlike other fests, every year this fest goes out with a message for the engineers. The fest was themed after Engineering for Society followed by Innovation and Entrepreneurship in 2013. This 2 day long fest has always had a diverse participation from all over the country. Over the years IMPETUS has emerged to be one of Bengaluru\'s top technical fests.
+    </string>
+</resources>

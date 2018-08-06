@@ -24,9 +24,20 @@
         <activity
             android:name=".associations"
             android:label="@string/title_activity_associations"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".placements"
+            android:parentActivityName=".MainActivity"
+            android:label="TRAINING AND PLACEMENT"/>
+        <activity
+            android:name=".fests"
+            android:parentActivityName=".MainActivity"
+            android:label="FESTS"/>
+        <activity
+            android:name=".activities"
+            android:parentActivityName=".MainActivity"
+            android:label="ACTIVITIES"/>
     </application>
 
 </manifest>

@@ -85,21 +85,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.menu_activities:
+                //intent = new Intent(this,activities.class);
                 Toast.makeText(this,"Activities",Toast.LENGTH_SHORT).show();
+                //startActivity(intent);
                 break;
 
             case R.id.menu_associations:
                 intent = new Intent(this,associations.class);
                 startActivity(intent);
-                Toast.makeText(this,"Associations",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"Associations",Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.menu_fest:
-                Toast.makeText(this,"Fests",Toast.LENGTH_SHORT).show();
+                intent = new Intent(this,fests.class);
+                startActivity(intent);
+                //Toast.makeText(this,"Fests",Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.menu_placement_office:
-                Toast.makeText(this,"Placement Office",Toast.LENGTH_SHORT).show();
+                intent = new Intent(this,placements.class);
+                startActivity(intent);
+                //Toast.makeText(this,"Placement Office",Toast.LENGTH_SHORT).show();
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

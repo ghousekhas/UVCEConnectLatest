@@ -1,5 +1,6 @@
 package com.uvce.uvceconnect;
 
+import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -55,19 +56,23 @@ public class associations extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            TextView card1_content,card2_content,card3_content,card4_content;
+            //customfont
+            Typeface mycustomfont = Typeface.createFromAsset(getAssets(),  "fonts/adobe_font.otf");
+
             switch(position)
             {
                 case 0:
-                    alumini_tab tab1 = new alumini_tab(); //opens alumini layout
+                    alumini_tab tab1 = new alumini_tab();
                     return tab1;
 
                 case 1:
-                    vision_tab tab3 = new vision_tab();//opens vision uvce layout
-                    return tab3;
+                    vision_tab tab2 = new vision_tab();
+                    return tab2;
 
                 case 2:
-                    foundation_tab tab2 = new foundation_tab();//opens foudation uvce layout
-                    return tab2;
+                    foundation_tab tab3 = new foundation_tab();
+                    return tab3;
                 default:
                     return null;
             }
