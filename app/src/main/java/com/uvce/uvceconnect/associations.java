@@ -60,12 +60,14 @@ public class associations extends AppCompatActivity {
                 case 0:
                     alumini_tab tab1 = new alumini_tab(); //opens alumini layout
                     return tab1;
+
                 case 1:
-                    foundation_tab tab2 = new foundation_tab();//opens foudation uvce layout
-                    return tab2;
-                case 2:
                     vision_tab tab3 = new vision_tab();//opens vision uvce layout
                     return tab3;
+
+                case 2:
+                    foundation_tab tab2 = new foundation_tab();//opens foudation uvce layout
+                    return tab2;
                 default:
                     return null;
             }

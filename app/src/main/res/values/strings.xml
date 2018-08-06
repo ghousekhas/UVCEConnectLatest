@@ -22,10 +22,56 @@
         6.	Four-Year part time Ph.D. programmes in all disciplines. \n
         7.	Ph.D. (QIP) programme in Civil Engineering\n \nThe total intake of the college is about 1200 students a year.
     </string>
-    <string name="title_activity_associations">ASSOCIATIONS</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-</resources>
+
+
+    <string name="title_activity_associations">
+        ASSOCIATIONS
+    </string>
+    <string name="alumini_card1">
+            Alumni are the vital asset for any educational institution. UVCE being a century old college finds its alumni spread widely across globe.
+    </string>
+    <string name="alumini_card2">
+        Alumni association aims to gather its strong alumni network and build a better UVCE with its various initiatives like, \n\n
+    1.	Lecture series \n
+    2.	Providing scholarship \n
+    3.	Corpus funds \n
+    4.	Awarding achievers \n
+    5.	Planning Centenary building \n
+    6.	Community service
+    </string>
+    <string name="alumini_card3">
+    The alumni association strives to keep its members informed about the activities that happen in the college through its newsletter. \n\n
+    Website: http://uvcealumni.org/index.html
+    </string>
+
+
+    <string name="foundation_card1">
+             The UVCE Foundation was created by alumni, faculty and well-wishers of UVCE in 2003 to help in restoring the glory of UVCE.
+    </string>
+    <string name="foundation_card2">
+        It has members from around the world and has already executed various projects at UVCE to address immediate needs of the students of UVCE.
+    </string>
+    <string name="foundation_card3">
+    UVCE Foundation has been growing in strength ever since its inception and has been widely recognized as a strong support from the college authorities. The objective of the Foundation is to restore the ‘top-ten’ status the college.\n\nWebsite: http://uvcefoundation.org
+    </string>
+
+
+    <string name="vision_card1">
+            VisionUVCE is a group of UVCE alumni who are focussed on \"Giving Back to UVCE\" by creating awareness among the strong alumni and make them understand the potential that the creation of an alumni group, working for the betterment of college brings about.
+    </string>
+    <string name="vision_card2">
+         It is VU\'s responsibility to make sure, the flag of our alma mater flies high in the air and also as proud alumni of this college, there is a need to take part in the operations involved with the institution.
+    </string>
+    <string name="vision_card3">
+    Major programs held under VISION UVCE:\n\n
+    1	Sampada – A monthly magazine that offers you a ride though UVCE\n
+    2	VU scholarship – Every year scholarships are provided to those in need\n
+    3	VU champs – Recognition of efforts of Student Volunteers\n
+    4	Parichaya – A detailed profile of UVCE’s great alumni\n
+    5	Samvaada – Occasional meet between alumnus, current staff and students\n
+    6	VU also supports and funds various student initiatives which seems promising in terms of idea and its reach. It\'s also involved in taking care of student\’s utility in campus by funding to the required cause. VU raises its fund from alumni of UVCE.
+    </string>
+    <string name="vision_card4">
+        Website:  http://www.visionuvce.in \n\nEmail: contact@visionuvce.in\n\nContact:  +91-9740111552
+    </string>
+    </resources>

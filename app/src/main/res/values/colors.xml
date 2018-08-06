@@ -6,4 +6,5 @@
     <color name="Black">#000000</color>
     <color name="Grey">#8b8b8b</color>
     <color name="Tab_underline">#9C27B0</color>
+    <color name="Grey_layout">#EEEEEE</color>
 </resources>

@@ -1,17 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".foundation_tab">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".about_uvce"
+    tools:showIn="@layout/activity_about_uvce"
+    android:background="@color/Grey_layout">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="259dp"
-        android:layout_height="390dp"
-        android:text="2"
-        android:textSize="300sp"
-         />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:elevation="50dp"
+            android:id="@+id/foundation_card1"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="true">
+
+            <TextView
+                android:id="@+id/card1_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/foundation_card1"
+                android:textSize="20sp"
+                android:background="@drawable/blue_border"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:elevation="50dp"
+            android:id="@+id/foundation_card2"
+            app:cardUseCompatPadding="true"
+            android:layout_below="@id/foundation_card1"
+            app:cardPreventCornerOverlap="true">
+
+            <TextView
+                android:id="@+id/card2_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/foundation_card2"
+                android:textSize="20sp"
+                android:background="@drawable/blue_border"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:elevation="50dp"
+            android:id="@+id/foundation_card3"
+            app:cardUseCompatPadding="true"
+            android:layout_below="@id/foundation_card2"
+            app:cardPreventCornerOverlap="true">
+
+            <TextView
+                android:id="@+id/card3_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/foundation_card3"
+                android:textSize="20sp"
+                android:autoLink="all"
+                android:textColorLink="#9C27B0"
+                android:background="@drawable/blue_border"/>
+
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
