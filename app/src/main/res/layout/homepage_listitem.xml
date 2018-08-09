@@ -9,7 +9,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5sp"
-    android:elevation="@dimen/cardview_default_elevation"
+    android:elevation="50dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
     android:id="@+id/listitem_card"
     app:cardCornerRadius="10sp">
 

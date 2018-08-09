@@ -1,7 +1,9 @@
 package com.uvce.uvceconnect;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
         public TextView name, content, timesignature;
         public ImageView image, logo;
+        public CardView card;
 
         public MyViewHolder(View view)
         {
@@ -28,6 +31,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             timesignature = view.findViewById(R.id.listitem_timesignature);
             image = view.findViewById(R.id.listitem_image);
             logo = view.findViewById(R.id.listitem_logo);
+            card = view.findViewById(R.id.listitem_card);
         }
 
     }
@@ -53,6 +57,10 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.content.setText(listitem.getContent());
         holder.timesignature.setText(listitem.getTimesignature());
         holder.image.setImageResource(R.drawable.icon_activities);
+        if(listitem.getType()==1)
+            holder.card.setCardBackgroundColor(Color.parseColor("#c2d2ff"));
+        else
+        holder.card.setCardBackgroundColor(Color.parseColor("White"));
     }
 
     @Override

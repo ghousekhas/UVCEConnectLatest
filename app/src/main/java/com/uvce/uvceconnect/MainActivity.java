@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Function to populate the list (Dummy for now)
     void prepareHomePageData() {
         for(int i=0; i<20;i++) {
-            Hompage_ListItem item = new Hompage_ListItem("", Integer.toString(i), Integer.toString(i+1), "", Integer.toString(i+2));
+            Hompage_ListItem item = new Hompage_ListItem("", Integer.toString(i), Integer.toString(i+1), "", Integer.toString(i+2), i%2);
             list.add(item);
             adapter.notifyDataSetChanged();
         }
