@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:padding="10sp">
+    android:paddingTop="5sp"
+    android:paddingBottom="5sp">
 
 <android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"

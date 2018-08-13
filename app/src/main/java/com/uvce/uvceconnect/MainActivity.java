@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Following Lines used to populate the recycler list
         recyclerView = findViewById(R.id.homepage_recyclerview);
-        adapter = new HomePage_Adapter(list);
+        adapter = new HomePage_Adapter(list, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
