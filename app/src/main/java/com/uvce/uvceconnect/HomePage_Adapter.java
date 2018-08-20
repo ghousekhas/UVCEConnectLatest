@@ -1,10 +1,12 @@
 package com.uvce.uvceconnect;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,13 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyViewHolder> {
 
     private List<Hompage_ListItem> homepagelist;
-    public Typeface mycustomfont;
+    private Typeface mycustomfont;
+    private Activity activity;
+    private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,10 +45,12 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
     }
 
-    public HomePage_Adapter(List<Hompage_ListItem> homepagelist, Activity activity)
+    public HomePage_Adapter(List<Hompage_ListItem> homepagelist, Activity activity, Context context)
     {
         this.homepagelist = homepagelist;
         this.mycustomfont = Typeface.createFromAsset(activity.getAssets(),  "fonts/adobe_font.otf");
+        this.activity = activity;
+        this.context = context;
     }
 
     @Override
@@ -56,14 +64,27 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Hompage_ListItem listitem = homepagelist.get(position);
-        holder.logo.setImageResource(R.drawable.common_google_signin_btn_icon_dark_focused);
+        if(!listitem.getLogo().isEmpty()) {
+            StorageReference logoref = FirebaseStorage.getInstance().getReference().child(listitem.getLogo());
+            if (!activity.isDestroyed()) {
+               downloadDirect(logoref, holder.logo, 1);
+            }
+        } else
+            holder.logo.setImageBitmap(null);
         holder.name.setText(listitem.getName());
         holder.name.setTypeface(mycustomfont);
         holder.content.setText(listitem.getContent());
         holder.content.setTypeface(mycustomfont);
         holder.timesignature.setText(listitem.getTimesignature());
         holder.timesignature.setTypeface(mycustomfont);
-        holder.image.setImageResource(R.drawable.icon_activities);
+        holder.image.setMinimumWidth(holder.card.getWidth());
+        if(!listitem.getImage().isEmpty()) {
+            StorageReference imageref = FirebaseStorage.getInstance().getReference().child(listitem.getImage());
+            if (!activity.isDestroyed()) {
+                downloadDirect(imageref, holder.image, 0);
+            }
+        } else
+             holder.image.setImageBitmap(null);
         if(listitem.getType()==1) {
             holder.card.setCardBackgroundColor(Color.parseColor("#1565C0"));
             holder.name.setTextColor(Color.parseColor("White"));
@@ -81,5 +102,29 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     @Override
     public int getItemCount() {
         return homepagelist.size();
+    }
+
+    public void downloadDirect(StorageReference imageRef, ImageView imageView, int type) {
+        //type : 0-Image, 1-Logo
+        try {
+                // Download directly from StorageReference using Glide
+                // (See HomepageGlideModule for Loader registration)
+            if(type==0) {
+                GlideApp.with(context)
+                        .load(imageRef)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imageView);
+            } else {
+                GlideApp.with(context)
+                        .load(imageRef)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .circleCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imageView);
+            }
+        }catch (Exception ex){
+            Toast.makeText(activity, "Error in downloading image", Toast.LENGTH_SHORT).show();;
+        }
     }
 }

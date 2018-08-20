@@ -8,6 +8,17 @@
     android:paddingTop="5sp"
     android:paddingBottom="5sp">
 
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loading_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="@style/AVLoadingIndicatorView.Large"
+        android:visibility="visible"
+        app:indicatorName="LineScaleIndicator"
+        app:indicatorColor="@color/colorPrimaryDark"
+        />
+
 <android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"

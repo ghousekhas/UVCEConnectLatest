@@ -14,7 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +32,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     List<Hompage_ListItem> list = new ArrayList<>();
     HomePage_Adapter adapter;
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    AVLoadingIndicatorView load_animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer_main);
-
+        //Loading Animation
+        load_animation = findViewById(R.id.loading_animation);
+        load_animation.smoothToShow();
         //Setting the custom toolbar as Action bar.
         //Any toolbar related code should be done after these lines
         mToolbar=findViewById(R.id.toolbar_main);
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Following Lines used to populate the recycler list
         recyclerView = findViewById(R.id.homepage_recyclerview);
-        adapter = new HomePage_Adapter(list, this);
+        adapter = new HomePage_Adapter(list, this, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -58,11 +66,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //Function to populate the list (Dummy for now)
     void prepareHomePageData() {
-        for(int i=0; i<20;i++) {
-            Hompage_ListItem item = new Hompage_ListItem("", Integer.toString(i), Integer.toString(i+1), "", Integer.toString(i+2), i%2);
-            list.add(item);
-            adapter.notifyDataSetChanged();
-        }
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
+                            Hompage_ListItem item = new Hompage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()));
+                            list.add(item);
+                    }
+                    adapter.notifyDataSetChanged();
+                    load_animation.smoothToHide();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Error in fetching details", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
