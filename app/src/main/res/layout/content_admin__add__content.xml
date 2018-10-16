@@ -7,7 +7,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:padding="15dp"
-
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -58,8 +58,9 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:text="Add Image"
-                android:background="@android:color/holo_green_light"
-                android:textColor="@android:color/black"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
                 android:padding="10dp"
                 android:id="@+id/choose_pic_news" />
 
@@ -68,8 +69,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:padding="10dp"
-                android:background="@android:color/holo_orange_light"
-                android:textColor="@android:color/black"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
                 android:text="Post"
                 android:textAllCaps="false"
                 android:id="@+id/news_add_button" />
@@ -81,6 +83,17 @@
             android:layout_marginTop="30dp"
             android:id="@+id/news_imageview"
             android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/edit_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="20sp"
+            android:text="Delete / Edit" />
 
     </LinearLayout>
 </ScrollView>

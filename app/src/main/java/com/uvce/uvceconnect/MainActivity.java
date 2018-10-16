@@ -2,8 +2,12 @@ package com.uvce.uvceconnect;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -63,6 +67,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Permissions
+        if (Build.VERSION.SDK_INT >= 23) { // if android version >= 6.0
+            if (ContextCompat.checkSelfPermission(
+                    getApplicationContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // if permission was not granted initially, ask the user again.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+            }
+        }
+
         //Following Lines used to enable admin options
         headerview = mNavigationView.getHeaderView(0);
         admin_shortcut = headerview.findViewById(R.id.Admin_Shortcut);
@@ -91,20 +108,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         prepareHomePageData();
     }
 
-    //Function to populate the list (Dummy for now)
+    //Function to populate the list
     void prepareHomePageData() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
+                    list.clear();
                     for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
-                            Hompage_ListItem item = new Hompage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()));
+                            Hompage_ListItem item = new Hompage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "", Integer.parseInt(childsnapshot.getKey().toString()));
                             list.add(item);
                     }
                     adapter.notifyDataSetChanged();
                     load_animation.smoothToHide();
                 } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "Error in fetching details", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Error in fetching details", Toast.LENGTH_SHORT).show();
                     list.clear();
                     databaseReference.removeEventListener(this);
                 }

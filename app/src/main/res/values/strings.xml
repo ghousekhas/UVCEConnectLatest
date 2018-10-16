@@ -167,4 +167,5 @@
     </string>
     <string name="title_activity_admin__page">Admin Access</string>
     <string name="title_activity_admin__add__content">Add Content</string>
+    <string name="title_activity_admin__add__delete">Admin Operations</string>
 </resources>

@@ -62,9 +62,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".Admin_Add_Content"
             android:label="@string/title_activity_admin__add__content"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Admin_Add_Delete"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_admin__add__delete"
             android:theme="@style/AppTheme"></activity>
     </application>
 
