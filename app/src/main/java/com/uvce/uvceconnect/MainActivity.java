@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     List<Hompage_ListItem> list = new ArrayList<>();
     HomePage_Adapter adapter;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
     AVLoadingIndicatorView load_animation;
 
     @Override
@@ -98,7 +98,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id)
         {
             case R.id.menu_qp_and_syllabus:
-                Toast.makeText(this,"Question Paper and Syllabus",Toast.LENGTH_SHORT).show();
+                intent = new Intent(this,Academic.class);
+                startActivity(intent);
+                // Toast.makeText(this,"Question Papers and Syllabus",Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.menu_about_uvce:
