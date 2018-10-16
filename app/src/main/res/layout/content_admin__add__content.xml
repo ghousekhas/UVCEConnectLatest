@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:padding="15dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.venkibellu.myapplication.News_Adding"
+        tools:showIn="@layout/activity_admin_add_content"
+        android:orientation="vertical">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/organisation_news_add"
+            android:layout_marginTop="80dp"
+            android:spinnerMode="dropdown"></Spinner>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:hint="Enter News Details here"
+            android:id="@+id/admin_relative_up_news">
+
+            <EditText
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/news_details_add"
+                android:inputType="textMultiLine"
+                android:gravity="start"
+                android:textAlignment="viewStart" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/priority"
+            android:layout_marginTop="20sp"
+            android:spinnerMode="dropdown"
+            android:entries="@array/priority_array"></Spinner>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Add Image"
+                android:background="@android:color/holo_green_light"
+                android:textColor="@android:color/black"
+                android:padding="10dp"
+                android:id="@+id/choose_pic_news" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:padding="10dp"
+                android:background="@android:color/holo_orange_light"
+                android:textColor="@android:color/black"
+                android:text="Post"
+                android:textAllCaps="false"
+                android:id="@+id/news_add_button" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:id="@+id/news_imageview"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+</ScrollView>

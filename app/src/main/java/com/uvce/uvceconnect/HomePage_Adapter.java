@@ -79,12 +79,13 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.timesignature.setTypeface(mycustomfont);
         holder.image.setMinimumWidth(holder.card.getWidth());
         if(!listitem.getImage().isEmpty()) {
+            holder.image.setVisibility(View.VISIBLE);
             StorageReference imageref = FirebaseStorage.getInstance().getReference().child(listitem.getImage());
             if (!activity.isDestroyed()) {
                 downloadDirect(imageref, holder.image, 0);
             }
         } else
-             holder.image.setImageBitmap(null);
+             holder.image.setVisibility(View.GONE);
         if(listitem.getType()==1) {
             holder.card.setCardBackgroundColor(Color.parseColor("#1565C0"));
             holder.name.setTextColor(Color.parseColor("White"));

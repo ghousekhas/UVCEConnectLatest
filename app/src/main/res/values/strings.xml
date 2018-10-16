@@ -46,6 +46,11 @@
         <item>5</item>
     </string-array>
 
+    <string-array name="priority_array">
+        <item>Priority</item>
+        <item>Non-Priority</item>
+    </string-array>
+
     <string name="disclaimer">
         UVCE Connect has made honest effort to gather document from various departments.
         The validation of such documents may vary along with time.
@@ -125,7 +130,6 @@
     </string>
 
 
-
     <string name="placement_card1">
         Training and Placement Office is the power house of UVCE where, Student coordinators take the responsibility to interact with companies under the guidance of Placement Officer Dr. Thriveni. Placement Office was established in the year 1989, and has been consistently working as a liaison between the industry and students in order to fulfil the ambition of the students in getting the right job.
     </string>
@@ -135,8 +139,6 @@
     <string name="placement_card3">
         Email: info@campusuvce.in  \nWebsite: http://campusuvce.in/
     </string>
-
-
 
 
     <string name="uvce_jaathre">
@@ -163,4 +165,6 @@
     <string name="impetus">
         IMPETUS is a National Level Technical Extravaganza organized by IEEE UVCE. IMPETUS is a technical fest designed for a change and with a vivid difference. Unlike other fests, every year this fest goes out with a message for the engineers. The fest was themed after Engineering for Society followed by Innovation and Entrepreneurship in 2013. This 2 day long fest has always had a diverse participation from all over the country. Over the years IMPETUS has emerged to be one of Bengaluru\'s top technical fests.
     </string>
+    <string name="title_activity_admin__page">Admin Access</string>
+    <string name="title_activity_admin__add__content">Add Content</string>
 </resources>
