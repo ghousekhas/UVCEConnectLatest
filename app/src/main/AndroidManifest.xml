@@ -16,6 +16,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+            android:screenOrientation="portrait"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,29 +25,35 @@
         </activity>
         <activity
             android:name=".about_uvce"
+            android:screenOrientation="portrait"
             android:label="ABOUT UVCE"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".associations"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_associations"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Academic"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_academics"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".placements"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:label="TRAINING AND PLACEMENT"/>
         <activity
             android:name=".fests"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:label="FESTS"/>
         <activity
             android:name=".activities"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:label="ACTIVITIES"/>
     </application>
