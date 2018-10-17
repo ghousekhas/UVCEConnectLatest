@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="45dp"
-            android:hint="Enter News Details here"
+            android:hint="Enter Content Here"
             android:id="@+id/admin_relative_up_news">
 
             <EditText

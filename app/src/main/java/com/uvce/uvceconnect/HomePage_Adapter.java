@@ -183,8 +183,10 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
                     builder.setMessage("Select the appropriate option.").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            photoRef = mFirebaseStorage.getReference(listitem.getImage());
-                            photoRef.delete();
+                            if(!listitem.getImage().isEmpty()) {
+                                photoRef = mFirebaseStorage.getReference(listitem.getImage());
+                                photoRef.delete();
+                            }
                             ref.child(Integer.toString(listitem.getKey())).removeValue();
                             dialog.dismiss();
                             notifyDataSetChanged();
