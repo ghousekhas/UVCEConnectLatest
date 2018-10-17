@@ -215,7 +215,14 @@ public class Admin_Add_Content extends AppCompatActivity {
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
                         Date date = new Date();
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
+                        if(getIntent().getBooleanExtra("Edit", false)) {
+                            if(getIntent().getStringExtra("Time").contains("(Edited)"))
+                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time"));
+                            else
+                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time") + " (Edited)");
+                        }
+                        else
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
                         StorageReference riversRef = storageReference.child("image/" + filePath.getLastPathSegment() + "_" + ID);
                         riversRef.putFile(filePath)
                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -274,7 +281,14 @@ public class Admin_Add_Content extends AppCompatActivity {
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
                         Date date = new Date();
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
+                        if(getIntent().getBooleanExtra("Edit", false)){
+                            if(getIntent().getStringExtra("Time").contains("(Edited)"))
+                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time"));
+                            else
+                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time") + " (Edited)");
+                        }
+                        else
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
                         progressDialog.dismiss();
 
 

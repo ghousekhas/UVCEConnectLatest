@@ -39,6 +39,9 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     private Activity activity;
     private Context context;
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Main_Page");
+    private FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
+    private StorageReference photoRef;
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name, content, timesignature;
@@ -177,9 +180,11 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setCancelable(true);
                     builder.setTitle("Edit or Delete");
-                    builder.setMessage("Select the appropriate option").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    builder.setMessage("Select the appropriate option.").setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            photoRef = mFirebaseStorage.getReference(listitem.getImage());
+                            photoRef.delete();
                             ref.child(Integer.toString(listitem.getKey())).removeValue();
                             dialog.dismiss();
                             notifyDataSetChanged();
