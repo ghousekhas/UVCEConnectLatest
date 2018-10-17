@@ -1,7 +1,9 @@
 package com.uvce.uvceconnect;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -11,13 +13,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
     AVLoadingIndicatorView load_animation;
     Activity activity;
+    private final String PREFERENECE = "UVCE-prefereceFile";
+    private SharedPreferences preference;
+    final String askAgain = "Privacy";
     int count = 0;
 
     @Override
@@ -106,6 +115,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
         prepareHomePageData();
+
+        //Displaying the Privacy Policy
+        preference = getSharedPreferences(PREFERENECE, MODE_PRIVATE);
+        if (!(preference.contains(askAgain) && preference.getBoolean(askAgain, false))) {
+            showPrivacyPolicy();
+        }
     }
 
     //Function to populate the list
@@ -133,6 +148,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+    }
+
+    //Function to Display Privacy Policy
+    private void showPrivacyPolicy() {
+        AlertDialog.Builder disclaimerDialog = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View view = inflater.inflate(R.layout.privacy_policy, null);
+        final CheckBox dontShowAgain = (CheckBox) view.findViewById(R.id.checkBoxid_privacy);
+        TextView privacy_text = view.findViewById(R.id.privacy_text);
+        privacy_text.setMovementMethod(new ScrollingMovementMethod());
+
+        disclaimerDialog.setView(view)
+                .setTitle("Privacy Policy")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        SharedPreferences.Editor editor = preference.edit();
+                        editor.putBoolean(askAgain, dontShowAgain.isChecked());
+                        editor.apply();
+                    }
+                })
+                .setCancelable(false)
+                .show();
     }
 
 
