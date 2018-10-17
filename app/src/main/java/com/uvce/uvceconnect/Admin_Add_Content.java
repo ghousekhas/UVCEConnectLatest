@@ -183,7 +183,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                             break;
 
                         case "UVCE Select":
-                            organization_image = "logo/UVCE Select.jpg";
+                            organization_image = "logo/UVCE Select.png";
                             break;
 
                         case "E-Cell UVCE":
@@ -290,7 +290,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                         else
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
                         progressDialog.dismiss();
-
+                        Toast.makeText(getApplicationContext(), "Content Successfully Updated", Toast.LENGTH_LONG).show();
 
                     }
 
