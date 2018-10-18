@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView mNavigationView;
     RecyclerView recyclerView;
     View headerview;
-    TextView admin_shortcut;
+    ImageView admin_shortcut;
     List<Hompage_ListItem> list = new ArrayList<>();
     HomePage_Adapter adapter;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
