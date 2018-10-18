@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fests"
-
-    >
+    tools:context=".fests">
 
     <include layout="@layout/activity_toolbar"/>
     <android.support.v4.widget.NestedScrollView

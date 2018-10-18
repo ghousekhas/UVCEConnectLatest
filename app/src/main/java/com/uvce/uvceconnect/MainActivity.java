@@ -199,11 +199,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                // Toast.makeText(this,"About UVCE",Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.menu_activities:
+            case R.id.menu_adhamya:
                 count = 0;
-                //intent = new Intent(this,activities.class);
-                Toast.makeText(this,"Activities",Toast.LENGTH_SHORT).show();
-                //startActivity(intent);
+                intent = new Intent(this,Adhamya.class);
+                //Toast.makeText(this,"Adhamya",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                break;
+
+            case R.id.menu_ieee:
+                count = 0;
+                intent = new Intent(this,Ieee.class);
+                //Toast.makeText(this,"IEEE",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
                 break;
 
             case R.id.menu_associations:

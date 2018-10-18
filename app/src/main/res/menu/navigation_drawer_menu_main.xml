@@ -21,9 +21,14 @@
         android:icon="@drawable/icon_placement_office"/>
 
     <item
-        android:id="@+id/menu_activities"
-        android:title="Activities"
+        android:id="@+id/menu_adhamya"
+        android:title="Adhamya"
         android:icon="@drawable/icon_activities"/>
+
+    <item
+        android:id="@+id/menu_ieee"
+        android:title="IEEE"
+        android:icon="@drawable/icon_ieee"/>
 
     <item
         android:id="@+id/menu_fest"

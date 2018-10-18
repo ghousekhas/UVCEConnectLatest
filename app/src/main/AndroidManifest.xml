@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            android:screenOrientation="portrait"
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,11 +52,6 @@
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities"
-            android:label="ACTIVITIES"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Admin_Page"
             android:label="@string/title_activity_admin__page"
             android:screenOrientation="portrait"
@@ -68,9 +63,20 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Admin_Add_Delete"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_admin__add__delete"
-            android:theme="@style/AppTheme"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Ieee"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:label="IEEE"/>
+
+        <activity
+            android:name=".Adhamya"
+            android:label="ADHAMYA"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
