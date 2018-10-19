@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
-
+// mahith
 public class associations extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;

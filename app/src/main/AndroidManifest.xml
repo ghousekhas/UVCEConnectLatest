@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,15 +69,64 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Ieee"
+            android:label="IEEE"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"
-            android:label="IEEE"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Adhamya"
             android:label="ADHAMYA"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Chethana"
+            android:label="CHETHANA"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Chakravyuha"
+            android:label="CHAKRAVYUHA"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Vinimaya"
+            android:label="VINIMAYA"
+            android:parentActivityName=".Adhamya"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Sae"
+            android:label="SAE"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".dance"
+            android:label="DANCE"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Tatva"
+            android:label="TATVA"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".G2c2"
+            android:label="G2C2"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Sports"
+            android:label="SPORTS"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Music"
+            android:label="MUSIC"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Ecell"
+            android:label="E-CELL"
+            android:parentActivityName=".Adhamya"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

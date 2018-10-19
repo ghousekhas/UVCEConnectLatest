@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 // mahith
-public class placements extends AppCompatActivity {
+public class Ieee extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placements);
+        setContentView(R.layout.activity_ieee);
 
         //toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -26,6 +26,7 @@ public class placements extends AppCompatActivity {
         TextView card1_content =(TextView)findViewById(R.id.card1_content);
         TextView card2_content =(TextView)findViewById(R.id.card2_content);
         TextView card3_content =(TextView)findViewById(R.id.card3_content);
+        TextView card4_content =(TextView)findViewById(R.id.card4_content);
         //customfont
         Typeface mycustomfont = Typeface.createFromAsset(getAssets(),  "fonts/adobe_font.otf");
 
@@ -33,6 +34,7 @@ public class placements extends AppCompatActivity {
         card1_content.setTypeface(mycustomfont);
         card2_content.setTypeface(mycustomfont);
         card3_content.setTypeface(mycustomfont);
+        card4_content.setTypeface(mycustomfont);
 
     }
 }

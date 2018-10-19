@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 // mahith
-public class placements extends AppCompatActivity {
+public class Sports extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placements);
+        setContentView(R.layout.activity_sports);
 
         //toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -33,6 +33,5 @@ public class placements extends AppCompatActivity {
         card1_content.setTypeface(mycustomfont);
         card2_content.setTypeface(mycustomfont);
         card3_content.setTypeface(mycustomfont);
-
     }
 }

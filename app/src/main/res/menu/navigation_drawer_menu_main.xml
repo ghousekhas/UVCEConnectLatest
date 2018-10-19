@@ -23,7 +23,7 @@
     <item
         android:id="@+id/menu_adhamya"
         android:title="Adhamya"
-        android:icon="@drawable/icon_activities"/>
+        android:icon="@drawable/icon_adhamya"/>
 
     <item
         android:id="@+id/menu_ieee"
