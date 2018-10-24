@@ -114,65 +114,68 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        try {
 
+                            if (dataSnapshot.getValue() == null) {
 
-                        if (dataSnapshot.getValue()==null) {
-
-                            ChatMessage chatMessage = new ChatMessage("May I know your name please?", "bot");
-                            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
-                            addBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    name = editText.getText().toString().trim();
-                                    ChatMessage chatMessagereply = new ChatMessage(name, "user");
-                                    ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessagereply);
-                                    if (!name_flag) {
-                                        if (name.contains("My name is "))
-                                            name = name.replace("My name is ", "");
-                                        else if (name.contains("my name is "))
-                                            name = name.replace("my name is ", "");
-                                        else if (name.contains("My name's "))
-                                            name = name.replace("My name's ", "");
-                                        else if (name.contains("my name's "))
-                                            name = name.replace("my name's ", "");
-                                        else if (name.contains("It's "))
-                                            name = name.replace("It's ", "");
-                                        else if (name.contains("it's "))
-                                            name = name.replace("it's ", "");
-                                        else if (name.contains("It is "))
-                                            name = name.replace("It is ", "");
-                                        else if (name.contains("it is "))
-                                            name = name.replace("it is ", "");
-                                        else if (name.contains("Myself "))
-                                            name = name.replace("Myself ", "");
-                                        else if (name.contains("myself "))
-                                            name = name.replace("myself ", "");
-                                        ChatMessage chatMessage = new ChatMessage("So your name is " + name + ", am I right?", "bot");
-                                        ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
-                                        temp_name = name;
-                                        name_flag = true;
-                                    } else {
-                                        if (editText.getText().toString().trim().contains("Yes") || editText.getText().toString().trim().contains("yes") || editText.getText().toString().trim().contains("Yep") || editText.getText().toString().trim().contains("yep")) {
-                                            name = temp_name;
-                                            ref.child("Devices").child(android_id).child("Name").setValue(name);
-                                            ChatMessage chatMessage = new ChatMessage("Thank You! Ask me anything, " + name + ".", "bot");
+                                ChatMessage chatMessage = new ChatMessage("May I know your name please?", "bot");
+                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                addBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        name = editText.getText().toString().trim();
+                                        ChatMessage chatMessagereply = new ChatMessage(name, "user");
+                                        ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessagereply);
+                                        if (!name_flag) {
+                                            if (name.contains("My name is "))
+                                                name = name.replace("My name is ", "");
+                                            else if (name.contains("my name is "))
+                                                name = name.replace("my name is ", "");
+                                            else if (name.contains("My name's "))
+                                                name = name.replace("My name's ", "");
+                                            else if (name.contains("my name's "))
+                                                name = name.replace("my name's ", "");
+                                            else if (name.contains("It's "))
+                                                name = name.replace("It's ", "");
+                                            else if (name.contains("it's "))
+                                                name = name.replace("it's ", "");
+                                            else if (name.contains("It is "))
+                                                name = name.replace("It is ", "");
+                                            else if (name.contains("it is "))
+                                                name = name.replace("it is ", "");
+                                            else if (name.contains("Myself "))
+                                                name = name.replace("Myself ", "");
+                                            else if (name.contains("myself "))
+                                                name = name.replace("myself ", "");
+                                            ChatMessage chatMessage = new ChatMessage("So your name is " + name + ", am I right?", "bot");
                                             ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
-                                            onnamereceived();
+                                            temp_name = name;
+                                            name_flag = true;
                                         } else {
-                                            name_flag = false;
-                                            ChatMessage chatMessage = new ChatMessage("Sorry to ask again. May I know your name please?", "bot");
-                                            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                            if (editText.getText().toString().trim().contains("Yes") || editText.getText().toString().trim().contains("yes") || editText.getText().toString().trim().contains("Yep") || editText.getText().toString().trim().contains("yep")) {
+                                                name = temp_name;
+                                                ref.child("Devices").child(android_id).child("Name").setValue(name);
+                                                ChatMessage chatMessage = new ChatMessage("Thank You! Ask me anything, " + name + ".", "bot");
+                                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                                onnamereceived();
+                                            } else {
+                                                name_flag = false;
+                                                ChatMessage chatMessage = new ChatMessage("Sorry to ask again. May I know your name please?", "bot");
+                                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                            }
                                         }
+
+                                        editText.setText("");
+
                                     }
+                                });
 
-                                    editText.setText("");
+                            } else {
+                                name = dataSnapshot.getValue().toString();
+                                onnamereceived();
+                            }
+                        } catch (Exception e) {
 
-                                }
-                            });
-
-                        } else {
-                            name = dataSnapshot.getValue().toString();
-                            onnamereceived();
                         }
 
 
