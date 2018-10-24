@@ -1,13 +1,17 @@
 package com.uvce.uvceconnect;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -38,7 +42,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends MultiDex_Support implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar mToolbar;
     DrawerLayout mDrawerLayout;
@@ -48,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView admin_shortcut;
     List<Hompage_ListItem> list = new ArrayList<>();
     HomePage_Adapter adapter;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
+
+    DatabaseReference databaseReference;
     AVLoadingIndicatorView load_animation;
     Activity activity;
     private final String PREFERENECE = "UVCE-prefereceFile";
@@ -67,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Any toolbar related code should be done after these lines
         mToolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
+
+        //Firebase Persistence
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
 
         //Following lines are used to link navigation drawer
         mDrawerLayout=findViewById(R.id.navigation_drawer_main);
@@ -122,6 +132,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!(preference.contains(askAgain) && preference.getBoolean(askAgain, false))) {
             showPrivacyPolicy();
         }
+
+        //Following Lines for the Floating Action button
+        final FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UVCE_Assistant.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     //Function to populate the list
@@ -253,4 +275,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         prepareHomePageData();
     }
+
+
 }

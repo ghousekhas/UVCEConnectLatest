@@ -3,6 +3,7 @@
     package="com.uvce.uvceconnect">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -91,17 +92,17 @@
             android:name=".Vinimaya"
             android:label="VINIMAYA"
             android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Sae"
             android:label="SAE"
             android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".dance"
             android:label="DANCE"
             android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Tatva"
             android:label="TATVA"
@@ -111,22 +112,32 @@
             android:name=".G2c2"
             android:label="G2C2"
             android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Sports"
             android:label="SPORTS"
             android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Music"
             android:label="MUSIC"
             android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Ecell"
             android:label="E-CELL"
             android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UVCE_Assistant"
+            android:label="@string/title_activity_uvce__assistant"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.uvce.uvceconnect.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
