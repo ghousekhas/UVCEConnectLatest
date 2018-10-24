@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -27,8 +28,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +50,7 @@ import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import android.provider.Settings.Secure;
+import android.widget.Toast;
 
 
 public class UVCE_Assistant extends AppCompatActivity implements AIListener {
@@ -57,9 +62,10 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
     FirebaseRecyclerAdapter<ChatMessage,chat_rec> adapter;
     Boolean flagFab = true;
     private String android_id;
-
+    private String name;
     private AIService aiService;
-
+    boolean name_flag = false;
+    String temp_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,66 +103,93 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
         ref = FirebaseDatabase.getInstance().getReference();
         ref.keepSynced(true);
 
-        final AIConfiguration config = new AIConfiguration("108eee18636643379296e12abafe380f",
-                AIConfiguration.SupportedLanguages.English,
-                AIConfiguration.RecognitionEngine.System);
 
-        aiService = AIService.getService(getApplicationContext(), config);
-        aiService.setListener(this);
-
-        final AIDataService aiDataService = new AIDataService(getApplicationContext(), config);
-
-        final AIRequest aiRequest = new AIRequest();
 
         initialchat();
-
-
-
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("StaticFieldLeak")
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View view) {
+            public void run() {
+                ref.child("Devices").child(android_id).child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String message = editText.getText().toString().trim();
 
-                if (!message.equals("")) {
 
-                    ChatMessage chatMessage = new ChatMessage(message, "user");
-                    ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                        if (dataSnapshot.getValue()==null) {
 
-                    aiRequest.setQuery(message);
-                    new AsyncTask<AIRequest,Void,AIResponse>(){
+                            ChatMessage chatMessage = new ChatMessage("May I know your name please?", "bot");
+                            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                            addBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    name = editText.getText().toString().trim();
+                                    ChatMessage chatMessagereply = new ChatMessage(name, "user");
+                                    ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessagereply);
+                                    if (!name_flag) {
+                                        if (name.contains("My name is "))
+                                            name = name.replace("My name is ", "");
+                                        else if (name.contains("my name is "))
+                                            name = name.replace("my name is ", "");
+                                        else if (name.contains("My name's "))
+                                            name = name.replace("My name's ", "");
+                                        else if (name.contains("my name's "))
+                                            name = name.replace("my name's ", "");
+                                        else if (name.contains("It's "))
+                                            name = name.replace("It's ", "");
+                                        else if (name.contains("it's "))
+                                            name = name.replace("it's ", "");
+                                        else if (name.contains("It is "))
+                                            name = name.replace("It is ", "");
+                                        else if (name.contains("it is "))
+                                            name = name.replace("it is ", "");
+                                        else if (name.contains("Myself "))
+                                            name = name.replace("Myself ", "");
+                                        else if (name.contains("myself "))
+                                            name = name.replace("myself ", "");
+                                        ChatMessage chatMessage = new ChatMessage("So your name is " + name + ", am I right?", "bot");
+                                        ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                        temp_name = name;
+                                        name_flag = true;
+                                    } else {
+                                        if (editText.getText().toString().trim().contains("Yes") || editText.getText().toString().trim().contains("yes") || editText.getText().toString().trim().contains("Yep") || editText.getText().toString().trim().contains("yep")) {
+                                            name = temp_name;
+                                            ref.child("Devices").child(android_id).child("Name").setValue(name);
+                                            ChatMessage chatMessage = new ChatMessage("Thank You! Ask me anything, " + name ".", "bot");
+                                            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                            onnamereceived();
+                                        } else {
+                                            name_flag = false;
+                                            ChatMessage chatMessage = new ChatMessage("Sorry to ask again. May I know your name please?", "bot");
+                                            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                        }
+                                    }
 
-                        @Override
-                        protected AIResponse doInBackground(AIRequest... aiRequests) {
-                            final AIRequest request = aiRequests[0];
-                            try {
-                                final AIResponse response = aiDataService.request(aiRequest);
-                                return response;
-                            } catch (AIServiceException e) {
-                            }
-                            return null;
+                                    editText.setText("");
+
+                                }
+                            });
+
+                        } else {
+                            name = dataSnapshot.getValue().toString();
+                            onnamereceived();
                         }
-                        @Override
-                        protected void onPostExecute(AIResponse response) {
-                            if (response != null) {
 
-                                Result result = response.getResult();
-                                String reply = result.getFulfillment().getSpeech();
-                                ChatMessage chatMessage = new ChatMessage(reply, "bot");
-                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
-                            }
-                        }
-                    }.execute(aiRequest);
-                }
-                else {
-                    aiService.startListening();
-                }
 
-                editText.setText("");
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
-        });
+        }, 1000);
+
+
+
+
+
 
 
 
@@ -320,7 +353,7 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
         ChatMessage chatMessage = new ChatMessage("Hi", "user");
         //ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
 
-        aiRequest.setQuery("Hi.");
+        aiRequest.setQuery("ABCD1234");
         new AsyncTask<AIRequest,Void,AIResponse>(){
 
             @Override
@@ -344,6 +377,68 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
                 }
             }
         }.execute(aiRequest);
+    }
+
+    void onnamereceived()
+    {
+        final AIConfiguration config = new AIConfiguration("108eee18636643379296e12abafe380f",
+                AIConfiguration.SupportedLanguages.English,
+                AIConfiguration.RecognitionEngine.System);
+
+        aiService = AIService.getService(getApplicationContext(), config);
+        aiService.setListener(this);
+
+        final AIDataService aiDataService = new AIDataService(getApplicationContext(), config);
+
+        final AIRequest aiRequest = new AIRequest();
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onClick(View view) {
+
+                String message = editText.getText().toString().trim();
+
+                if (!message.equals("")) {
+
+                    ChatMessage chatMessage = new ChatMessage(message, "user");
+                    ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+
+                    aiRequest.setQuery(message);
+                    new AsyncTask<AIRequest,Void,AIResponse>(){
+
+                        @Override
+                        protected AIResponse doInBackground(AIRequest... aiRequests) {
+                            final AIRequest request = aiRequests[0];
+                            try {
+                                final AIResponse response = aiDataService.request(aiRequest);
+                                return response;
+                            } catch (AIServiceException e) {
+                            }
+                            return null;
+                        }
+                        @Override
+                        protected void onPostExecute(AIResponse response) {
+                            if (response != null) {
+
+                                Result result = response.getResult();
+                                String reply = result.getFulfillment().getSpeech();
+                                char replypunc = reply.charAt(reply.length()-1);
+                                reply = reply.substring(0, reply.length()-1);
+                                ChatMessage chatMessage = new ChatMessage(reply + ", " + name + replypunc, "bot");
+                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                            }
+                        }
+                    }.execute(aiRequest);
+                }
+                else {
+                    aiService.startListening();
+                }
+
+                editText.setText("");
+
+            }
+        });
     }
 
 }

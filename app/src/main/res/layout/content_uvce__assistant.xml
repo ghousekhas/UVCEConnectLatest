@@ -12,11 +12,16 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+
+        android:background="#f4f6f7"
+        android:clipToPadding="false"
         android:paddingTop="10dp"
         android:paddingBottom="50dp"
-        android:clipToPadding="false"
-        android:background="#f4f6f7"
-        />
+        android:layout_marginBottom="10dp"/>
 
 
     <RelativeLayout
