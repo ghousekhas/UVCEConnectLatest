@@ -155,7 +155,7 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
                                         if (editText.getText().toString().trim().contains("Yes") || editText.getText().toString().trim().contains("yes") || editText.getText().toString().trim().contains("Yep") || editText.getText().toString().trim().contains("yep")) {
                                             name = temp_name;
                                             ref.child("Devices").child(android_id).child("Name").setValue(name);
-                                            ChatMessage chatMessage = new ChatMessage("Thank You! Ask me anything, " + name ".", "bot");
+                                            ChatMessage chatMessage = new ChatMessage("Thank You! Ask me anything, " + name + ".", "bot");
                                             ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
                                             onnamereceived();
                                         } else {
