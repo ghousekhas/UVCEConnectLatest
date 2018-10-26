@@ -105,16 +105,17 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
 
 
-        initialchat();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+
+
+
                 ref.child("Devices").child(android_id).child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         try {
+
+                            ChatMessage chatMessageinitial = new ChatMessage("Greetings! I am UVCE Assistant, your one stop destination for all your UVCE related doubts. How may I help you today?", "bot");
+                            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessageinitial);
 
                             if (dataSnapshot.getValue() == null) {
 
@@ -172,6 +173,8 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
                             } else {
                                 name = dataSnapshot.getValue().toString();
+                                chatMessageinitial = new ChatMessage("Greetings, " + name + "! I am UVCE Assistant, your one stop destination for all your UVCE related doubts. How may I help you today?", "bot");
+                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessageinitial);
                                 onnamereceived();
                             }
                         } catch (Exception e) {
@@ -186,8 +189,8 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
                     }
                 });
-            }
-        }, 1000);
+
+
 
 
 
