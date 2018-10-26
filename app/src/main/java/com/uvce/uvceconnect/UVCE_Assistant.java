@@ -62,7 +62,7 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
     FirebaseRecyclerAdapter<ChatMessage,chat_rec> adapter;
     Boolean flagFab = true;
     private String android_id;
-    private String name;
+    private String name = "";
     private AIService aiService;
     boolean name_flag = false;
     String temp_name;
@@ -309,7 +309,9 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
 
         String reply = result.getFulfillment().getSpeech();
-        ChatMessage chatMessage = new ChatMessage(reply, "bot");
+        char replypunc = reply.charAt(reply.length()-1);
+        reply = reply.substring(0, reply.length()-1);
+        ChatMessage chatMessage = new ChatMessage(reply + ", " + name + replypunc, "bot");
         ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
 
 
@@ -353,7 +355,7 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
         final AIRequest aiRequest = new AIRequest();
 
-        ChatMessage chatMessage = new ChatMessage("Hi", "user");
+        ChatMessage chatMessage = new ChatMessage("ABCD1234", "user");
         //ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
 
         aiRequest.setQuery("ABCD1234");
@@ -375,6 +377,9 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
                     Result result = response.getResult();
                     String reply = result.getFulfillment().getSpeech();
+                    if(!name.equals(""))
+                        reply = reply.substring(0, 9) + ", " + name + reply.substring(9);
+
                     ChatMessage chatMessage = new ChatMessage(reply, "bot");
                     ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
                 }
