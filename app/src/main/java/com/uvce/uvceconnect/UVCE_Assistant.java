@@ -114,11 +114,11 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
                         try {
 
-                            ChatMessage chatMessageinitial = new ChatMessage("Greetings! I am UVCE Assistant, your one stop destination for all your UVCE related doubts. How may I help you today?", "bot");
-                            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessageinitial);
+                            ChatMessage chatMessageinitial;
 
                             if (dataSnapshot.getValue() == null) {
-
+                                chatMessageinitial = new ChatMessage("Greetings! I am UVCE Assistant, your one stop destination for all your UVCE related doubts. How may I help you today?", "bot");
+                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessageinitial);
                                 ChatMessage chatMessage = new ChatMessage("May I know your name please?", "bot");
                                 ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
                                 addBtn.setOnClickListener(new View.OnClickListener() {
