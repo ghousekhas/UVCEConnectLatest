@@ -312,10 +312,16 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
 
         String reply = result.getFulfillment().getSpeech();
-        char replypunc = reply.charAt(reply.length()-1);
-        reply = reply.substring(0, reply.length()-1);
-        ChatMessage chatMessage = new ChatMessage(reply + ", " + name + replypunc, "bot");
-        ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+        if(!reply.contains("XYZ123")) {
+            char replypunc = reply.charAt(reply.length() - 1);
+            reply = reply.substring(0, reply.length() - 1);
+            ChatMessage chatMessage = new ChatMessage(reply + ", " + name + replypunc, "bot");
+            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+        } else {
+            reply = reply.replace("XYZ123", "");
+            ChatMessage chatMessage = new ChatMessage(reply, "bot");
+            ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+        }
 
 
     }
@@ -434,10 +440,16 @@ public class UVCE_Assistant extends AppCompatActivity implements AIListener {
 
                                 Result result = response.getResult();
                                 String reply = result.getFulfillment().getSpeech();
-                                char replypunc = reply.charAt(reply.length()-1);
-                                reply = reply.substring(0, reply.length()-1);
-                                ChatMessage chatMessage = new ChatMessage(reply + ", " + name + replypunc, "bot");
-                                ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                if(!reply.contains("XYZ123")) {
+                                    char replypunc = reply.charAt(reply.length() - 1);
+                                    reply = reply.substring(0, reply.length() - 1);
+                                    ChatMessage chatMessage = new ChatMessage(reply + ", " + name + replypunc, "bot");
+                                    ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                } else {
+                                    reply = reply.replace("XYZ123", "");
+                                    ChatMessage chatMessage = new ChatMessage(reply, "bot");
+                                    ref.child("Devices").child(android_id).child("chat").push().setValue(chatMessage);
+                                }
                             }
                         }
                     }.execute(aiRequest);
