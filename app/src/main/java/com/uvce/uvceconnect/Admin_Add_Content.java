@@ -106,7 +106,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        String organ[] = new String[]{"Administration Office", "Placement Office", "Principal's Office", "Vision UVCE", "IEEE", "E-Cell UVCE", "Thatva", "g2c2", "sae", "vinimaya", "Chakravyuha", "ಚೇತನ", "UVCE Foundation", "UVCE Select"};
+        String organ[] = new String[]{"Administration Office", "Placement Office", "Principal's Office", "Vision UVCE", "IEEE", "E-Cell UVCE", "Thatva", "G2C2", "SAE", "Vinimaya", "Chakravyuha", "ಚೇತನ", "UVCE Foundation", "UVCE Select"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, organ);
         organization.setAdapter(arrayAdapter);
 
@@ -154,16 +154,16 @@ public class Admin_Add_Content extends AppCompatActivity {
                             organization_image = "logo/tatva.jpg";
                             break;
 
-                        case "g2c2":
-                            organization_image = "logo/g2c2.jpg";
+                        case "G2C2":
+                            organization_image = "logo/G2C2.jpg";
                             break;
 
-                        case "sae":
-                            organization_image = "logo/sae.jpg";
+                        case "SAE":
+                            organization_image = "logo/SAE.jpg";
                             break;
 
-                        case "vinimaya":
-                            organization_image = "logo/vinimaya.jpg";
+                        case "Vinimaya":
+                            organization_image = "logo/Vinimaya.jpg";
                             break;
 
                         case "Chakravyuha":
@@ -187,7 +187,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                             break;
 
                         case "E-Cell UVCE":
-                            organization_image = "logo/ecell.jpg";
+                            organization_image = "logo/E-Cell UVCE.jpg";
                             break;
 
                     }
