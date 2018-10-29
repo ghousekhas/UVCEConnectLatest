@@ -206,6 +206,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         id=item.getItemId();
         switch (id)
         {
+            case R.id.menu_register:
+                count = 0;
+                intent = new Intent(this,Register.class);
+                startActivity(intent);
+                // Toast.makeText(this,"Question Papers and Syllabus",Toast.LENGTH_SHORT).show();
+                break;
+
             case R.id.menu_qp_and_syllabus:
                 count = 0;
                 intent = new Intent(this,Academic.class);
