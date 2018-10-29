@@ -42,7 +42,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends MultiDex_Support implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar mToolbar;
     DrawerLayout mDrawerLayout;
@@ -73,8 +73,7 @@ public class MainActivity extends MultiDex_Support implements NavigationView.OnN
         mToolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
 
-        //Firebase Persistence
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
 
@@ -273,6 +272,7 @@ public class MainActivity extends MultiDex_Support implements NavigationView.OnN
     @Override
     protected void onResume() {
         super.onResume();
+
         prepareHomePageData();
     }
 
