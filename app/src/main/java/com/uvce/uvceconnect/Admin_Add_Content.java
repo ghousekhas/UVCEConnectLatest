@@ -291,7 +291,8 @@ public class Admin_Add_Content extends AppCompatActivity {
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
                         progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Content Successfully Updated", Toast.LENGTH_LONG).show();
-
+                        startActivity(new Intent(Admin_Add_Content.this,MainActivity.class));
+                        finish();
                     }
 
                     if(getIntent().getBooleanExtra("Edit", false))
