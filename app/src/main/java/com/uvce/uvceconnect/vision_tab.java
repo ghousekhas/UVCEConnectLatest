@@ -8,19 +8,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-// mahith
-public class vision_tab extends Fragment {
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
+public class vision_tab extends Fragment {
+    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Club_Content/Vision");
+    TextView card1_content,card2_content,card3_content,card4_content;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_vision_tab, container, false);
         Typeface mycustomfont = Typeface.createFromAsset(getActivity().getAssets(),  "fonts/adobe_font.otf");
         //text view contents of vision layout
-        TextView card1_content =(TextView)view.findViewById(R.id.card1_content_vision);
-        TextView card2_content =(TextView)view.findViewById(R.id.card2_content_vision);
-        TextView card3_content =(TextView)view.findViewById(R.id.card3_content_vision);
-        TextView card4_content =(TextView)view.findViewById(R.id.card4_content_vision);
+         card1_content =(TextView)view.findViewById(R.id.card1_content_vision);
+         card2_content =(TextView)view.findViewById(R.id.card2_content_vision);
+         card3_content =(TextView)view.findViewById(R.id.card3_content_vision);
+         card4_content =(TextView)view.findViewById(R.id.card4_content_vision);
+
+        //load all contents
+        preparePageData();
+
+
         //customfont for the textviews in each cardview
         card1_content.setTypeface(mycustomfont);
         card2_content.setTypeface(mycustomfont);
@@ -28,6 +41,31 @@ public class vision_tab extends Fragment {
         card4_content.setTypeface(mycustomfont);
 
         return view;
+    }
+
+    void preparePageData() {
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //to give a next line every time a bb appears in the sentence
+                //assuming no word starts with bb xD
+                String temp1=dataSnapshot.child("card1").getValue().toString().replace("bb", "\n");
+                String temp2=dataSnapshot.child("card2").getValue().toString().replace("bb", "\n");
+                String temp3= dataSnapshot.child("card3").getValue().toString().replace("bb", "\n");
+                String temp4= dataSnapshot.child("card4").getValue().toString().replace("bb", "\n");
+
+                card1_content.setText(temp1);
+                card2_content.setText(temp2);
+                card3_content.setText(temp3);
+                card4_content.setText(temp4);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

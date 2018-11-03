@@ -21,16 +21,17 @@
             android:id="@+id/foundation_card1"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
             <TextView
                 android:id="@+id/card1_content_foundation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/foundation_card1"
-                android:textSize="20sp"
-                android:background="@drawable/blue_border"/>
-
+                android:textSize="20sp" />
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -42,15 +43,17 @@
             app:cardUseCompatPadding="true"
             android:layout_below="@id/foundation_card1"
             app:cardPreventCornerOverlap="true">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
             <TextView
                 android:id="@+id/card2_content_foundation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/foundation_card2"
-                android:textSize="20sp"
-                android:background="@drawable/blue_border"/>
+                android:textSize="20sp" />
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -63,17 +66,19 @@
             app:cardUseCompatPadding="true"
             android:layout_below="@id/foundation_card2"
             app:cardPreventCornerOverlap="true">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
             <TextView
                 android:id="@+id/card3_content_foundation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/foundation_card3"
                 android:textSize="20sp"
                 android:autoLink="all"
-                android:textColorLink="#9C27B0"
-                android:background="@drawable/blue_border"/>
+                android:textColorLink="#9C27B0" />
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
     </RelativeLayout>

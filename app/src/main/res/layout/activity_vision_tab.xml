@@ -27,7 +27,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/vision_card1"
                 android:textSize="20sp"
                 android:background="@drawable/blue_border"/>
 
@@ -48,7 +47,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/vision_card2"
                 android:textSize="20sp"
                 android:background="@drawable/blue_border"/>
 
@@ -69,7 +67,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/vision_card3"
                 android:textSize="20sp"
                 android:background="@drawable/blue_border"/>
 
@@ -93,7 +90,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/vision_card4"
                 android:textSize="20sp"
                 android:autoLink="all"
                 android:textColorLink="#9C27B0" />

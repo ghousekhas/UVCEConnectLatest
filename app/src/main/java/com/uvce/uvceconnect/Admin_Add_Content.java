@@ -361,7 +361,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                 id  = 8;
                 break;
 
-            case "vinimaya":
+            case "Vinimaya":
                 id  = 9;
                 break;
 

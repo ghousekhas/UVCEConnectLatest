@@ -1,5 +1,7 @@
 package com.uvce.uvceconnect;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +14,18 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 //mahith
 public class Adhamya extends AppCompatActivity {
 
     GridLayout gridLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +38,69 @@ public class Adhamya extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ImageView chethana = (ImageView)findViewById(R.id.chethana);
+        ImageView tatva = (ImageView)findViewById(R.id.tatva);
+        ImageView chakravyuha = (ImageView)findViewById(R.id.chakravyuha);
+        ImageView g2c2 = (ImageView)findViewById(R.id.g2c2);
+        ImageView vinimaya = (ImageView)findViewById(R.id.vinimaya);
+        ImageView ecell = (ImageView)findViewById(R.id.ecell);
+        ImageView sae = (ImageView)findViewById(R.id.sae);
+        ImageView sports = (ImageView)findViewById(R.id.sports);
+        ImageView music = (ImageView)findViewById(R.id.music);
+        ImageView dance = (ImageView)findViewById(R.id.dance);
+
         gridLayout = (GridLayout)findViewById(R.id.gridLayout);
 
+        StorageReference chethanaStorage  = FirebaseStorage.getInstance().getReference().child("logo/chethana.jpg");
+        StorageReference tatvaStorage  = FirebaseStorage.getInstance().getReference().child("logo/tatva.jpg");
+        StorageReference chakravyuhaStorage  = FirebaseStorage.getInstance().getReference().child("logo/chakravyuha.jpg");
+        StorageReference g2c2Storage  = FirebaseStorage.getInstance().getReference().child("logo/G2C2.jpg");
+        StorageReference vinimayaStorage  = FirebaseStorage.getInstance().getReference().child("logo/Vinimaya.jpg");
+        StorageReference ecellStorage  = FirebaseStorage.getInstance().getReference().child("logo/E-Cell UVCE.jpg");
+        StorageReference saeStorage  = FirebaseStorage.getInstance().getReference().child("logo/SAE.jpg");
+        StorageReference sportsStorage  = FirebaseStorage.getInstance().getReference().child("logo/sports.jpg");
+        StorageReference musicStorage  = FirebaseStorage.getInstance().getReference().child("logo/music.jpg");
+        StorageReference danceStorage  = FirebaseStorage.getInstance().getReference().child("logo/dance.png");
+
+
+      Log.d("image=",(chethanaStorage).toString());
+      Log.d("image=",(vinimayaStorage).toString());
+      Log.d("image=",(chakravyuhaStorage).toString());
+        // Load the image using Glide
+        Glide.with(this )
+                .load(chethanaStorage)
+                .into(chethana );
+        Glide.with(this )
+                .load(tatvaStorage)
+                .into(tatva );
+        Glide.with(this )
+                .load(chakravyuhaStorage)
+                .into(chakravyuha );
+        Glide.with(this )
+                .load(g2c2Storage)
+                .into(g2c2 );
+        Glide.with(this )
+                .load(vinimayaStorage)
+                .into(vinimaya );
+        Glide.with(this )
+                .load(ecellStorage)
+                .into(ecell );
+        Glide.with(this )
+                .load(saeStorage)
+                .into(sae );
+        Glide.with(this )
+                .load(sportsStorage)
+                .into(sports );
+        Glide.with(this )
+                .load(musicStorage)
+                .into(music );
+        Glide.with(this )
+                .load(danceStorage)
+                .into(dance );
+
+
+
         setSingleEvent(gridLayout);
-
-
 
     }
 
@@ -84,5 +152,6 @@ public class Adhamya extends AppCompatActivity {
             });
         }
     }
+
 
 }

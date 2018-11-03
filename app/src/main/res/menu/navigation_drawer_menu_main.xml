@@ -4,7 +4,6 @@
     <item
         android:id="@+id/menu_register"
         android:title="Register"
-        android:icon="@drawable/icon_register"
         />
     <item android:id="@+id/menu_qp_and_syllabus"
         android:title="Question Paper and Syllabus"
