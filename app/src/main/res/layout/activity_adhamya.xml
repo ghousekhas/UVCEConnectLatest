@@ -25,14 +25,11 @@
                 android:layout_height="0dp"
                 android:layout_weight="1.25">
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:text="ADHAMYA"
-                    android:textColor="#ffffff"
-                    android:textSize="40dp" />
+                    android:src="@mipmap/adhamya"/>
 
             </RelativeLayout>
 

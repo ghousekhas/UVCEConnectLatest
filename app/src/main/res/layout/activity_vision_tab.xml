@@ -21,7 +21,10 @@
             android:id="@+id/vision_card1"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
             <TextView
                 android:id="@+id/card1_content_vision"
                 android:layout_width="wrap_content"
@@ -29,6 +32,7 @@
                 android:padding="10dp"
                 android:textSize="20sp"
                 android:background="@drawable/blue_border"/>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -41,14 +45,17 @@
             app:cardUseCompatPadding="true"
             android:layout_below="@id/vision_card1"
             app:cardPreventCornerOverlap="true">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
             <TextView
                 android:id="@+id/card2_content_vision"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:textSize="20sp"
-                android:background="@drawable/blue_border"/>
+                android:textSize="20sp" />
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -61,14 +68,17 @@
             app:cardUseCompatPadding="true"
             android:layout_below="@id/vision_card2"
             app:cardPreventCornerOverlap="true">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
             <TextView
                 android:id="@+id/card3_content_vision"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:textSize="20sp"
-                android:background="@drawable/blue_border"/>
+                android:textSize="20sp"/>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
