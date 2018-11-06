@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -38,66 +40,9 @@ public class Adhamya extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ImageView chethana = (ImageView)findViewById(R.id.chethana);
-        ImageView tatva = (ImageView)findViewById(R.id.tatva);
-        ImageView chakravyuha = (ImageView)findViewById(R.id.chakravyuha);
-        ImageView g2c2 = (ImageView)findViewById(R.id.g2c2);
-        ImageView vinimaya = (ImageView)findViewById(R.id.vinimaya);
-        ImageView ecell = (ImageView)findViewById(R.id.ecell);
-        ImageView sae = (ImageView)findViewById(R.id.sae);
-        ImageView sports = (ImageView)findViewById(R.id.sports);
-        ImageView music = (ImageView)findViewById(R.id.music);
-        ImageView dance = (ImageView)findViewById(R.id.dance);
+        addPics();
 
         gridLayout = (GridLayout)findViewById(R.id.gridLayout);
-
-        StorageReference chethanaStorage  = FirebaseStorage.getInstance().getReference().child("logo/chethana.jpg");
-        StorageReference tatvaStorage  = FirebaseStorage.getInstance().getReference().child("logo/tatva.jpg");
-        StorageReference chakravyuhaStorage  = FirebaseStorage.getInstance().getReference().child("logo/chakravyuha.jpg");
-        StorageReference g2c2Storage  = FirebaseStorage.getInstance().getReference().child("logo/G2C2.jpg");
-        StorageReference vinimayaStorage  = FirebaseStorage.getInstance().getReference().child("logo/Vinimaya.jpg");
-        StorageReference ecellStorage  = FirebaseStorage.getInstance().getReference().child("logo/E-Cell UVCE.jpg");
-        StorageReference saeStorage  = FirebaseStorage.getInstance().getReference().child("logo/SAE.jpg");
-        StorageReference sportsStorage  = FirebaseStorage.getInstance().getReference().child("logo/sports.jpg");
-        StorageReference musicStorage  = FirebaseStorage.getInstance().getReference().child("logo/music.jpg");
-        StorageReference danceStorage  = FirebaseStorage.getInstance().getReference().child("logo/dance.png");
-
-
-      Log.d("image=",(chethanaStorage).toString());
-      Log.d("image=",(vinimayaStorage).toString());
-      Log.d("image=",(chakravyuhaStorage).toString());
-        // Load the image using Glide
-        Glide.with(this )
-                .load(chethanaStorage)
-                .into(chethana );
-        Glide.with(this )
-                .load(tatvaStorage)
-                .into(tatva );
-        Glide.with(this )
-                .load(chakravyuhaStorage)
-                .into(chakravyuha );
-        Glide.with(this )
-                .load(g2c2Storage)
-                .into(g2c2 );
-        Glide.with(this )
-                .load(vinimayaStorage)
-                .into(vinimaya );
-        Glide.with(this )
-                .load(ecellStorage)
-                .into(ecell );
-        Glide.with(this )
-                .load(saeStorage)
-                .into(sae );
-        Glide.with(this )
-                .load(sportsStorage)
-                .into(sports );
-        Glide.with(this )
-                .load(musicStorage)
-                .into(music );
-        Glide.with(this )
-                .load(danceStorage)
-                .into(dance );
-
 
 
         setSingleEvent(gridLayout);
@@ -153,5 +98,85 @@ public class Adhamya extends AppCompatActivity {
         }
     }
 
+    void addPics(){
+        ImageView chethana = (ImageView)findViewById(R.id.chethana);
+        ImageView tatva = (ImageView)findViewById(R.id.tatva);
+        ImageView chakravyuha = (ImageView)findViewById(R.id.chakravyuha);
+        ImageView g2c2 = (ImageView)findViewById(R.id.g2c2);
+        ImageView vinimaya = (ImageView)findViewById(R.id.vinimaya);
+        ImageView ecell = (ImageView)findViewById(R.id.ecell);
+        ImageView sae = (ImageView)findViewById(R.id.sae);
+        ImageView sports = (ImageView)findViewById(R.id.sports);
+        ImageView music = (ImageView)findViewById(R.id.music);
+        ImageView dance = (ImageView)findViewById(R.id.dance);
 
+        StorageReference chethanaStorage  = FirebaseStorage.getInstance().getReference().child("logo/chethana.jpg");
+        StorageReference tatvaStorage  = FirebaseStorage.getInstance().getReference().child("logo/tatva.jpg");
+        StorageReference chakravyuhaStorage  = FirebaseStorage.getInstance().getReference().child("logo/chakravyuha.jpg");
+        StorageReference g2c2Storage  = FirebaseStorage.getInstance().getReference().child("logo/G2C2.jpg");
+        StorageReference vinimayaStorage  = FirebaseStorage.getInstance().getReference().child("logo/Vinimaya.jpg");
+        StorageReference ecellStorage  = FirebaseStorage.getInstance().getReference().child("logo/E-Cell UVCE.jpg");
+        StorageReference saeStorage  = FirebaseStorage.getInstance().getReference().child("logo/SAE.jpg");
+        StorageReference sportsStorage  = FirebaseStorage.getInstance().getReference().child("logo/sports.jpg");
+        StorageReference musicStorage  = FirebaseStorage.getInstance().getReference().child("logo/music.jpg");
+        StorageReference danceStorage  = FirebaseStorage.getInstance().getReference().child("logo/dance.png");
+
+
+        Log.d("image=",(chethanaStorage).toString());
+        Log.d("image=",(vinimayaStorage).toString());
+        Log.d("image=",(chakravyuhaStorage).toString());
+        // Load the image using Glide
+        Glide.with(this )
+                .load(chethanaStorage)
+                .into(chethana );
+        Glide.with(this )
+                .load(tatvaStorage)
+                .into(tatva );
+        Glide.with(this )
+                .load(chakravyuhaStorage)
+                .into(chakravyuha );
+        Glide.with(this )
+                .load(g2c2Storage)
+                .into(g2c2 );
+        Glide.with(this )
+                .load(vinimayaStorage)
+                .into(vinimaya );
+        Glide.with(this )
+                .load(ecellStorage)
+                .into(ecell );
+        Glide.with(this )
+                .load(saeStorage)
+                .into(sae );
+        Glide.with(this )
+                .load(sportsStorage)
+                .into(sports );
+        Glide.with(this )
+                .load(musicStorage)
+                .into(music );
+        Glide.with(this )
+                .load(danceStorage)
+                .into(dance );
+
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.club_info, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.info) {
+//            Toast.makeText(this,"Yeah you just clicked me!",Toast.LENGTH_SHORT).show();
+             startActivity(new Intent(this,Content_Adhamya.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -73,7 +73,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Ieee"
-            android:label="IEEE"
+            android:label="IEEE UVCE"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -150,51 +150,61 @@
             android:name=".Wie"
             android:label="WOMEN IN ENGINEERING"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Cs"
             android:label="COMPUTER SOCIETY"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Avishkar"
             android:label="AVISHKAR"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Robotics"
             android:label="ROBOTICS"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Design"
             android:label="DESIGN TEAM"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Art"
             android:label="ART FORUM"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Varchas"
             android:label="VARCHAS"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vidyuth"
             android:label="VIDYUTH"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Tstar"
             android:label="TISP AND STAR"
             android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Literary"
             android:label="LITERARY"
             android:parentActivityName=".Ieee"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Content_IEEE"
+            android:label="ABOUT IEEE UVCE"
+            android:parentActivityName=".Ieee"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Content_Adhamya"
+            android:label="ABOUT ADHAMYA"
+            android:parentActivityName=".Adhamya"
             android:screenOrientation="portrait"/>
     </application>
 
