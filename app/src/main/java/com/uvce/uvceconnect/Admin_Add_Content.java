@@ -6,9 +6,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -210,7 +210,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                         ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(ID);
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("image/" + filePath.getLastPathSegment() + "_" + ID);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
@@ -273,7 +273,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                         ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(ID);
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
                         if(getIntent().getBooleanExtra("Edit", false))
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue(getIntent().getStringExtra("Image"));
                         else

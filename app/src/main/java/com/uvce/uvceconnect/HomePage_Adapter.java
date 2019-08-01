@@ -9,20 +9,25 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,6 +52,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         public TextView name, content, timesignature;
         public ImageView image, logo;
         public CardView card;
+        //public HackyPagerViewer pagerViewer;
 
 
         public MyViewHolder(View view)
@@ -56,6 +62,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             content = view.findViewById(R.id.listitem_content);
             timesignature = view.findViewById(R.id.listitem_timesignature);
             image = view.findViewById(R.id.listitem_image);
+            //pagerViewer=view.findViewById(R.id.viewpagerforimage);
             logo = view.findViewById(R.id.listitem_logo);
             card = view.findViewById(R.id.listitem_card);
         }
@@ -89,11 +96,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         } else
             holder.logo.setImageBitmap(null);
         holder.name.setText(listitem.getName());
-        holder.name.setTypeface(mycustomfont);
         holder.content.setText(listitem.getContent());
-        holder.content.setTypeface(mycustomfont);
         holder.timesignature.setText(listitem.getTimesignature());
-        holder.timesignature.setTypeface(mycustomfont);
         holder.image.setMinimumWidth(holder.card.getWidth());
         if(!listitem.getImage().isEmpty()) {
             holder.image.setVisibility(View.VISIBLE);
@@ -156,8 +160,23 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
                 }
             });
-        } else
+        }
+        else
              holder.image.setVisibility(View.GONE);
+        /*ImagePagerAdapter imagePagerAdapter=new ImagePagerAdapter();
+        holder.pagerViewer.setAdapter(imagePagerAdapter);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        View v=(View)inflater.inflate(R.layout.imageview_for_pager,null);
+        PhotoView phv=v.findViewById(R.id.imageforpagerviewer);
+        GlideApp.with(context).load(FirebaseStorage.getInstance().getReference().child(listitem.getImage())).into(phv);
+        imagePagerAdapter.addView(v,0);
+        View v2=(View) inflater.inflate(R.layout.imageview_for_pager,null);
+        PhotoView ph2=v2.findViewById(R.id.imageforpagerviewer);
+        GlideApp.with(context).load(FirebaseStorage.getInstance().getReference().child(listitem.getImage())).into(ph2);
+        imagePagerAdapter.addView(v2);
+        phv.setZoomable(true);
+        ph2.setZoomable(true);
+        imagePagerAdapter.notifyDataSetChanged();*/
         if(listitem.getType()==1) {
             holder.card.setCardBackgroundColor(Color.parseColor("#1565C0"));
             holder.name.setTextColor(Color.parseColor("White"));

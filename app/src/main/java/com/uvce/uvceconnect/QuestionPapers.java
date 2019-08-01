@@ -1,15 +1,16 @@
 package com.uvce.uvceconnect;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +36,24 @@ public class QuestionPapers extends Fragment implements View.OnClickListener {
     private Typeface mycustomfont;
     private final String QP = "Question_Papers";
 
+    //Ghouse
+    SharedPreferences sharedPreferences;
+    String registeredBefore;
+    String brancha;
+    int yeara;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question_paper, container, false);
+
+        //Ghouse
+        sharedPreferences=getActivity().getApplicationContext().getSharedPreferences("lol", Context.MODE_PRIVATE);
+        registeredBefore=sharedPreferences.getString("registeredBefore","false");
+
+
+
         mycustomfont = Typeface.createFromAsset(getActivity().getAssets(),  "fonts/adobe_font.otf");
         department_header = view.findViewById(R.id.branchTextView);
         semester_header = view.findViewById(R.id.yearTextView);
@@ -49,13 +63,23 @@ public class QuestionPapers extends Fragment implements View.OnClickListener {
         button.setOnClickListener(this);
         branchSpinner = (Spinner) view.findViewById(R.id.branchSpinner);
         semesterSpinner = (Spinner) view.findViewById(R.id.semesterSpinner);
+        brancha=sharedPreferences.getString("studentBranch","");
+        yeara=sharedPreferences.getInt("studentyear",0);
+        branchspinnerselect();
 
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        downloadButtonClicked();
+
+
+        if(registeredBefore.equals("false")){
+            redirectToRegister();
+        }
+        else {
+            downloadButtonClicked();
+        }
     }
 
     public void downloadButtonClicked() {
@@ -216,4 +240,64 @@ public class QuestionPapers extends Fragment implements View.OnClickListener {
 
         return ID;
     }
+
+    private void branchspinnerselect(){
+        switch(brancha){
+            case "CSE": branchSpinner.setSelection(1);
+                break;
+            case "ISE": branchSpinner.setSelection(5);
+                break;
+            case "ME": branchSpinner.setSelection(6);
+                break;
+            case "ECE": branchSpinner.setSelection(4);
+                break;
+            case "EEE": branchSpinner.setSelection(3);
+                break;
+            case "CE":branchSpinner.setSelection(2);
+                break;
+            case "ARCH": branchSpinner.setSelection(0);
+                break;
+
+        }
+        switch(yeara){
+            case 1: semesterSpinner.setSelection(1);
+                break;
+            case 2: semesterSpinner.setSelection(2);
+                break;
+            case 3: semesterSpinner.setSelection(3);
+                break;
+            case 4: semesterSpinner.setSelection(4);
+                break;
+            case 5: semesterSpinner.setSelection(5);
+                break;
+            case 6: semesterSpinner.setSelection(6);
+                break;
+            case 7: semesterSpinner.setSelection(7);
+                break;
+            case 8: semesterSpinner.setSelection(8);
+                break;
+            case 9: semesterSpinner.setSelection(9);
+                break;
+            case 10: semesterSpinner.setSelection(10);
+                break;
+        }
+
+    }
+
+    public void redirectToRegister(){
+        Toast.makeText(getActivity().getApplicationContext(),"kindly register before downloading ", Toast.LENGTH_LONG).show();
+        Intent intent=new Intent(getActivity(),Register.class);
+        startActivityForResult(intent,1);
+        getActivity().finish();
+        brancha=sharedPreferences.getString("studentBranch","");
+        yeara=sharedPreferences.getInt("studentyear",0);
+        registeredBefore=sharedPreferences.getString("registeredBefore","false");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registeredBefore=sharedPreferences.getString("registeredBefore","false");
+    }
+
 }
