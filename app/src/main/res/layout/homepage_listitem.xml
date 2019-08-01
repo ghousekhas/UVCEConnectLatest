@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_marginBottom="2dp"
+    android:layout_marginTop="2dp"
+    app:cardBackgroundColor="#CCC8C8"
+    app:contentPadding="10dp"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="10dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="5sp"
-    android:layout_marginBottom="5sp">
-
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5sp"
-    android:elevation="50dp"
+    android:padding="5dp"
+    android:elevation="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="true"
     android:id="@+id/listitem_card">
@@ -32,32 +36,35 @@
         android:src="@color/cardview_dark_background"
         android:scaleType="centerCrop"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/listitem_logo"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:text="Example"
-        android:layout_marginLeft="10sp"
-        android:layout_centerVertical="true"
-        android:id="@+id/listitem_name"
-        android:textColor="@color/Black"/>
+        <TextView
+            android:id="@+id/listitem_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10sp"
+            android:layout_toRightOf="@id/listitem_logo"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="Example"
+            android:textColor="@color/Black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
         <TextView
+            android:id="@+id/listitem_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/listitem_relative_layout"
-            android:id="@+id/listitem_content"
-            android:text="Example"
-            android:autoLink="all"
-            android:textIsSelectable="true"
-            android:textSize="20sp"
             android:layout_marginTop="10sp"
-            android:textColor="@color/Black"/>
-        <ImageView
+            android:autoLink="all"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="Example"
+            android:textColor="@color/Black"
+            android:textIsSelectable="true"
+            android:textSize="20sp" />
+
+        <com.github.chrisbanes.photoview.PhotoView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listitem_image"
@@ -65,19 +72,28 @@
             android:adjustViewBounds="true"
             android:layout_below="@id/listitem_content"
             android:layout_marginTop="10sp" />
+
+        <!--<com.uvce.uvceconnect.HackyPagerViewer
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/viewpagerforimage"
+            android:layout_below="@id/listitem_content"
+            android:layout_marginTop="10sp"/>-->
+
+
         <TextView
+            android:id="@+id/listitem_timesignature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:text="Example"
             android:layout_below="@id/listitem_image"
             android:layout_marginTop="10sp"
+            android:fontFamily="@font/nunito_extralight"
             android:gravity="right"
+            android:text="Example"
+            android:textColor="@color/Grey"
             android:textSize="15sp"
-            android:id="@+id/listitem_timesignature"
-            android:textColor="@color/Grey"/>
+            android:textStyle="italic" />
 
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>
 
-</RelativeLayout>

@@ -20,11 +20,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/organisation_news_add"
             android:layout_marginTop="80dp"
-            android:spinnerMode="dropdown"></Spinner>
+            android:spinnerMode="dropdown"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:layout_margin="10dp"
             android:layout_marginTop="45dp"
             android:hint="Enter Content Here"
             android:id="@+id/admin_relative_up_news">
@@ -37,7 +39,7 @@
                 android:inputType="textMultiLine"
                 android:gravity="start"
                 android:textAlignment="viewStart" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:layout_width="match_parent"
@@ -45,7 +47,7 @@
             android:id="@+id/priority"
             android:layout_marginTop="20sp"
             android:spinnerMode="dropdown"
-            android:entries="@array/priority_array"></Spinner>
+            android:entries="@array/priority_array"/>
 
         <LinearLayout
             android:layout_width="match_parent"

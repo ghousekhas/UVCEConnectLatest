@@ -58,6 +58,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="10dp"
         android:onClick="downloadButtonClicked"
         android:text="@string/download"
         android:textAlignment="center"

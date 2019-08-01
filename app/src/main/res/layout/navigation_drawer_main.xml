@@ -8,7 +8,7 @@
 
     <include layout="@layout/activity_toolbar"/>
 
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/navigation_drawer_main"
@@ -20,7 +20,7 @@
         <include layout="@layout/activity_main"/>
 
 
-        <android.support.design.widget.NavigationView
+        <com.google.android.material.navigation.NavigationView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/navigation_view"
@@ -30,5 +30,5 @@
             app:menu="@menu/navigation_drawer_menu_main"/>
 
 
-    </android.support.v4.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </RelativeLayout>
