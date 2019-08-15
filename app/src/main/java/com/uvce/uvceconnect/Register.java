@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,13 +45,14 @@ public class Register extends AppCompatActivity
     Button regbtn;
     Spinner semspin;
     EditText regno1,email1,phone1,name1,year1;
+    TextView skipRegistration;
     String regno,email,phone,name,year;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String registeredBefore="false";
-    String update;
     String brunch;
     String branch="";
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,7 +60,7 @@ public class Register extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         //back button
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,6 +73,7 @@ public class Register extends AppCompatActivity
          email1=(EditText) findViewById(R.id.email);
          phone1=(EditText) findViewById(R.id.phone);
          name1=(EditText) findViewById(R.id.name);
+         skipRegistration=(TextView) findViewById(R.id.skipbutton);
 
          sharedPreferences=getApplicationContext().getSharedPreferences("lol",Context.MODE_PRIVATE);
          editor=sharedPreferences.edit();
@@ -88,6 +92,27 @@ public class Register extends AppCompatActivity
              }
          });
 
+         skipRegistration.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 skip();
+             }
+         });
+
+    }
+
+    public void skip(){
+            editor.putString("registeredBefore", "true");
+            editor.commit();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+    }
+
+    public void registered(){
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -163,7 +188,7 @@ public class Register extends AppCompatActivity
                                     ref.child(regno).child("branch").setValue(branch);
                                     ref.child(regno).child("DateOfRegistration").setValue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
                                     Toast.makeText(getApplicationContext(), "You've successfully registered in " + branch, Toast.LENGTH_LONG).show();
-                                    finish();
+                                    registered();
                                 }
                                 else{
                                     Toast.makeText(getApplicationContext(),"Please try again with an active internet connection",Toast.LENGTH_LONG).show();
@@ -193,6 +218,25 @@ public class Register extends AppCompatActivity
         }
         return 0;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // code to upload images

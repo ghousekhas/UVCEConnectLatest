@@ -70,7 +70,6 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:elevation="50dp"
-            android:id="@+id/placement_card3"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true"
             android:layout_below="@id/placement_card2">

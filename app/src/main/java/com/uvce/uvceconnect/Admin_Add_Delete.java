@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Admin_Add_Delete extends AppCompatActivity {
 
-    List<Hompage_ListItem> list = new ArrayList<>();
+    List<Homepage_ListItem> list = new ArrayList<>();
     HomePage_Adapter adapter;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
     AVLoadingIndicatorView load_animation;
@@ -56,7 +56,7 @@ public class Admin_Add_Delete extends AppCompatActivity {
                 try {
                     list.clear();
                     for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
-                        Hompage_ListItem item = new Hompage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "Admin", Integer.parseInt(childsnapshot.getKey().toString()));
+                        Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), getIntent().getStringExtra("Name"), Integer.parseInt(childsnapshot.getKey().toString()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString());
                         list.add(item);
                     }
                     adapter.notifyDataSetChanged();

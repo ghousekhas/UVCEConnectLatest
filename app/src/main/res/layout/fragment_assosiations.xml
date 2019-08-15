@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".about_uvce"
-    tools:showIn="@layout/activity_about_uvce"
+    tools:context=".AssosiationsFragment"
     android:background="@color/Grey_layout">
 
     <RelativeLayout
@@ -18,19 +17,41 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:elevation="50dp"
-            android:id="@+id/about_uvce_card1"
+            android:id="@+id/foundation_card1"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="true">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/blue_border">
-            <TextView
-                android:id="@+id/card1_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:elevation="50dp"
+            android:id="@+id/foundation_card2"
+            app:cardUseCompatPadding="true"
+            android:layout_below="@id/foundation_card1"
+            app:cardPreventCornerOverlap="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="20sp" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -40,48 +61,23 @@
             android:layout_height="wrap_content"
             android:padding="5sp"
             android:elevation="50dp"
-            android:id="@+id/about_uvce_card2"
-            android:layout_below="@+id/about_uvce_card1"
             app:cardUseCompatPadding="true"
+            android:layout_below="@id/foundation_card2"
             app:cardPreventCornerOverlap="true">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/blue_border">
-            <TextView
-                android:id="@+id/card2_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="20sp"
+                    android:autoLink="all"
+                    android:textColorLink="#9C27B0" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:elevation="50dp"
-            android:layout_below="@+id/about_uvce_card2"
-            app:cardUseCompatPadding="true"
-            app:cardPreventCornerOverlap="true">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/blue_border">
-            <TextView
-                android:id="@+id/card3_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@drawable/blue_border"
-                android:textSize="20sp" />
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
     </RelativeLayout>
-
-
 </androidx.core.widget.NestedScrollView>

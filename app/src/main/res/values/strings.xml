@@ -2,18 +2,22 @@
     <string name="app_name">UVCE Connect</string>
     <string name="open_navigation_drawer">Open Navigation Drawer</string>
     <string name="close_navigation_drawer">Close Navigation Drawer</string>
-    <string name="title_activity_about_uvce">about_uvce</string>
 
 
     <!--HACK! DONT CHANGE THE NAME, Feel free to change the value!-->
     <string name="arch">Architecture</string>
     <string name="cse">Computer Science and Engineering</string>
     <string name="ce">Civil Engineering</string>
-    <string name="eee">Electronic and Electrical Engineering</string>
+    <string name="eee">Electrical and Electronics Engineering</string>
     <string name="ece">Electronics and Communication Engineering</string>
     <string name="ise">Information Science and Engineering</string>
     <string name="me">Mechanical Engineering</string>
     <string name="download">Download</string>
+    <string name="fill_fields">Please fill all fields to register</string>
+    <string name="fields_properly">Please fill valid information to register</string>
+    <string name="invalid_register">Kindly enter a valid registration number and try again</string>
+
+    <string name="click_here_to_download"><u>Click here to download </u> </string>
 
     <string-array name="branch_array">
         <item>@string/arch</item>
@@ -346,26 +350,8 @@ If there are any questions regarding this privacy policy, you may contact us usi
 Mail ID\n
 uvceconnect@gmail.com
     </string>
-    <string name="title_activity_ieee">ieee</string>
 
-    <string name="ieee_card1">
-        IEEE Student Branch of UVCE endeavors to enhance the learning experience of the student community on the UVCE campus. The Student Branch intends on providing different social, cultural and technical events for the students throughout the year. We encourage the students to take full advantage of the benefits of IEEE membership, including scholarships, competitions, and conference grants. The Student Branch also emphasizes the students to work with peers in other institutes, academicians, professionals, engineers, and scientists through the on campus IEEE Student Branch and the Local IEEE Section, thereby encouraging students to be a part of the global IEEE community.
-    </string>
-    <string name="ieee_card2">
-        IEEE UVCE has come to be one of the most recognised student branches across Region 10 of IEEE. Rekindled in 2001, the student branch has since grown to a strength of over 200 student members.\n\nThe organization\'s commitment to enhancing and upgrading the core knowledge base of its members to the industry standards is reflected in the host of activities organised by it throghtout the year. \n\nSymposiums, guest leactures, hands-on workshops, the National Level Paper Presentation contest - KAGADA, the National Level Technical Fest- IMPETUS; intra collegiate activities- RIPPLES and industrial tours are some of the events held all through the year.
-    </string>
-    <string name="ieee_card3">
-        Our diligent efforts haven\'t been left unrecognized:\n\n
-         • IEEE UVCE was awarded the Exemplory Student Branch in Region 10 for the year 2016.\n
-         • IEEE UVCE WIE affinity group won the Region 10 Outstanding WIE Group Affinity Award.\n
-         • The National Level Paper Presentation Contest- KAGADA was conferred the Darrel Platinum Level Student Activity Award.\n
-         • In the Bangalore Section, Team IEEE UVCE won the Best Student Branch Website Award and also the first runner up in the Poster Presentation Contest.\n
-         • There were individual honours too as our Principal, Dr Venugopal K R was conferred with the IEEE Fellow rade for his exemplary contributions towards the field of education and Dr. P Deepa Shenoy was awaraded with the Best Branch Counselor Award.\n
-         • Our spirit of volunteering was recognized when Mahesh R B, Ex- Chairperson IEEE UVCE, won the Outstanding Student Volunteer Award for his contributions.\n
-    </string>
-    <string name="ieee_card4">
-         Email: uvce.ieee@gmail.com  \nWebsite: http://ieeeuvce.in  \nContact: Jishnu SM ( +91-7353120520 )
-    </string>
+    <!-- TODO: Remove or change this placeholder text -->
 
     <!--<string name="chethana_card1">-->
     <!--ನಾವು ಕನ್ನಡಿಗರು, ವಿಶಾಲ ಹೃದಯವನ್ನು ಹೊಂದವರು, ಜಗತ್ತಿನ ಮೂಲೆ-ಮೂಲೆಗಳಿಂದ ಹರಿದುಬರುವ ಜನರನ್ನು ತನ್ನ ಓಡಿಲಲ್ಲಿ ಸಾಕಿ ಸಲಹುವವರು. ಈ ಸಲಹುವಿಕೆ ಹೆಚ್ಚಾಯಿತೇನೋ, ಬೆಂಗಳೂರಿನಲ್ಲಿ ಕನ್ನಡಿಗರೇ ಅಲ್ಪಸಂಖ್ಯಾತರಾಗಿದ್ದಾರೆ. ಕನ್ನಡತನ ಎಂಬುದು ಮುಗಿದುಹೋದ ಅಧ್ಯಾಯವಾಗತೊಡಗಿದೆ. ಇಡೀಯ ಜಗತ್ತಿನಲ್ಲಿ ಅಂಗೈಯಷ್ಟು ಅಗಲ ಜಾಗದಲ್ಲಿ ಮಾತ್ರ ಕನ್ನಡ ಉಸಿರಾಡುತ್ತಿದೆ. ಕನ್ನಡವನ್ನು ಬಳಸುವ, ಉಳಿಸುವ, ಬೆಳೆಸುವ ಕೆಲಸ ಮಾಡಬೇಕಿದೆ.-->
@@ -484,7 +470,7 @@ uvceconnect@gmail.com
     <!--<string name="music_card3">-->
     <!--Contact: Sowmya (+91 97435 69412)-->
     <!--</string>-->
-    <string name="title_activity_uvce__assistant">UVCE Assistant</string>
+
 
 </resources>
 

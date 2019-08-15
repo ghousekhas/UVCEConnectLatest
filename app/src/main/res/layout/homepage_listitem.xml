@@ -16,6 +16,8 @@
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     app:cardUseCompatPadding="true"
+    android:clickable="true"
+    android:focusable="true"
     app:cardPreventCornerOverlap="true"
     android:id="@+id/listitem_card">
 
@@ -63,6 +65,17 @@
             android:textColor="@color/Black"
             android:textIsSelectable="true"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/linktodownload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/listitem_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="@string/click_here_to_download"
+            android:textColor="@color/Grey"
+            android:visibility="gone" />
 
         <com.github.chrisbanes.photoview.PhotoView
             android:layout_width="match_parent"

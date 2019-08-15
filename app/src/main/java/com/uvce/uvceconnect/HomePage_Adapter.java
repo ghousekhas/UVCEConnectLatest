@@ -36,10 +36,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.List;
+import java.util.Random;
 
 public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyViewHolder> {
 
-    private List<Hompage_ListItem> homepagelist;
+    private List<Homepage_ListItem> homepagelist;
     private Typeface mycustomfont;
     private Activity activity;
     private Context context;
@@ -49,7 +50,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView name, content, timesignature;
+        public TextView name, content, timesignature,link;
         public ImageView image, logo;
         public CardView card;
         //public HackyPagerViewer pagerViewer;
@@ -65,11 +66,12 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             //pagerViewer=view.findViewById(R.id.viewpagerforimage);
             logo = view.findViewById(R.id.listitem_logo);
             card = view.findViewById(R.id.listitem_card);
+            link= view.findViewById(R.id.linktodownload);
         }
 
     }
 
-    public HomePage_Adapter(List<Hompage_ListItem> homepagelist, Activity activity, Context context)
+    public HomePage_Adapter(List<Homepage_ListItem> homepagelist, Activity activity, Context context)
     {
         this.homepagelist = homepagelist;
         this.mycustomfont = Typeface.createFromAsset(activity.getAssets(),  "fonts/adobe_font.otf");
@@ -87,7 +89,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final Hompage_ListItem listitem = homepagelist.get(position);
+        final Homepage_ListItem listitem = homepagelist.get(position);
         if(!listitem.getLogo().isEmpty()) {
             StorageReference logoref = FirebaseStorage.getInstance().getReference().child(listitem.getLogo());
             if (!activity.isDestroyed()) {
@@ -99,6 +101,28 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.content.setText(listitem.getContent());
         holder.timesignature.setText(listitem.getTimesignature());
         holder.image.setMinimumWidth(holder.card.getWidth());
+
+        if(!listitem.getLink().equals("-1")){
+            holder.link.setVisibility(View.VISIBLE);
+            holder.link.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        String url="https://docs.google.com/uc?id=[FILE_ID]&export=download";
+                        String id=getID(listitem.getLink());
+                        url=url.replace("[FILE_ID]",id);
+                        Download download=new Download(context,listitem.getFilename() ,url);
+                        download.start();
+                    }
+                    catch (SecurityException e){
+                        Toast.makeText(context,"Please grant storage permissions to download",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+        }
+
+
         if(!listitem.getImage().isEmpty()) {
             holder.image.setVisibility(View.VISIBLE);
             final StorageReference imageref = FirebaseStorage.getInstance().getReference().child(listitem.getImage());
@@ -163,20 +187,6 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         }
         else
              holder.image.setVisibility(View.GONE);
-        /*ImagePagerAdapter imagePagerAdapter=new ImagePagerAdapter();
-        holder.pagerViewer.setAdapter(imagePagerAdapter);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        View v=(View)inflater.inflate(R.layout.imageview_for_pager,null);
-        PhotoView phv=v.findViewById(R.id.imageforpagerviewer);
-        GlideApp.with(context).load(FirebaseStorage.getInstance().getReference().child(listitem.getImage())).into(phv);
-        imagePagerAdapter.addView(v,0);
-        View v2=(View) inflater.inflate(R.layout.imageview_for_pager,null);
-        PhotoView ph2=v2.findViewById(R.id.imageforpagerviewer);
-        GlideApp.with(context).load(FirebaseStorage.getInstance().getReference().child(listitem.getImage())).into(ph2);
-        imagePagerAdapter.addView(v2);
-        phv.setZoomable(true);
-        ph2.setZoomable(true);
-        imagePagerAdapter.notifyDataSetChanged();*/
         if(listitem.getType()==1) {
             holder.card.setCardBackgroundColor(Color.parseColor("#1565C0"));
             holder.name.setTextColor(Color.parseColor("White"));
@@ -261,4 +271,21 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             Toast.makeText(activity, "Error in downloading image", Toast.LENGTH_SHORT).show();;
         }
     }
+
+    //download method
+    private String getID(String url) {
+        String ID = "";
+
+        for (int i = url.length() - 1; i >= 0; --i) {
+            if (url.charAt(i) != '=') {
+                ID = url.charAt(i) + ID;
+            } else {
+                break;
+            }
+        }
+
+        return ID;
+    }
+
+
 }

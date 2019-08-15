@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:layout_gravity="center"
         android:dropDownWidth="match_parent"
         android:entries="@array/branch_array"/>
@@ -37,12 +37,34 @@
             android:id="@+id/yearTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Year : "
+            android:text="Semester : "
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
         <Spinner
             android:id="@+id/semesterSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:dropDownWidth="match_parent"
+            android:textAlignment="center"
+            android:entries="@array/year_array"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subject : "
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/subjectspinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -66,12 +88,5 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
-    <TextView
-        android:id="@+id/noteTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:textColor="@android:color/holo_blue_light"
-        android:layout_gravity="bottom" />
 
 </LinearLayout>

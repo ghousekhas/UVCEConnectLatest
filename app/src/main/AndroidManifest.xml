@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".MultiDex_Support"
@@ -19,6 +20,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".EditCLubs"></activity>
+        <activity android:name=".ClubContent"
+            android:parentActivityName=".MainActivity"/>
+
+        <service
+            android:name=".MainPageNotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -82,138 +95,20 @@
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Chethana"
-            android:label="CHETHANA"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Chakravyuha"
-            android:label="CHAKRAVYUHA"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vinimaya"
-            android:label="VINIMAYA"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Sae"
-            android:label="SAE"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".dance"
-            android:label="DANCE"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Tatva"
-            android:label="TATVA"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".G2c2"
-            android:label="G2C2"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Sports"
-            android:label="SPORTS"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Music"
-            android:label="MUSIC"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Ecell"
-            android:label="E-CELL"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UVCE_Assistant"
-            android:label="@string/title_activity_uvce__assistant"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.uvce.uvceconnect.MainActivity" />
-        </activity>
-        <activity
             android:name=".Register"
             android:label="Register"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Wie"
-            android:label="WOMEN IN ENGINEERING"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Cs"
-            android:label="COMPUTER SOCIETY"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Avishkar"
-            android:label="AVISHKAR"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Robotics"
-            android:label="ROBOTICS"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Design"
-            android:label="DESIGN TEAM"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Art"
-            android:label="ART FORUM"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Varchas"
-            android:label="VARCHAS"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vidyuth"
-            android:label="VIDYUTH"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Tstar"
-            android:label="TISP AND STAR"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Literary"
-            android:label="LITERARY"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Content_IEEE"
-            android:label="ABOUT IEEE UVCE"
-            android:parentActivityName=".Ieee"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".Content_Adhamya"
-            android:label="ABOUT ADHAMYA"
-            android:parentActivityName=".Adhamya"
-            android:screenOrientation="portrait"/>
 
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_icon"-->
-            <!--android:resource="@drawable/uvce" />-->
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_color"-->
-            <!--android:resource="@color/Grey" />-->
-
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_round" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

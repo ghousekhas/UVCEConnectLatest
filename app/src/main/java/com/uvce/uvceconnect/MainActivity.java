@@ -1,6 +1,7 @@
 package com.uvce.uvceconnect;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     View headerview;
     ImageView admin_shortcut;
-    List<Hompage_ListItem> list = new ArrayList<>();
+    List<Homepage_ListItem> list = new ArrayList<>();
     HomePage_Adapter adapter;
 
     DatabaseReference databaseReference;
@@ -100,6 +102,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
+        //Startup Registration (optional skippable)
+        preference=getApplicationContext().getSharedPreferences("lol", Context.MODE_PRIVATE);
+        if(preference.getString("registeredBefore","false").equals("false")){
+            Intent intent=new Intent(this,Register.class);
+            startActivity(intent);
+            finish();
+        }
+
         //Following Lines used to enable admin options
         headerview = mNavigationView.getHeaderView(0);
         admin_shortcut = headerview.findViewById(R.id.Admin_Shortcut);
@@ -134,14 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //Following Lines for the Floating Action button
-        final FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UVCE_Assistant.class);
-                startActivity(intent);
-            }
-        });
+
 
 
     }
@@ -154,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 try {
                     list.clear();
                     for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
-                            Hompage_ListItem item = new Hompage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "", Integer.parseInt(childsnapshot.getKey().toString()));
+                            Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "", Integer.parseInt(childsnapshot.getKey().toString()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString());
                             list.add(item);
                     }
                     adapter.notifyDataSetChanged();
@@ -276,6 +279,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
 
         prepareHomePageData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.club_info, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.info) {
+            Intent intent=new Intent(this,ClubContent.class);
+            intent.putExtra("clubname","Contact us");
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

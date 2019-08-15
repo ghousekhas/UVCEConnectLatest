@@ -9,6 +9,8 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,11 +39,11 @@ import java.util.Date;
 
 public class Admin_Add_Content extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 234;
-    EditText details;
+    EditText details,filename,link;
     Spinner organization;
     Button picture;
     ImageView pictureshow;
-    Button add;
+    Button add,editclubs;
     int type;
 
     //a Uri object to store file path
@@ -92,8 +94,10 @@ public class Admin_Add_Content extends AppCompatActivity {
             }
         });
 
-
+        editclubs=(Button) findViewById(R.id.editclubs);
         details = (EditText) findViewById(R.id.news_details_add);
+        link=(EditText) findViewById(R.id.link);
+        filename=(EditText) findViewById(R.id.filename);
         organization = (Spinner) findViewById(R.id.organisation_news_add);
         picture = (Button) findViewById(R.id.choose_pic_news);
         pictureshow = (ImageView) findViewById(R.id.news_imageview);
@@ -103,12 +107,21 @@ public class Admin_Add_Content extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Admin_Add_Delete.class);
+                intent.putExtra("Name",getIntent().getStringExtra("Name"));
                 startActivity(intent);
             }
         });
         String organ[] = new String[]{"Administration Office", "Placement Office", "Principal's Office", "Vision UVCE", "IEEE", "E-Cell UVCE", "Thatva", "G2C2", "SAE", "Vinimaya", "Chakravyuha", "ಚೇತನ", "UVCE Foundation", "UVCE Select"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, organ);
         organization.setAdapter(arrayAdapter);
+
+        editclubs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Admin_Add_Content.this,EditCLubs.class);
+                startActivity(intent);
+            }
+        });
 
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,6 +227,17 @@ public class Admin_Add_Content extends AppCompatActivity {
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("image/" + filePath.getLastPathSegment() + "_" + ID);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
+                        if(filename.getText().toString().trim().isEmpty()||link.getText().toString().trim().isEmpty()) {
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
+                            Log.d("this","first");
+                        }
+                        else{
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(filename.getText().toString());
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(link.getText().toString());
+                            Log.d("this","second");
+                        }
+                        Log.d("this","third");
                         Date date = new Date();
                         if(getIntent().getBooleanExtra("Edit", false)) {
                             if(getIntent().getStringExtra("Time").contains("(Edited)"))
@@ -274,6 +298,17 @@ public class Admin_Add_Content extends AppCompatActivity {
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
+                        if(filename.getText().toString().trim().isEmpty()||link.getText().toString().trim().isEmpty()) {
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
+                            Log.d("this","first");
+                        }
+                        else{
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(filename.getText().toString());
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(link.getText().toString());
+                            Log.d("this","second");
+                        }
+                        Log.d("this","third");
                         if(getIntent().getBooleanExtra("Edit", false))
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue(getIntent().getStringExtra("Image"));
                         else

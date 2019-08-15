@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditCLubs">
+
+
+
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/spinner"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:elevation="50dp"
+            android:id="@+id/foundation_card1"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
+                <EditText
+                    android:inputType=""
+                    android:id="@+id/text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:padding="10dp"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:elevation="50dp"
+            android:id="@+id/foundation_card2"
+            app:cardUseCompatPadding="true"
+            android:layout_below="@id/foundation_card1"
+            app:cardPreventCornerOverlap="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
+                <EditText
+                    android:inputType=""
+                    android:id="@+id/text2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:padding="10dp"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:elevation="50dp"
+            app:cardUseCompatPadding="true"
+            android:id="@+id/foundation_card3"
+            android:layout_below="@id/foundation_card2"
+            app:cardPreventCornerOverlap="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_border">
+                <EditText
+                    android:inputType=""
+                    android:id="@+id/text3"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="20sp"
+                    android:autoLink="all"
+                    android:textColorLink="#9C27B0" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:background="@color/colorPrimary"
+            android:text="Save"
+            android:layout_margin="10dp"
+            android:layout_below="@id/foundation_card3"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

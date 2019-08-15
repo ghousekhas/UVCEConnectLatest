@@ -76,13 +76,9 @@ public class Syllabus extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(registeredBefore.equalsIgnoreCase("false")){
-            redirectToRegister();
 
-        }
-        else {
             downloadButtonClicked();
-        }
+
 
     }
 

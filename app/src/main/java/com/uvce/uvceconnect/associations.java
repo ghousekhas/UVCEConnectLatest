@@ -57,16 +57,15 @@ public class associations extends AppCompatActivity {
             switch(position)
             {
                 case 0:
-                    alumini_tab tab1 = new alumini_tab();
-                    return tab1;
+                    return new AssosiationsFragment("Alumini");
 
                 case 1:
-                    vision_tab tab2 = new vision_tab();
-                    return tab2;
+                    return new AssosiationsFragment("Vision");
 
                 case 2:
-                    foundation_tab tab3 = new foundation_tab();
-                    return tab3;
+                    return new AssosiationsFragment("Foundation");
+                case 3:
+                    return new AssosiationsFragment("Graduate");
                 default:
                     return null;
             }
@@ -76,7 +75,7 @@ public class associations extends AppCompatActivity {
         @Override
         public int getCount() {
             //number of tabs
-            return 3;
+            return 4;
         }
 
 

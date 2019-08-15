@@ -172,6 +172,10 @@ public class Academic extends AppCompatActivity {
                     return new Syllabus();
                 case 1:
                     return new QuestionPapers();
+                case 2:
+                    return new QuestionBanks();
+                case 3:
+                    return new Notes();
             }
 
             return null;
@@ -179,7 +183,7 @@ public class Academic extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
 
         @Override
@@ -189,6 +193,10 @@ public class Academic extends AppCompatActivity {
                     return "Syllabus";
                 case 1:
                     return "Question Papers";
+                case 2:
+                    return "Question Banks";
+                case 3:
+                    return "Notes";
             }
             return null;
         }
