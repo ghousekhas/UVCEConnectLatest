@@ -400,6 +400,9 @@ public class Admin_Add_Content extends AppCompatActivity {
             case "E-Cell UVCE":
                 id  = 5;
                 break;
+            default:
+                id=0;
+                break;
         }
         return id;
     }
