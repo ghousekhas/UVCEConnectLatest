@@ -66,8 +66,8 @@ public class Ieee extends AppCompatActivity {
     }
 
     private void populateTheGrid(){
-        clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
-        clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
+        //clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
+       // clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("IEEEClubs");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
