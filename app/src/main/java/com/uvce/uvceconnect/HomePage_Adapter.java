@@ -101,7 +101,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
                 @Override
                 public void onClick(View v) {
                     try {
-                        String url="https://docs.google.com/uc?id=[FILE_ID]&export=download";
+                        String url="https://drive.google.com/uc?id=[FILE_ID]&export=download";
                         String id=getID(listitem.getLink());
                         url=url.replace("[FILE_ID]",id);
                         Download download=new Download(context,listitem.getFilename() ,url);
