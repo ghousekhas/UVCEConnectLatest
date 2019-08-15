@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 public class Academic extends AppCompatActivity {
 
@@ -95,6 +96,8 @@ public class Academic extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setCancelable(false)
                 .show();
+
+       
     }
 
     @Override
