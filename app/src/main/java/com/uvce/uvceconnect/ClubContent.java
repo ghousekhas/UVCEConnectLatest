@@ -35,10 +35,7 @@ public class ClubContent extends AppCompatActivity {
 
         clubname=getIntent().getStringExtra("clubname");
         getSupportActionBar().setTitle(clubname);
-        clubname=clubname.toLowerCase();
-        StringBuffer stringBuffer=new StringBuffer(clubname);
-        stringBuffer.setCharAt(0,Character.toUpperCase(clubname.charAt(0)));
-        clubname=stringBuffer.toString();
+
 
 
         //Toast.makeText(getApplicationContext(),clubname,Toast.LENGTH_LONG).show();
@@ -52,14 +49,19 @@ public class ClubContent extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
 
-                String temp1=dataSnapshot.child("card1").getValue().toString().replace("bb", "\n");
-                String temp2=dataSnapshot.child("card2").getValue().toString().replace("bb", "\n");
-                String temp3= dataSnapshot.child("card3").getValue().toString().replace("bb", "\n");
+                    String temp1 = dataSnapshot.child("card1").getValue().toString().replace("bb", "\n");
+                    String temp2 = dataSnapshot.child("card2").getValue().toString().replace("bb", "\n");
+                    String temp3 = dataSnapshot.child("card3").getValue().toString().replace("bb", "\n");
 
-                card1_content.setText(temp1);
-                card2_content.setText(temp2);
-                card3_content.setText(temp3);
+                    card1_content.setText(temp1);
+                    card2_content.setText(temp2);
+                    card3_content.setText(temp3);
+
+                }catch (Exception e) {
+                    Toast.makeText(ClubContent.this, "There seems to be a connectivity issue. Please try again.", Toast.LENGTH_LONG).show();
+                }
 
             }
 

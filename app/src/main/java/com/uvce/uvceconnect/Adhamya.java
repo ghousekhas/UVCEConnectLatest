@@ -51,7 +51,7 @@ public class Adhamya extends AppCompatActivity {
 
         //just copied code from ieee adapter, it's the same why define another adapter?
 
-        recyclerView=findViewById(R.id.ieeerecyclerview);
+        recyclerView=findViewById(R.id.adhamyarecyclerview);
         RecyclerView.LayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
         ieeeAdapter=new IeeeAdapter(clubs,this,this);

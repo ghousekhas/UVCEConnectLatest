@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 // mahith
 public class about_uvce extends AppCompatActivity {
-    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Club_Content/About_UVCE");
+    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Club_Content/About UVCE");
     TextView card1_content,card2_content,card3_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,9 @@ public class about_uvce extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //customfont
-        Typeface mycustomfont = Typeface.createFromAsset(getAssets(),  "fonts/adobe_font.otf");
+
 
         //customfont for the textviews in each cardview
-        card1_content.setTypeface(mycustomfont);
-        card2_content.setTypeface(mycustomfont);
-        card3_content.setTypeface(mycustomfont);
 
 
     }
@@ -49,6 +47,8 @@ public class about_uvce extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try{
 
                 //to give a next line every time a bb appears in the sentence
                 //assuming no word starts with bb xD
@@ -59,6 +59,10 @@ public class about_uvce extends AppCompatActivity {
                 card1_content.setText(temp1);
                 card2_content.setText(temp2);
                 card3_content.setText(temp3);
+
+                } catch(Exception e) {
+                    Toast.makeText(about_uvce.this, "There seems to be a connectivity issue. Please try again.", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

@@ -42,7 +42,7 @@
                     android:id="@+id/text1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_semibold"
+                    android:fontFamily="@font/nunito_extralight"
                     android:padding="10dp"
                     android:textSize="20sp" />
             </RelativeLayout>
@@ -66,7 +66,7 @@
                     android:id="@+id/text2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_semibold"
+                    android:fontFamily="@font/nunito_extralight"
                     android:padding="10dp"
                     android:textSize="20sp" />
             </RelativeLayout>
@@ -89,7 +89,7 @@
                 <EditText
                     android:inputType=""
                     android:id="@+id/text3"
-                    android:fontFamily="@font/nunito_semibold"
+                    android:fontFamily="@font/nunito_extralight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
@@ -106,8 +106,11 @@
             android:id="@+id/button"
             android:background="@color/colorPrimary"
             android:text="Save"
+            android:fontFamily="@font/nunito_extrabold"
+            android:textColor="@android:color/white"
             android:layout_margin="10dp"
             android:layout_below="@id/foundation_card3"
+            android:textAllCaps="false"
             android:layout_centerHorizontal="true"/>
 
 

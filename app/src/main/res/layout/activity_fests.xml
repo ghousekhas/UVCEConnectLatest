@@ -27,6 +27,7 @@
                 android:textSize="40sp"
                 android:textStyle="bold"
                 android:id="@+id/cultural_fest"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="@color/colorPrimary"/>
 
             <androidx.cardview.widget.CardView
@@ -46,9 +47,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UVCE JAATHRE:"
+                        android:text="UVCE JAATHRE :"
                         android:id="@+id/uvce_jaathre"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:textSize="25sp"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -57,6 +58,7 @@
                         android:layout_below="@+id/uvce_jaathre"
                         android:id="@+id/content_uvce_jaathre"
                         android:textSize="20sp"
+                        android:fontFamily="@font/nunito_extralight"
                         />
 
                 </RelativeLayout>
@@ -80,17 +82,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="FIESTA:"
+                        android:text="FIESTA :"
                         android:id="@+id/fiesta"
                         android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:fontFamily="@font/nunito_extrabold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fiesta"
                         android:layout_below="@+id/fiesta"
                         android:id="@+id/content_fiesta"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:fontFamily="@font/nunito_extralight"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -113,17 +116,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CIVISTA:"
+                        android:text="CIVISTA :"
                         android:id="@+id/civista"
                         android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:fontFamily="@font/nunito_extrabold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/civista"
                         android:layout_below="@+id/civista"
                         android:id="@+id/content_civista"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:fontFamily="@font/nunito_extralight"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -146,17 +150,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ESPORTIVO:"
+                        android:text="ESPORTIVO :"
                         android:id="@+id/esportivo"
                         android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:fontFamily="@font/nunito_extrabold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/esportivo"
                         android:layout_below="@+id/esportivo"
                         android:id="@+id/content_esportivo"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:fontFamily="@font/nunito_extralight"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -179,17 +184,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MILAGRO:"
+                        android:text="MILAGRO :"
                         android:textSize="25sp"
                         android:id="@+id/milagro"
-                        android:textStyle="bold"/>
+                        android:fontFamily="@font/nunito_extrabold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/milagro"
                         android:layout_below="@+id/milagro"
                         android:id="@+id/content_milagro"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:fontFamily="@font/nunito_extralight"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -206,6 +212,7 @@
                 android:background="#FFFF"
                 android:id="@+id/technical_fest"
                 android:layout_below="@+id/card5"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="@color/colorPrimary"/>
 
             <androidx.cardview.widget.CardView
@@ -225,17 +232,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KAGADA:"
+                        android:text="KAGADA :"
                         android:id="@+id/kagada"
                         android:textSize="25sp"
-                        android:textStyle="bold"/>
+                        android:fontFamily="@font/nunito_extrabold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/kagada"
                         android:layout_below="@+id/kagada"
                         android:id="@+id/content_kagada"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:fontFamily="@font/nunito_extralight"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -258,17 +266,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INSPIRON:"
+                        android:text="INSPIRON :"
                         android:textSize="25sp"
                         android:id="@+id/inspiron"
-                        android:textStyle="bold"/>
+                        android:fontFamily="@font/nunito_extrabold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/inspiron"
                         android:layout_below="@+id/inspiron"
                         android:textSize="20sp"
-                        android:id="@+id/content_inspiron"/>
+                        android:id="@+id/content_inspiron"
+                        android:fontFamily="@font/nunito_extralight"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -290,17 +299,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="IMPETUS:"
+                        android:text="IMPETUS :"
                         android:textSize="25sp"
                         android:id="@+id/impetus"
-                        android:textStyle="bold"/>
+                        android:fontFamily="@font/nunito_extrabold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/impetus"
                         android:layout_below="@+id/impetus"
                         android:id="@+id/content_impetus"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp"
+                        android:fontFamily="@font/nunito_extralight"/>
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

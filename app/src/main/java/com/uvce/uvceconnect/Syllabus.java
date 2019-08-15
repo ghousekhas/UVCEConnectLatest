@@ -34,7 +34,7 @@ public class Syllabus extends Fragment implements View.OnClickListener {
     private TextView noteTextView;
     private String branch, year;
     private TextView department_header, semester_header;
-    private Typeface mycustomfont;
+
     private final String SYLLABUS = "Syllabus";
 
     //Ghouse
@@ -56,11 +56,10 @@ public class Syllabus extends Fragment implements View.OnClickListener {
 
         Button button = (Button) view.findViewById(R.id.download_button);
         button.setOnClickListener(this);
-        mycustomfont = Typeface.createFromAsset(getActivity().getAssets(),  "fonts/adobe_font.otf");
+
         department_header = view.findViewById(R.id.branchTextView);
         semester_header = view.findViewById(R.id.yearTextView);
-        department_header.setTypeface(mycustomfont);
-        semester_header.setTypeface(mycustomfont);
+
         branchSpinner = (Spinner) view.findViewById(R.id.branchSpinner);
         semesterSpinner = (Spinner) view.findViewById(R.id.semesterSpinner);
         noteTextView = (TextView) view.findViewById(R.id.noteTextView);

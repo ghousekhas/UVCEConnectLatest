@@ -40,24 +40,6 @@ public class fests extends AppCompatActivity {
         TextView content_impetus = (TextView)findViewById(R.id.content_impetus);
 
         //customfont
-        Typeface mycustomfont = Typeface.createFromAsset(getAssets(),  "fonts/adobe_font.otf");
-        cultural_fest.setTypeface(mycustomfont);
-        technical_fest.setTypeface(mycustomfont);
-        uvce_jaathre.setTypeface(mycustomfont);
-        content_uvce_jaathre.setTypeface(mycustomfont);
-        fiesta.setTypeface(mycustomfont);
-        content_fiesta.setTypeface(mycustomfont);
-        civista.setTypeface(mycustomfont);
-        content_civista.setTypeface(mycustomfont);
-        esportivo.setTypeface(mycustomfont);
-        content_esportivo.setTypeface(mycustomfont);
-        milagro.setTypeface(mycustomfont);
-        content_milagro.setTypeface(mycustomfont);
-        kagada.setTypeface(mycustomfont);
-        content_kagada.setTypeface(mycustomfont);
-        inspiron.setTypeface(mycustomfont);
-        content_inspiron.setTypeface(mycustomfont);
-        impetus.setTypeface(mycustomfont);
-        content_impetus.setTypeface(mycustomfont);
+
     }
 }

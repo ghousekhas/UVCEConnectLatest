@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textSize="20sp"
-                        android:fontFamily="@font/nunito_extrabold"
+                        android:fontFamily="@font/nunito_extralight"
                         android:autoLink="all"
                         android:textColorLink="#9C27B0" />
                 </RelativeLayout>
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textSize="20sp"
-                        android:fontFamily="@font/nunito_semibold"
+                        android:fontFamily="@font/nunito_extralight"
                         android:autoLink="all"
                         android:textColorLink="#9C27B0" />
                 </RelativeLayout>

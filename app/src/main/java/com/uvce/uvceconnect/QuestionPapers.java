@@ -33,7 +33,7 @@ public class QuestionPapers extends Fragment implements View.OnClickListener {
     private String fileName;
     private String branch, semester;
     private TextView department_header, semester_header;
-    private Typeface mycustomfont;
+
     private final String QP = "Question_Papers";
 
     //Ghouse
@@ -54,11 +54,10 @@ public class QuestionPapers extends Fragment implements View.OnClickListener {
 
 
 
-        mycustomfont = Typeface.createFromAsset(getActivity().getAssets(),  "fonts/adobe_font.otf");
+
         department_header = view.findViewById(R.id.branchTextView);
         semester_header = view.findViewById(R.id.yearTextView);
-        department_header.setTypeface(mycustomfont);
-        semester_header.setTypeface(mycustomfont);
+
         Button button = (Button) view.findViewById(R.id.download_button);
         button.setOnClickListener(this);
         branchSpinner = (Spinner) view.findViewById(R.id.branchSpinner);

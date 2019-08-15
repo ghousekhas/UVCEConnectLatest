@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Department : "
         android:textColor="@android:color/black"
+        android:fontFamily="@font/nunito_semibold"
         android:textAlignment="viewEnd"
         android:textSize="24sp" />
 
@@ -22,10 +23,11 @@
     <Spinner
         android:id="@+id/branchSpinner"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="50dp"
         android:layout_gravity="center"
+        android:fontFamily="@font/nunito_semibold"
         android:dropDownWidth="match_parent"
         android:entries="@array/branch_array"/>
 
@@ -38,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Semester : "
+            android:fontFamily="@font/nunito_semibold"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
@@ -47,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:dropDownWidth="match_parent"
+            android:fontFamily="@font/nunito_semibold"
             android:textAlignment="center"
             android:entries="@array/year_array"/>
     </LinearLayout>
@@ -54,13 +58,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="50dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Subject : "
             android:textColor="@android:color/black"
+            android:fontFamily="@font/nunito_semibold"
             android:textSize="24sp" />
 
         <Spinner
@@ -69,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:dropDownWidth="match_parent"
+            android:fontFamily="@font/nunito_semibold"
             android:textAlignment="center"
             android:entries="@array/year_array"/>
     </LinearLayout>
@@ -85,6 +91,7 @@
         android:onClick="downloadButtonClicked"
         android:text="@string/download"
         android:textAlignment="center"
+        android:fontFamily="@font/nunito_extrabold"
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 

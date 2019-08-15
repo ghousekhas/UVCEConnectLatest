@@ -52,20 +52,20 @@ public class associations extends AppCompatActivity {
         public Fragment getItem(int position) {
             TextView card1_content,card2_content,card3_content,card4_content;
             //customfont
-            Typeface mycustomfont = Typeface.createFromAsset(getAssets(),  "fonts/adobe_font.otf");
+
 
             switch(position)
             {
                 case 0:
-                    return new AssosiationsFragment("Alumini");
+                    return new AssosiationsFragment("Alumni Association");
 
                 case 1:
-                    return new AssosiationsFragment("Vision");
+                    return new AssosiationsFragment("Vision UVCE");
 
                 case 2:
-                    return new AssosiationsFragment("Foundation");
+                    return new AssosiationsFragment("UVCE Foundation");
                 case 3:
-                    return new AssosiationsFragment("Graduate");
+                    return new AssosiationsFragment("UVCE Graduate Association");
                 default:
                     return null;
             }

@@ -115,7 +115,7 @@ public class Academic extends AppCompatActivity {
         if (id == R.id.academicPage_contribute) {
             Context context = this;
             Intent mailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                    "mailto", "1917uvce@gmail.com", null));
+                    "mailto", "uvceconnect@gmail.com", null));
             context.startActivity(Intent.createChooser(mailIntent, null));
             return true;
         }

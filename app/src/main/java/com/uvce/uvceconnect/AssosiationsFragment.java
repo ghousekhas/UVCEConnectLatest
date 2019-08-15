@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,9 +53,15 @@ public class AssosiationsFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                try{
                 cardView1.setText(dataSnapshot.child("card1").getValue().toString());
                 cardView2.setText(dataSnapshot.child("card2").getValue().toString());
                 cardView3.setText(dataSnapshot.child("card3").getValue().toString());
+
+                } catch(Exception e) {
+
+                }
             }
 
             @Override

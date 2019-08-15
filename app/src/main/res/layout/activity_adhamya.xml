@@ -11,8 +11,9 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:background="@color/colorPrimaryDark"
+        android:padding="50dp"
         android:layout_below="@id/toolbar_main"
         android:src="@mipmap/adhamya"/>
 
@@ -20,6 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar_main"
-        android:id="@+id/ieeerecyclerview"
+        android:id="@+id/adhamyarecyclerview"
         android:scrollbars="vertical"/>
 </RelativeLayout>
