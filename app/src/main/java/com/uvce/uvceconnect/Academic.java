@@ -97,7 +97,7 @@ public class Academic extends AppCompatActivity {
                 .setCancelable(false)
                 .show();
 
-       
+
     }
 
     @Override
