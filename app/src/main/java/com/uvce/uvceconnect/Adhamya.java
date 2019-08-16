@@ -51,7 +51,7 @@ public class Adhamya extends AppCompatActivity {
 
         //just copied code from ieee adapter, it's the same why define another adapter?
 
-        recyclerView=findViewById(R.id.ieeerecyclerview);
+        recyclerView=findViewById(R.id.adhamyarecyclerview);
         RecyclerView.LayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
         ieeeAdapter=new IeeeAdapter(clubs,this,this);
@@ -61,8 +61,8 @@ public class Adhamya extends AppCompatActivity {
     }
 
     private void populateTheGrid(){
-        clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
-        clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
+        //clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
+        //clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("AdhamyaClubs");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

@@ -23,6 +23,7 @@
             android:id="@+id/input_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_extralight"
             android:hint="User Name" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -39,6 +40,7 @@
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_extralight"
             android:hint="Password" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -53,6 +55,8 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:layout_below="@id/input_layout_password"
+        android:fontFamily="@font/nunito_extrabold"
+        android:textAllCaps="false"
         android:layout_marginTop="20sp"/>
 
     </RelativeLayout>

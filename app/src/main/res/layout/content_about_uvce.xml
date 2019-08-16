@@ -29,6 +29,7 @@
                 android:id="@+id/card1_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extralight"
                 android:padding="10dp"
                 android:textSize="20sp" />
             </RelativeLayout>
@@ -47,11 +48,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/blue_border">
+                android:background="@drawable/blue_border"
+                android:fontFamily="@font/nunito_extralight">
             <TextView
                 android:id="@+id/card2_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extralight"
                 android:padding="10dp"
                 android:textSize="20sp" />
             </RelativeLayout>
@@ -76,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@drawable/blue_border"
+                android:fontFamily="@font/nunito_extralight"
                 android:textSize="20sp" />
             </RelativeLayout>
 

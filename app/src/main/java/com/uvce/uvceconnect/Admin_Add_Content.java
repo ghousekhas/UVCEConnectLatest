@@ -35,7 +35,9 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Admin_Add_Content extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 234;
@@ -57,9 +59,11 @@ public class Admin_Add_Content extends AppCompatActivity {
     public static String newpos = "0";
     private static String newnewpos;
     private String ID;
+    List<String> organ=new ArrayList<>();
     private String organization_image;
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy, hh:mm a");
     Button edit_add;
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,8 @@ public class Admin_Add_Content extends AppCompatActivity {
 
         priority = findViewById(R.id.priority);
         Query query = mainref.orderByKey().limitToFirst(1);
+
+
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,8 +117,34 @@ public class Admin_Add_Content extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        String organ[] = new String[]{"Administration Office", "Placement Office", "Principal's Office", "Vision UVCE", "IEEE", "E-Cell UVCE", "Thatva", "G2C2", "SAE", "Vinimaya", "Chakravyuha", "ಚೇತನ", "UVCE Foundation", "UVCE Select"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, organ);
+
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, organ);
+        FirebaseDatabase.getInstance().getReference("Club_Content").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    organ.clear();
+                    organ.add("Administration Office");
+                    organ.add("Principal's Office");
+                    organ.add("UVCE Select");
+                    for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
+                        String temp = childsnapshot.getKey();
+                        if (temp.equals("Chethana Club"))
+                            temp = "ಚೇತನ Club";
+                        organ.add(temp);
+                        Log.e("club", childsnapshot.getKey());
+                    }
+                    arrayAdapter.notifyDataSetChanged();
+                } catch (Exception e) {}
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         organization.setAdapter(arrayAdapter);
 
         editclubs.setOnClickListener(new View.OnClickListener() {
@@ -145,65 +177,10 @@ public class Admin_Add_Content extends AppCompatActivity {
 
                     String organisation_name = organization.getItemAtPosition
                             (organization.getSelectedItemPosition()).toString();
-
-                    switch (organisation_name) {
-                        case "Administration Office":
-                            organization_image = "logo/Administration Office.jpg";
-                            break;
-
-                        case "Placement Office":
-                            organization_image = "logo/Placement Office.jpg";
-                            break;
-
-                        case "Principal's Office":
-                            organization_image = "logo/Principal's Office.jpg";
-                            break;
-
-                        case "IEEE":
-                            organization_image = "logo/IEEE.jpg";
-                            break;
-
-                        case "Thatva":
-                            organization_image = "logo/tatva.jpg";
-                            break;
-
-                        case "G2C2":
-                            organization_image = "logo/G2C2.jpg";
-                            break;
-
-                        case "SAE":
-                            organization_image = "logo/SAE.jpg";
-                            break;
-
-                        case "Vinimaya":
-                            organization_image = "logo/Vinimaya.jpg";
-                            break;
-
-                        case "Chakravyuha":
-                            organization_image = "logo/chakravyuha.jpg";
-                            break;
-
-                        case "ಚೇತನ":
-                            organization_image = "logo/chethana.jpg";
-                            break;
-
-                        case "Vision UVCE":
-                            organization_image = "logo/Vision UVCE.jpg";
-                            break;
-
-                        case "UVCE Foundation":
-                            organization_image = "logo/UVCE Foundation.jpg";
-                            break;
-
-                        case "UVCE Select":
-                            organization_image = "logo/UVCE Select.png";
-                            break;
-
-                        case "E-Cell UVCE":
-                            organization_image = "logo/E-Cell UVCE.jpg";
-                            break;
-
-                    }
+                    if(!organisation_name.equals("ಚೇತನ Club"))
+                        organization_image = "logo/" + organisation_name + ".jpg";
+                    else
+                        organization_image = "logo/Chethana Club.jpg";
 
                     type = priority.getSelectedItem().toString().equals("Priority")?1:0;
 
@@ -422,6 +399,9 @@ public class Admin_Add_Content extends AppCompatActivity {
 
             case "E-Cell UVCE":
                 id  = 5;
+                break;
+            default:
+                id=0;
                 break;
         }
         return id;

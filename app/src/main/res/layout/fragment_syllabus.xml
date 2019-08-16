@@ -16,17 +16,19 @@
         android:text="Department : "
         android:textColor="@android:color/black"
         android:textAlignment="viewEnd"
+        android:fontFamily="@font/nunito_semibold"
         android:textSize="24sp" />
 
 
     <Spinner
         android:id="@+id/branchSpinner"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
         android:layout_gravity="center"
         android:dropDownWidth="match_parent"
+        android:fontFamily="@font/nunito_semibold"
         android:entries="@array/branch_array"/>
 
     <LinearLayout
@@ -39,6 +41,7 @@
             android:layout_height="wrap_content"
             android:text="Year : "
             android:textColor="@android:color/black"
+            android:fontFamily="@font/nunito_semibold"
             android:textSize="24sp" />
 
         <Spinner
@@ -48,6 +51,7 @@
             android:layout_marginStart="30dp"
             android:dropDownWidth="match_parent"
             android:textAlignment="center"
+            android:fontFamily="@font/nunito_semibold"
             android:entries="@array/year_array"/>
     </LinearLayout>
 
@@ -64,7 +68,8 @@
         android:text="@string/download"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/nunito_extrabold"/>
 
     <TextView
         android:id="@+id/noteTextView"

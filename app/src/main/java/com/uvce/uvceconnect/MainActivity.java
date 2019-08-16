@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.info) {
             Intent intent=new Intent(this,ClubContent.class);
-            intent.putExtra("clubname","Contact us");
+            intent.putExtra("clubname","Contact Us");
             startActivity(intent);
         }
 

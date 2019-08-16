@@ -183,10 +183,10 @@ public class Register extends AppCompatActivity
                                     editor.apply();
                                     editor.commit();
                                     registeredBefore = "true";
-                                    ref.child(regno).child("email").setValue(email);
-                                    ref.child(regno).child("year").setValue(year);
-                                    ref.child(regno).child("branch").setValue(branch);
-                                    ref.child(regno).child("DateOfRegistration").setValue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+                                    ref.child(regno).child("Email").setValue(email);
+                                    ref.child(regno).child("Semester").setValue(year);
+                                    ref.child(regno).child("Branch").setValue(branch);
+                                    ref.child(regno).child("Date_Of_Registration").setValue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
                                     Toast.makeText(getApplicationContext(), "You've successfully registered in " + branch, Toast.LENGTH_LONG).show();
                                     registered();
                                 }
