@@ -147,6 +147,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@color/colorPrimary"
         android:text="Register"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/nunito_extrabold"/>

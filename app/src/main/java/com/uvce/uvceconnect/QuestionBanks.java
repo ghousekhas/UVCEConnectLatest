@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,15 +33,16 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class QuestionBanks extends Fragment {
-    private Spinner branchspinner,semesterspinner,subjectspinner;
+    private Spinner branchspinner, semesterspinner, subjectspinner;
     private Button button;
     DatabaseReference databaseReference;
-    List<String> subjects=new ArrayList<>();
-    ArrayAdapter<String> subjectAdapter;
-    String[] branches={"ARCH","CSE","CE","ECE","EEE","ISE","ME"};
-    String[] semesters={"Sem_1","Sem_2","Sem_3","Sem_4","Sem_5","Sem_6","Sem_7","Sem_8","Sem_9","Sem_10"};
-    String subject="";
+    List<String> subject = new ArrayList<>();
 
+    List<String> semester = new ArrayList<>();
+    List<String> branch = new ArrayList<>();
+    String selectedbranch = " ", selectedsemester = " ", selectedsubject = " ", selectedsubjectclink = " ";
+    ArrayAdapter<String> subjectadapter;
+    ArrayAdapter<String> semesteradapter, branchadapter;
 
 
     public QuestionBanks() {
@@ -55,35 +57,84 @@ public class QuestionBanks extends Fragment {
         View v = inflater.inflate(R.layout.fragment_question_banks, container, false);
 
 
+        branchspinner = v.findViewById(R.id.branchSpinner);
+        semesterspinner = v.findViewById(R.id.semesterSpinner);
+        subjectspinner = v.findViewById(R.id.subjectspinner);
+        button = v.findViewById(R.id.download_button);
 
 
-        branchspinner=v.findViewById(R.id.branchSpinner);
-        semesterspinner=v.findViewById(R.id.semesterSpinner);
-        subjectspinner=v.findViewById(R.id.subjectspinner);
-        button=v.findViewById(R.id.download_button);
+        branchadapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, branch);
+        branchadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        branchspinner.setAdapter(branchadapter);
 
-        subjectAdapter= new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, subjects);
-        subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        subjectspinner.setAdapter(subjectAdapter);
-        subjectspinner.setSaveEnabled(false);
-        subjectspinner.setSelected(true);
+        semesteradapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, semester);
+        semesteradapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        semesterspinner.setAdapter(semesteradapter);
 
-        semesterspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        subjectadapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, subject);
+        subjectadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        subjectspinner.setAdapter(subjectadapter);
+
+
+        branch.add("Select Branch");
+        semesteradapter.notifyDataSetChanged();
+        subjectadapter.notifyDataSetChanged();
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Question_Banks");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                createSubjectsList(branches[branchspinner.getSelectedItemPosition()],semesters[position]);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    branch.clear();
+                    branch.add("Select Branch");
+                    for (DataSnapshot childsnapshot : dataSnapshot.getChildren())
+                        branch.add(childsnapshot.getKey());
+                    branchadapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+        branchspinner.setSelected(true);
+
 
         branchspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                createSubjectsList(branches[position],semesters[semesterspinner.getSelectedItemPosition()]);
+
+                selectedbranch = branch.get(position);
+                Log.e("branch", selectedbranch);
+                databaseReference.child(selectedbranch).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            semester.clear();
+                            semester.add("Select Semester");
+                            for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
+                                semester.add(childsnapshot.getKey());
+                                Log.e("sem", childsnapshot.getKey());
+                            }
+                            semesteradapter.notifyDataSetChanged();
+
+                        } catch (Exception e) {
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -92,40 +143,80 @@ public class QuestionBanks extends Fragment {
             }
         });
 
+        semesterspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedsemester = semester.get(position);
+                Log.e("semester", selectedsemester);
+                databaseReference.child(selectedbranch).child(selectedsemester).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            subject.clear();
+                            subject.add("Select Subject");
+                            for (DataSnapshot childsnapshot : dataSnapshot.getChildren())
+                                subject.add(childsnapshot.getKey());
+                            subjectadapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                        }
 
 
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        subjectspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedsubject = subject.get(position);
+                Log.e("topic", selectedsubject);
+                databaseReference.child(selectedbranch).child(selectedsemester).child(selectedsubject).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            selectedsubjectclink = dataSnapshot.getValue().toString();
+                        } catch (Exception e) {
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subject=subjects.get(subjectspinner.getSelectedItemPosition());
-                Toast.makeText(getContext(),"Question_Banks/"+branches[branchspinner.getSelectedItemPosition()]+"/"+semesters[semesterspinner.getSelectedItemPosition()]+"/"+subject,Toast.LENGTH_LONG).show();
+
+                //Toast.makeText(getContext(),"Question_Banks/"+branches[branchspinner.getSelectedItemPosition()]+"/"+semesters[semesterspinner.getSelectedItemPosition()]+"/"+subject,Toast.LENGTH_LONG).show();
                 checkStoragePermission();
             }
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return v;
     }
-
-
-
 
 
     protected void checkStoragePermission() {
@@ -148,36 +239,40 @@ public class QuestionBanks extends Fragment {
         }
     }
 
-    private void startDownload() {
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Question_Banks/"+branches[branchspinner.getSelectedItemPosition()]+"/"+semesters[semesterspinner.getSelectedItemPosition()]);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            String url, id, downloadURL = "https://docs.google.com/uc?id=[FILE_ID]&export=download";
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
 
-               url=dataSnapshot.child(subject).getValue().toString();
-                if (url.equals("-1")) {
-                    Toast.makeText(getContext(), "Resource not found\n" +
-                                    "Will be added soon!\n" +
-                                    "Please contribute if available.",
-                            Toast.LENGTH_LONG).show();
+                // if permission allowed by the user, continue to download.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startDownload();
+                } else {
 
-                    return;
+                    // permission not granted, download can't take place.
+                    Toast.makeText(getContext(),
+                            "Permission denied to read External storage",
+                            Toast.LENGTH_SHORT).show();
                 }
-
-                id = getID(url);
-                downloadURL = downloadURL.replace("[FILE_ID]", id);
-                Download md = new Download(getContext(), branches[branchspinner.getSelectedItemPosition()]+semesters[semesterspinner.getSelectedItemPosition()]+".pdf", downloadURL);
-                md.start();
-
-                ref.removeEventListener(this);
             }
+        }
+    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+    private void startDownload() {
 
-            }
-        });
+
+        try {
+            String url = "https://docs.google.com/uc?id=[FILE_ID]&export=download";
+            String id = getID(selectedsubjectclink);
+            url = url.replace("[FILE_ID]", id);
+            Download download = new Download(getContext(), selectedsubject + ".pdf", url);
+            download.start();
+        } catch (SecurityException e) {
+            Toast.makeText(getContext(), "Please grant storage permissions to download", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+        }
     }
 
 
@@ -194,29 +289,13 @@ public class QuestionBanks extends Fragment {
 
         return ID;
     }
+}
 
-    public void createSubjectsList(String branch,String semester){
-        subjects.clear();
-        databaseReference=FirebaseDatabase.getInstance().getReference().child("Question_Banks/"+branch+"/"+semester);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot childsnapshot: dataSnapshot.getChildren())
-                    subjectAdapter.add(childsnapshot.getKey());
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        subjectAdapter.notifyDataSetChanged();
 
         
 
 
 
-    }
 
-}
+

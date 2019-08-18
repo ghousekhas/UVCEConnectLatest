@@ -1,9 +1,12 @@
 package com.uvce.uvceconnect;
 
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -77,10 +80,7 @@ public class Notes extends Fragment {
         topicspinner.setAdapter(topicadapter);
 
 
-        branch.add("select branch");
-        semester.add("wait ");
-        subject.add("wait ");
-        topic.add("wait ");
+        branch.add("Select Branch");
         semesteradapter.notifyDataSetChanged();
         subjectadapter.notifyDataSetChanged();
         topicadapter.notifyDataSetChanged();
@@ -90,10 +90,13 @@ public class Notes extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                branch.clear();
-                for(DataSnapshot childsnapshot:dataSnapshot.getChildren())
-                    branch.add(childsnapshot.getKey());
-                branchadapter.notifyDataSetChanged();
+                try {
+                    branch.clear();
+                    branch.add("Select Branch");
+                    for (DataSnapshot childsnapshot : dataSnapshot.getChildren())
+                        branch.add(childsnapshot.getKey());
+                    branchadapter.notifyDataSetChanged();
+                } catch (Exception e) {}
             }
 
             @Override
@@ -109,16 +112,22 @@ public class Notes extends Fragment {
         branchspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 selectedbranch=branch.get(position);
                 Log.e("branch",selectedbranch);
                 databaseReference.child(selectedbranch).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        semester.clear();
-                        for(DataSnapshot childsnapshot:dataSnapshot.getChildren()) {
-                            semester.add(childsnapshot.getKey());
-                            Log.e("sem",childsnapshot.getKey());
-                        }
+                        try {
+                            semester.clear();
+                            semester.add("Select Semester");
+                            for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
+                                semester.add(childsnapshot.getKey());
+                                Log.e("sem", childsnapshot.getKey());
+                            }
+                            semesteradapter.notifyDataSetChanged();
+
+                        } catch (Exception e) {}
 
 
                     }
@@ -128,7 +137,7 @@ public class Notes extends Fragment {
 
                     }
                 });
-                semesteradapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -145,10 +154,13 @@ public class Notes extends Fragment {
                 databaseReference.child(selectedbranch).child(selectedsemester).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        subject.clear();
-                        for(DataSnapshot childsnapshot:dataSnapshot.getChildren())
-                            subject.add(childsnapshot.getKey());
-                        subjectadapter.notifyDataSetChanged();
+                        try {
+                            subject.clear();
+                            subject.add("Select Subject");
+                            for (DataSnapshot childsnapshot : dataSnapshot.getChildren())
+                                subject.add(childsnapshot.getKey());
+                            subjectadapter.notifyDataSetChanged();
+                        } catch (Exception e) {}
 
 
                     }
@@ -173,10 +185,14 @@ public class Notes extends Fragment {
                 databaseReference.child(selectedbranch).child(selectedsemester).child(selectedsubject).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        topic.clear();
-                        for(DataSnapshot childsnapshot:dataSnapshot.getChildren())
-                            topic.add(childsnapshot.getKey());
-                        topicadapter.notifyDataSetChanged();
+                        try {
+                            topic.clear();
+                            topic.add("Select Topic");
+                            for (DataSnapshot childsnapshot : dataSnapshot.getChildren())
+                                topic.add(childsnapshot.getKey());
+                            topicadapter.notifyDataSetChanged();
+
+                        } catch (Exception e) {}
 
 
                     }
@@ -199,10 +215,12 @@ public class Notes extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedtopic=topic.get(position);
                 Log.e("topic",selectedtopic);
-                databaseReference.child(selectedbranch).child(selectedsemester).child(selectedtopic).addValueEventListener(new ValueEventListener() {
+                databaseReference.child(selectedbranch).child(selectedsemester).child(selectedsubject).child(selectedtopic).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //selectedtopiclink=dataSnapshot.getValue().toString();
+                        try {
+                            selectedtopiclink = dataSnapshot.getValue().toString();
+                        } catch (Exception e) {}
                     }
 
                     @Override
@@ -221,7 +239,7 @@ public class Notes extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadfile();
+                checkStoragePermission();
             }
         });
 
@@ -231,17 +249,60 @@ public class Notes extends Fragment {
         return v;
     }
 
+
+    protected void checkStoragePermission() {
+    // if android version >= 6.0
+        if (Build.VERSION.SDK_INT >= 23) {
+        if (ContextCompat.checkSelfPermission(
+                getContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // if permission was not granted initially, ask the user again.
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+        } else {
+            // if android >= 6.0 and permission already granted, continue to download.
+            downloadfile();
+        }
+    } else {
+
+        // if android < 6.0 continue to download, no need to ask permission again.
+        downloadfile();
+    }
+}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                // if permission allowed by the user, continue to download.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    downloadfile();
+                } else {
+
+                    // permission not granted, download can't take place.
+                    Toast.makeText(getContext(),
+                            "Permission denied to read External storage",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
     private void downloadfile(){
         try {
             String url="https://docs.google.com/uc?id=[FILE_ID]&export=download";
             String id=getID(selectedtopiclink);
             url=url.replace("[FILE_ID]",id);
-            Download download=new Download(getContext(),selectedtopic ,url);
+            Download download=new Download(getContext(),selectedtopic + ".pdf" ,url);
             download.start();
         }
         catch (SecurityException e){
             Toast.makeText(getContext(),"Please grant storage permissions to download",Toast.LENGTH_LONG).show();
         }
+        catch (Exception e) {}
 
     }
 

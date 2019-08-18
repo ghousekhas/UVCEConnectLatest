@@ -6,9 +6,11 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -27,6 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 
 import java.io.File;
 import java.util.List;
@@ -40,6 +48,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Main_Page");
     private FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
     private StorageReference photoRef;
+    private String docid = "", fileid = "";
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -100,16 +109,10 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             holder.link.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
-                        String url="https://drive.google.com/uc?id=[FILE_ID]&export=download";
-                        String id=getID(listitem.getLink());
-                        url=url.replace("[FILE_ID]",id);
-                        Download download=new Download(context,listitem.getFilename() ,url);
-                        download.start();
-                    }
-                    catch (SecurityException e){
-                        Toast.makeText(context,"Please grant storage permissions to download",Toast.LENGTH_LONG).show();
-                    }
+
+                    docid = listitem.getLink();
+                    fileid = listitem.getFilename();
+                    startdownload();
 
                 }
             });
@@ -265,7 +268,35 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         }
     }
 
+
+
+
+
+
     //download method
+
+    private void startdownload() {
+        try {
+            String url="https://docs.google.com/uc?id=[FILE_ID]&export=download";
+            String id=getID(docid);
+            url=url.replace("[FILE_ID]",id);
+            Download download=new Download(context, fileid ,url);
+            download.start();
+        }
+        catch (SecurityException e){
+            Toast.makeText(context,"Please grant storage permissions to download",Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+
+            Toast.makeText(activity, "An Error has occured in downloading the file", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
+
+
+
+
     private String getID(String url) {
         String ID = "";
 
