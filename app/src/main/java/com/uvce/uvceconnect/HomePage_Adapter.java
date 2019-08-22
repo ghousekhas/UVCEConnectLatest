@@ -48,6 +48,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Main_Page");
     private FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
     private StorageReference photoRef;
+    private StorageReference FileRef;
     private String docid = "", fileid = "";
     StorageReference fileref;
 
@@ -215,8 +216,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
                                 photoRef.delete();
                             }
                             if(!listitem.getLink().isEmpty()) {
-                                photoRef = mFirebaseStorage.getReference(listitem.getLink());
-                                photoRef.delete();
+                                FileRef = mFirebaseStorage.getReference(listitem.getLink());
+                                FileRef.delete();
                             }
                             ref.child(Integer.toString(listitem.getKey())).removeValue();
                             dialog.dismiss();

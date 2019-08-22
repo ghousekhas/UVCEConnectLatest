@@ -76,16 +76,7 @@
             android:adjustViewBounds="true"
             android:layout_below="@id/listitem_content"
             android:layout_marginTop="10sp" />
-        <TextView
-        android:id="@+id/linktodownload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/listitem_image"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="@string/click_here_to_download"
-        android:textColor="@color/Grey"
-        android:visibility="gone" />
+
 
         <!--<com.uvce.uvceconnect.HackyPagerViewer
             android:layout_width="match_parent"
@@ -97,8 +88,9 @@
 
         <TextView
             android:id="@+id/listitem_timesignature"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/listitem_image"
             android:layout_marginTop="10sp"
             android:fontFamily="@font/nunito_extralight"
@@ -107,6 +99,23 @@
             android:textColor="@color/Grey"
             android:textSize="15sp"
             android:textStyle="italic" />
+
+        <TextView
+        android:id="@+id/linktodownload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listitem_image"
+        android:layout_toLeftOf="@id/listitem_timesignature"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="@string/click_here_to_download"
+        android:textColor="@color/Grey"
+            android:gravity="left"
+            android:layout_marginRight="5sp"
+            android:textSize="15sp"
+            android:visibility="gone"
+
+         />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

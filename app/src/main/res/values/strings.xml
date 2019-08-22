@@ -17,7 +17,7 @@
     <string name="fields_properly">Please fill valid information to register</string>
     <string name="invalid_register">Kindly enter a valid registration number and try again</string>
 
-    <string name="click_here_to_download"><u>Click here to download </u> </string>
+    <string name="click_here_to_download"><u>Click here to download the file</u> </string>
 
     <string-array name="branch_array">
         <item>@string/arch</item>

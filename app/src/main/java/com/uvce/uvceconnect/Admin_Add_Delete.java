@@ -57,7 +57,7 @@ public class Admin_Add_Delete extends AppCompatActivity {
                 try {
                     list.clear();
                     for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
-                        Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), getIntent().getStringExtra("Name"), Integer.parseInt(childsnapshot.getKey().toString()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString());
+                        Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "Admin", Integer.parseInt(childsnapshot.getKey().toString()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString());
                         list.add(item);
                     }
                     adapter.notifyDataSetChanged();

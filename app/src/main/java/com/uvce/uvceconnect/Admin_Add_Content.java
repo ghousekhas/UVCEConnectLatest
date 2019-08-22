@@ -255,9 +255,9 @@ public class Admin_Add_Content extends AppCompatActivity {
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
                         }else if(DocumentfilePath!=null) {
-                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment());
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
+                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1));
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
                             fileref.putFile(DocumentfilePath)
                                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
@@ -374,9 +374,9 @@ public class Admin_Add_Content extends AppCompatActivity {
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
                         }else if(DocumentfilePath!=null) {
-                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment());
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
+                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1));
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
                             fileref.putFile(DocumentfilePath)
                                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
@@ -418,12 +418,11 @@ public class Admin_Add_Content extends AppCompatActivity {
                             Log.d("this","second");
                         }
                         Toast.makeText(getApplicationContext(), "Content Successfully Updated", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(Admin_Add_Content.this,MainActivity.class));
-                        finish();
+
                     }
 
-                    if(getIntent().getBooleanExtra("Edit", false))
-                        finish();
+                    /*if(getIntent().getBooleanExtra("Edit", false))
+                        finish();*/
                 } else
                     Toast.makeText(getApplicationContext(), "Please Enter all the fields", Toast.LENGTH_SHORT).show();
             }
