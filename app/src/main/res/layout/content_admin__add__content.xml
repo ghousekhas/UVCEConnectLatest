@@ -51,7 +51,7 @@
             android:spinnerMode="dropdown"
             android:entries="@array/priority_array"/>
 
-        <LinearLayout
+        <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
@@ -74,7 +74,7 @@
                 android:fontFamily="@font/nunito_extralight"
                 android:layout_weight="1"/>
 
-        </LinearLayout>
+        </LinearLayout> -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,14 +110,17 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:layout_marginStart="30dp"
+                android:padding="10dp"
                 android:background="@color/colorPrimary"
-                android:text="Edit Clubs"
-                android:id="@+id/editclubs"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="Add File"
                 android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"/>
+                android:id="@+id/add_file_button" />
+
+
         </LinearLayout>
 
         <ImageView
@@ -126,6 +129,24 @@
             android:layout_marginTop="30dp"
             android:id="@+id/news_imageview"
             android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/file_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"
+            android:text="No file selected for upload."
+            android:fontFamily="@font/nunito_extralight"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
 
         <Button
             android:id="@+id/edit_delete_button"
@@ -138,6 +159,21 @@
             android:fontFamily="@font/nunito_extrabold"
             android:textAllCaps="false"
             android:text="Delete / Edit" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginStart="30dp"
+                android:background="@color/colorPrimary"
+                android:text="Edit Clubs"
+                android:layout_marginTop="20sp"
+                android:id="@+id/editclubs"
+                android:fontFamily="@font/nunito_extrabold"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 </ScrollView>

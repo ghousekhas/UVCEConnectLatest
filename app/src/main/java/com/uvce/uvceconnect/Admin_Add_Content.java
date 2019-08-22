@@ -2,6 +2,7 @@ package com.uvce.uvceconnect;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,11 +47,18 @@ public class Admin_Add_Content extends AppCompatActivity {
     Spinner organization;
     Button picture;
     ImageView pictureshow;
-    Button add,editclubs;
+    Button add,editclubs, addfile;
     int type;
+    private final String PREFERENECE = "UVCE-prefereceFile";
+    private SharedPreferences preference;
+    String Admin_Name = "Admin_Name";
+    private String Edit_FileName;
+    private String Edit_FileLink;
+    private String Edit_ImageLink;
 
     //a Uri object to store file path
     private Uri filePath;
+    private Uri DocumentfilePath;
 
     //firebase storage reference
     private StorageReference storageReference;
@@ -64,6 +73,8 @@ public class Admin_Add_Content extends AppCompatActivity {
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy, hh:mm a");
     Button edit_add;
     ArrayAdapter<String> arrayAdapter;
+    private static final int FILE_SELECT_CODE = 0;
+    TextView file_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +84,9 @@ public class Admin_Add_Content extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mainref = FirebaseDatabase.getInstance().getReference().child("Main_Page");
-        name = getIntent().getStringExtra("Name");
+        preference = getSharedPreferences(PREFERENECE, MODE_PRIVATE);
+
+        //name = getIntent().getStringExtra("Name");
 
         priority = findViewById(R.id.priority);
         Query query = mainref.orderByKey().limitToFirst(1);
@@ -102,10 +115,12 @@ public class Admin_Add_Content extends AppCompatActivity {
 
         editclubs=(Button) findViewById(R.id.editclubs);
         details = (EditText) findViewById(R.id.news_details_add);
-        link=(EditText) findViewById(R.id.link);
-        filename=(EditText) findViewById(R.id.filename);
+        //link=(EditText) findViewById(R.id.link);
+        file_text=(TextView) findViewById(R.id.file_text);
+        //filename=(EditText) findViewById(R.id.filename);
         organization = (Spinner) findViewById(R.id.organisation_news_add);
         picture = (Button) findViewById(R.id.choose_pic_news);
+        addfile = (Button) findViewById(R.id.add_file_button);
         pictureshow = (ImageView) findViewById(R.id.news_imageview);
         add = (Button) findViewById(R.id.news_add_button);
         edit_add = findViewById(R.id.edit_delete_button);
@@ -167,6 +182,22 @@ public class Admin_Add_Content extends AppCompatActivity {
             }
         });
 
+        addfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentfile = new Intent();
+                intentfile.setType("*/*");
+                intentfile.setAction(Intent.ACTION_GET_CONTENT);
+                try {
+                    startActivityForResult(Intent.createChooser(intentfile, "Select File"), FILE_SELECT_CODE);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    // Potentially direct the user to the Market with a Dialog
+                    Toast.makeText(getApplicationContext(), "Please install a File Manager.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         add.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -196,24 +227,17 @@ public class Admin_Add_Content extends AppCompatActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.show();
 
-
+                        name = "Default_User";
                         ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("image/" + filePath.getLastPathSegment() + "_" + ID);
+                        if(preference.contains(Admin_Name))
+                            name = preference.getString(Admin_Name, "Default_User");
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
-                        if(filename.getText().toString().trim().isEmpty()||link.getText().toString().trim().isEmpty()) {
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
-                            Log.d("this","first");
-                        }
-                        else{
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(filename.getText().toString());
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(link.getText().toString());
-                            Log.d("this","second");
-                        }
+
                         Log.d("this","third");
                         Date date = new Date();
                         if(getIntent().getBooleanExtra("Edit", false)) {
@@ -225,6 +249,54 @@ public class Admin_Add_Content extends AppCompatActivity {
                         else
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
                         StorageReference riversRef = storageReference.child("image/" + filePath.getLastPathSegment() + "_" + ID);
+                        if(getIntent().getBooleanExtra("Edit", false) && DocumentfilePath==null) {
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
+                        }else if(DocumentfilePath!=null) {
+                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment());
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
+                            fileref.putFile(DocumentfilePath)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            //if the upload is successfull
+                                            //hiding the progress dialog
+                                            progressDialog.dismiss();
+
+                                            //and displaying a success toast
+                                            Toast.makeText(getApplicationContext(), "File Successfully Uploaded", Toast.LENGTH_LONG).show();
+
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            //if the upload is not successfull
+                                            //hiding the progress dialog
+                                            progressDialog.dismiss();
+
+                                            //and displaying error message
+                                            Toast.makeText(getApplicationContext(), "File Upload failed", Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                            //calculating progress percentage
+                                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                                            //displaying percentage in progress dialog
+                                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                                        }
+                                    });
+                        } else {
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
+                            Log.d("this","second");
+                        }
+
                         riversRef.putFile(filePath)
                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
@@ -234,7 +306,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                                         progressDialog.dismiss();
 
                                         //and displaying a success toast
-                                        Toast.makeText(getApplicationContext(), "Content Successfully Updated", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_LONG).show();
 
 
                                     }
@@ -247,7 +319,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                                         progressDialog.dismiss();
 
                                         //and displaying error message
-                                        Toast.makeText(getApplicationContext(), "Update failed", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "Image Upload failed", Toast.LENGTH_LONG).show();
                                     }
                                 })
                                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -257,7 +329,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                                         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
                                         //displaying percentage in progress dialog
-                                        progressDialog.setMessage("Updated " + ((int) progress) + "%...");
+                                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                                     }
                                 });
 
@@ -271,25 +343,19 @@ public class Admin_Add_Content extends AppCompatActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.show();
 
+                        name = "Default_User";
                         ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
-                        if(filename.getText().toString().trim().isEmpty()||link.getText().toString().trim().isEmpty()) {
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
-                            Log.d("this","first");
-                        }
-                        else{
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(filename.getText().toString());
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(link.getText().toString());
-                            Log.d("this","second");
-                        }
+
                         Log.d("this","third");
                         if(getIntent().getBooleanExtra("Edit", false))
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue(getIntent().getStringExtra("Image"));
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue(Edit_ImageLink);
                         else
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("");
+                        if(preference.contains(Admin_Name))
+                            name = preference.getString(Admin_Name, "Default_User");
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
                         Date date = new Date();
@@ -302,6 +368,53 @@ public class Admin_Add_Content extends AppCompatActivity {
                         else
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
                         progressDialog.dismiss();
+                        if(getIntent().getBooleanExtra("Edit", false) && DocumentfilePath==null) {
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
+                        }else if(DocumentfilePath!=null) {
+                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment());
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment() + "_" + ID);
+                            fileref.putFile(DocumentfilePath)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            //if the upload is successfull
+                                            //hiding the progress dialog
+                                            progressDialog.dismiss();
+
+                                            //and displaying a success toast
+                                            Toast.makeText(getApplicationContext(), "File Successfully Uploaded", Toast.LENGTH_LONG).show();
+
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            //if the upload is not successfull
+                                            //hiding the progress dialog
+                                            progressDialog.dismiss();
+
+                                            //and displaying error message
+                                            Toast.makeText(getApplicationContext(), "File Upload failed", Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                            //calculating progress percentage
+                                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                                            //displaying percentage in progress dialog
+                                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                                        }
+                                    });
+                        } else {
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
+                            Log.d("this","second");
+                        }
                         Toast.makeText(getApplicationContext(), "Content Successfully Updated", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Admin_Add_Content.this,MainActivity.class));
                         finish();
@@ -320,6 +433,10 @@ public class Admin_Add_Content extends AppCompatActivity {
             details.setText(getIntent().getStringExtra("Content"));
             organization.setSelection(getSpinnerPosition(getIntent().getStringExtra("Organ_Name")));
             priority.setSelection(getIntent().getIntExtra("Type", 0)==1?0:1);
+            file_text.setText("If no image or file is selected, the respective fields will be set to the previous one upon update.");
+            Edit_FileName = getIntent().getStringExtra("FileName");
+            Edit_FileLink = getIntent().getStringExtra("Link");
+            Edit_ImageLink = getIntent().getStringExtra("Image");
         }
 
 
@@ -338,73 +455,32 @@ public class Admin_Add_Content extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        if(requestCode == FILE_SELECT_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            DocumentfilePath = data.getData();
+            try {
+
+                file_text.setText("File Selected: " + DocumentfilePath.getLastPathSegment().toString());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    int getSpinnerPosition(String organ)
+    int getSpinnerPosition(String edit_organ)
     {
-        int id=0;
-        switch (organ)
-        {
-            case "Administration Office":
-                id = 0;
-                break;
 
-            case "Placement Office":
-                id  =1;
-                break;
-
-            case "Principal's Office":
-                id = 2;
-                break;
-
-            case "IEEE":
-               id  = 4;
-                break;
-
-            case "Thatva":
-                id  = 6;
-                break;
-
-            case "g2c2":
-                id = 7;
-                break;
-
-            case "sae":
-                id  = 8;
-                break;
-
-            case "Vinimaya":
-                id  = 9;
-                break;
-
-            case "Chakravyuha":
-                id  =10;
-                break;
-
-            case "ಚೇತನ":
-                id  = 11;
-                break;
-
-            case "Vision UVCE":
-                id  = 3;
-                break;
-
-            case "UVCE Foundation":
-                id = 12;
-                break;
-
-            case "UVCE Select":
-                id  = 13;
-                break;
-
-            case "E-Cell UVCE":
-                id  = 5;
-                break;
-            default:
-                id=0;
-                break;
+        try {
+            for (int i = 0; i < organ.size(); i++) {
+                if (edit_organ.equals(organ.get(i)))
+                    return i;
+            }
+        } catch(Exception e) {
+            
         }
-        return id;
+        return 0;
+
     }
 
     @Override

@@ -49,6 +49,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     private FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
     private StorageReference photoRef;
     private String docid = "", fileid = "";
+    StorageReference fileref;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -112,6 +113,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
                     docid = listitem.getLink();
                     fileid = listitem.getFilename();
+                    fileref = FirebaseStorage.getInstance().getReference().child(listitem.getLink());
                     startdownload();
 
                 }
@@ -212,6 +214,10 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
                                 photoRef = mFirebaseStorage.getReference(listitem.getImage());
                                 photoRef.delete();
                             }
+                            if(!listitem.getLink().isEmpty()) {
+                                photoRef = mFirebaseStorage.getReference(listitem.getLink());
+                                photoRef.delete();
+                            }
                             ref.child(Integer.toString(listitem.getKey())).removeValue();
                             dialog.dismiss();
                             notifyDataSetChanged();
@@ -228,6 +234,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
                             intent.putExtra("Type", listitem.getType());
                             intent.putExtra("Time", listitem.getTimesignature());
                             intent.putExtra("Key", listitem.getKey());
+                            intent.putExtra("Link", listitem.getLink());
+                            intent.putExtra("FileName", listitem.getFilename());
                             activity.startActivity(intent);
                             activity.finish();
                             dialog.dismiss();
@@ -276,7 +284,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     //download method
 
     private void startdownload() {
-        try {
+        /*try {
             String url="https://docs.google.com/uc?id=[FILE_ID]&export=download";
             String id=getID(docid);
             url=url.replace("[FILE_ID]",id);
@@ -289,7 +297,39 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
             Toast.makeText(activity, "An Error has occured in downloading the file", Toast.LENGTH_SHORT).show();
 
-        }
+        }*/
+
+        fileref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    File directory = new File(Environment.getExternalStorageDirectory() + "/UVCE-Connect");
+
+                    if (!directory.exists()) {
+                        directory.mkdirs();
+                    }
+
+
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    String fileName = fileid;
+                    request.setDescription("File")
+                            .setTitle(fileName)
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setDestinationInExternalPublicDir("/UVCE-Connect/Files", fileName)
+                            .allowScanningByMediaScanner();
+
+                    DownloadManager manager = (DownloadManager)
+                            context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    manager.enqueue(request);
+                    Toast.makeText(context, "Downloading.....", Toast.LENGTH_SHORT).show();
+
+                } catch (Exception e) {
+                    Toast.makeText(context, "Permission not granted to read External storage. Please grant permission and try again.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
     }
 
 

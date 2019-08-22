@@ -1,6 +1,7 @@
 package com.uvce.uvceconnect;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,9 @@ public class Admin_Page extends AppCompatActivity {
     EditText username;
     EditText password;
     Button sign_in;
+    private final String PREFERENECE = "UVCE-prefereceFile";
+    private SharedPreferences preference;
+    String Admin_Name = "Admin_Name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class Admin_Page extends AppCompatActivity {
         setContentView(R.layout.activity_admin__page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        preference = getSharedPreferences(PREFERENECE, MODE_PRIVATE);
 
         //Admin Login
         username = findViewById(R.id.input_username);
@@ -47,6 +52,10 @@ public class Admin_Page extends AppCompatActivity {
                             {
                                 if(password.getText().toString().equals(dataSnapshot.child("Password").getValue().toString()))
                                 {
+
+                                    SharedPreferences.Editor editor = preference.edit();
+                                    editor.putString(Admin_Name, dataSnapshot.child("Name").getValue().toString());
+                                    editor.apply();
                                     Intent intent = new Intent(getApplicationContext(), Admin_Add_Content.class);
                                     intent.putExtra("Name", dataSnapshot.child("Name").getValue().toString());
                                     startActivity(intent);
