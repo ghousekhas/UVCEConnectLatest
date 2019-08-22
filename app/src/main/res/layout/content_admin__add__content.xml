@@ -137,6 +137,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20sp"
             android:text="No file selected for upload."
+            android:layout_marginBottom="20sp"
             android:fontFamily="@font/nunito_extralight"/>
 
         <RelativeLayout
