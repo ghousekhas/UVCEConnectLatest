@@ -75,6 +75,7 @@ public class Admin_Add_Content extends AppCompatActivity {
     ArrayAdapter<String> arrayAdapter;
     private static final int FILE_SELECT_CODE = 0;
     TextView file_text;
+    String organ_spin_select = "-100";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +151,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                         Log.e("club", childsnapshot.getKey());
                     }
                     arrayAdapter.notifyDataSetChanged();
+                    organization.setSelection(getSpinnerPosition(organ_spin_select));
                 } catch (Exception e) {}
             }
 
@@ -431,7 +433,7 @@ public class Admin_Add_Content extends AppCompatActivity {
         if(getIntent().getBooleanExtra("Edit", false))
         {
             details.setText(getIntent().getStringExtra("Content"));
-            organization.setSelection(getSpinnerPosition(getIntent().getStringExtra("Organ_Name")));
+            organ_spin_select = getIntent().getStringExtra("Organ_Name");
             priority.setSelection(getIntent().getIntExtra("Type", 0)==1?0:1);
             file_text.setText("If no image or file is selected, the respective fields will be set to the previous one upon update.");
             Edit_FileName = getIntent().getStringExtra("FileName");
@@ -470,6 +472,8 @@ public class Admin_Add_Content extends AppCompatActivity {
 
     int getSpinnerPosition(String edit_organ)
     {
+        if(edit_organ.equals("-100"))
+            return 0;
 
         try {
             for (int i = 0; i < organ.size(); i++) {
@@ -477,7 +481,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                     return i;
             }
         } catch(Exception e) {
-            
+
         }
         return 0;
 
