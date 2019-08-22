@@ -148,15 +148,15 @@ public class Register extends AppCompatActivity
             }
 
             //Let's just guess the branch
-            if(brunch.compareTo("GAEC9")==0)
+            if(brunch.compareTo("GAEC")==0)
                 branch="CSE";
             else if(brunch.substring(0,4).compareTo("GAEI")==0)
                 branch="ISE";
             else if(brunch.substring(0,4).compareTo("GAEM")==0)
                 branch="ME";
-            else if(brunch.compareTo("GAEE7")==0)
+            else if(brunch.compareTo("GAEE")==0)
                 branch="ECE";
-            else if(brunch.compareTo("GAEE8")==0)
+            else if(brunch.compareTo("GAEE")==0)
                 branch="EEE";
             else if(brunch.compareTo("GAECV")==0)
                 branch="CE";
