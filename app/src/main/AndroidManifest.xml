@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.uvce.uvceconnect">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -20,9 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditCLubs"></activity>
-        <activity android:name=".ClubContent"
-            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".AboutConnect"></activity>
+        <activity android:name=".EditCLubs" />
+        <activity
+            android:name=".ClubContent"
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".MainPageNotificationService"
@@ -109,6 +110,12 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBy4OJwcrYJWCqtC1m6I-ZQ3gJVN1Kumn4"/>
+
+
     </application>
 
 </manifest>

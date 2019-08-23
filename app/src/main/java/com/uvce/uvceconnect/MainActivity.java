@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.info) {
-            Intent intent=new Intent(this,ClubContent.class);
+            Intent intent=new Intent(this,AboutConnect.class);
             intent.putExtra("clubname","Contact Us");
             startActivity(intent);
         }
