@@ -140,7 +140,7 @@ public class Register extends AppCompatActivity
         else{
             //Send details to the firebase child, add an on complete listener and sharedpreferences
             try {
-                brunch = regno.substring(2, 7).toUpperCase();
+                brunch = regno.substring(2, 6).toUpperCase();
             }
             catch(Exception e){
                 Toast.makeText(getApplicationContext(),R.string.invalid_register,Toast.LENGTH_SHORT).show();
@@ -148,19 +148,21 @@ public class Register extends AppCompatActivity
             }
 
             //Let's just guess the branch
-            if(brunch.compareTo("GAEC")==0)
-                branch="CSE";
-            else if(brunch.substring(0,4).compareTo("GAEI")==0)
-                branch="ISE";
-            else if(brunch.substring(0,4).compareTo("GAEM")==0)
-                branch="ME";
-            else if(brunch.compareTo("GAEE")==0)
-                branch="ECE";
-            else if(brunch.compareTo("GAEE")==0)
-                branch="EEE";
-            else if(brunch.compareTo("GAECV")==0)
+            if(regno.contains("GAECV"))
                 branch="CE";
-            else if(brunch.substring(0,4).compareTo("GAEA")==0)
+            else if(regno.contains("GAEI"))
+                branch="ISE";
+            else if(regno.contains("GAEM"))
+                branch="ME";
+            else if(regno.contains("GAEE7"))
+                branch="ECE";
+            else if(regno.contains("GAEE8"))
+                branch="EEE";
+            else if(regno.contains("GAEE"))
+                branch="EEE";
+            else if(regno.contains("GAEC"))
+                branch="CSE";
+            else if(regno.contains("GAEA"))
                 branch="ARCH";
             else{
                 Toast.makeText(getApplicationContext(),R.string.invalid_register,Toast.LENGTH_LONG).show();
