@@ -6,7 +6,7 @@
     <com.github.chrisbanes.photoview.PhotoView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imagefortherecyclerviewinsiderecyc"/>
+        android:id="@+id/imagesss"/>
 
 
 </androidx.cardview.widget.CardView>

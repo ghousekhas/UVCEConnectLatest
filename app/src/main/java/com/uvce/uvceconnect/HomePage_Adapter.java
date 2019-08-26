@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,9 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     private StorageReference FileRef;
     private String docid = "", fileid = "";
     StorageReference fileref;
+    List<StorageReference> imagelist=new ArrayList<>();
+    Images_Adapter images_adapter;
+    DatabaseReference databaseReference;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -115,18 +119,19 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.timesignature.setText(listitem.getTimesignature());
         holder.image.setMinimumWidth(holder.card.getWidth());
 
-        final List<StorageReference> imagelist=new ArrayList<>();
 
-
-
-        final Images_Adapter images_adapter;
         images_adapter=new Images_Adapter(imagelist,activity,context);
         RecyclerView.LayoutManager manager=new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
         SnapHelper snapHelper=new LinearSnapHelper();
+        holder.recyclerView.setLayoutManager(manager);
         holder.recyclerView.setAdapter(images_adapter);
+        holder.recyclerView.setOnFlingListener(null);
         snapHelper.attachToRecyclerView(holder.recyclerView);
 
-        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("TestDatabase").child(Integer.toString(listitem.getKey())).child("images");
+        Log.e("key",Integer.toString(listitem.getKey()));
+
+
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("TestDatabase").child("Main_Page").child(Integer.toString(listitem.getKey())).child("images");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
