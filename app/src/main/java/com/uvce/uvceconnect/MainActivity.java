@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Notifications
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Main_Page");
+        databaseReference = FirebaseDatabase.getInstance().getReference("TestDatabase").child("Main_Page");
 
         //Following lines are used to link navigation drawer
         mDrawerLayout=findViewById(R.id.navigation_drawer_main);
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 try {
                     list.clear();
                     for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
-                            Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "", Integer.parseInt(childsnapshot.getKey().toString()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString());
+                            Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "", Integer.parseInt(childsnapshot.getKey()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString());
                             list.add(item);
                     }
                     adapter.notifyDataSetChanged();

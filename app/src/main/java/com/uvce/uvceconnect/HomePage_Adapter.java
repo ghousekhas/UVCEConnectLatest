@@ -23,20 +23,27 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.SnapHelper;
 
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyViewHolder> {
@@ -57,6 +64,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         public TextView name, content, timesignature,link;
         public ImageView image, logo;
         public CardView card;
+        public RecyclerView recyclerView;
+
         //public HackyPagerViewer pagerViewer;
 
 
@@ -67,10 +76,10 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             content = view.findViewById(R.id.listitem_content);
             timesignature = view.findViewById(R.id.listitem_timesignature);
             image = view.findViewById(R.id.listitem_image);
-            //pagerViewer=view.findViewById(R.id.viewpagerforimage);
             logo = view.findViewById(R.id.listitem_logo);
             card = view.findViewById(R.id.listitem_card);
             link= view.findViewById(R.id.linktodownload);
+            recyclerView=view.findViewById(R.id.recyclerview_for_images);
         }
 
     }
@@ -105,6 +114,38 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.content.setText(listitem.getContent());
         holder.timesignature.setText(listitem.getTimesignature());
         holder.image.setMinimumWidth(holder.card.getWidth());
+
+        final List<StorageReference> imagelist=new ArrayList<>();
+
+
+
+        final Images_Adapter images_adapter;
+        images_adapter=new Images_Adapter(imagelist,activity,context);
+        RecyclerView.LayoutManager manager=new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
+        SnapHelper snapHelper=new LinearSnapHelper();
+        holder.recyclerView.setAdapter(images_adapter);
+        snapHelper.attachToRecyclerView(holder.recyclerView);
+
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("TestDatabase").child(Integer.toString(listitem.getKey())).child("images");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                imagelist.clear();
+                for(DataSnapshot childsnapshot: dataSnapshot.getChildren())
+                    imagelist.add(FirebaseStorage.getInstance().getReference().child(childsnapshot.getValue().toString()));
+                images_adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
         if(!listitem.getLink().equals("-1")){
             holder.link.setVisibility(View.VISIBLE);
