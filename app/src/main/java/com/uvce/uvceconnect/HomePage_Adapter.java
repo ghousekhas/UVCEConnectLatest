@@ -119,6 +119,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
                 }
             });
+        } else {
+            holder.link.setVisibility(View.GONE);
         }
 
 
