@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -36,11 +37,15 @@ import java.util.concurrent.Future;
 public class MainPageNotificationService extends FirebaseMessagingService {
 
     Bitmap largeNotificaitonImage;
-    String title;
-    String body;
-    String image="";
+    String title, prev_title = " ";
+    String body, prev_body = " ";
+    String image="", prev_image="";
     Bitmap veryLargeNotificationImage;
     Intent intent;
+    private final String PREFERENECE = "UVCE-prefereceFile";
+    private SharedPreferences preference;
+    final String Notification_Title = "Notification_Title", Notification_Body = "Notification_Body", Notification_Image = "Notification_Image";
+
 
 
     @Override
@@ -53,6 +58,7 @@ public class MainPageNotificationService extends FirebaseMessagingService {
             image = message.get("image");
         intentSelector(message);
         getLogoImage();
+        preference = getSharedPreferences(PREFERENECE, MODE_PRIVATE);
         sendNotification();
     }
 
@@ -82,54 +88,69 @@ public class MainPageNotificationService extends FirebaseMessagingService {
     }
 
     public void sendNotification() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel("uvce_connect_main_channel", "UVCE CONNECT", NotificationManager.IMPORTANCE_MAX);
+        if(preference.contains(Notification_Title))
+            prev_title = preference.getString(Notification_Title, " ");
+        if(preference.contains(Notification_Body))
+            prev_body = preference.getString(Notification_Body, " ");
+        if(preference.contains(Notification_Image))
+            prev_image = preference.getString(Notification_Image, " ");
+        if(!(prev_title.equals(title) && prev_body.equals(body) && prev_image.equals(image))) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel notificationChannel = new NotificationChannel("uvce_connect_main_channel", "UVCE CONNECT", NotificationManager.IMPORTANCE_HIGH);
 
-            // Configure the notification channel.
-            notificationChannel.setDescription("Notifications about college stuff");
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.setVibrationPattern(new long[]{0, 700, 200, 700});
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-        NotificationCompat.Builder notificaitonBuilder = new NotificationCompat.Builder(this, "uvce_connect_main_channel");
-
-
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
-        stackBuilder.addNextIntentWithParentStack(intent);
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        //Actual notification builder
-
-
-        notificaitonBuilder.setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.ic_stat_name)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setContentInfo("Does this matter?")
-                .setLargeIcon(largeNotificaitonImage);
-
-        if (!image.isEmpty()) {
-            StorageReference imageref = FirebaseStorage.getInstance().getReference().child(image);
-            FutureTarget<Bitmap> futureBitmap = GlideApp.with(getApplicationContext()).asBitmap().load(imageref).submit(700, 350);
-            try {
-                veryLargeNotificationImage = futureBitmap.get();
-            } catch (ExecutionException e) {
-            } catch (InterruptedException e1) {
+                // Configure the notification channel.
+                notificationChannel.setDescription("Notifications about college stuff");
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.BLUE);
+                notificationChannel.setVibrationPattern(new long[]{0, 700, 200, 700});
+                notificationChannel.enableVibration(true);
+                notificationManager.createNotificationChannel(notificationChannel);
             }
-            NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle()
-                    .bigLargeIcon(largeNotificaitonImage)
-                    .bigPicture(veryLargeNotificationImage);
-            notificaitonBuilder.setStyle(style);
-            futureBitmap.cancel(false);
+            NotificationCompat.Builder notificaitonBuilder = new NotificationCompat.Builder(this, "uvce_connect_main_channel");
+
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+            stackBuilder.addNextIntentWithParentStack(intent);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            //Actual notification builder
+
+
+            notificaitonBuilder.setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setWhen(System.currentTimeMillis())
+                    .setSmallIcon(R.drawable.ic_stat_name)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setContentInfo("Does this matter?")
+                    .setLargeIcon(largeNotificaitonImage);
+
+            if (!image.isEmpty()) {
+                StorageReference imageref = FirebaseStorage.getInstance().getReference().child(image);
+                FutureTarget<Bitmap> futureBitmap = GlideApp.with(getApplicationContext()).asBitmap().load(imageref).submit(700, 350);
+                try {
+                    veryLargeNotificationImage = futureBitmap.get();
+                } catch (ExecutionException e) {
+                } catch (InterruptedException e1) {
+                }
+                NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle()
+                        .bigLargeIcon(largeNotificaitonImage)
+                        .bigPicture(veryLargeNotificationImage);
+                notificaitonBuilder.setStyle(style);
+                futureBitmap.cancel(false);
+            }
+
+
+            notificationManager.notify((int) System.currentTimeMillis(), notificaitonBuilder.build());
+
+            SharedPreferences.Editor editor = preference.edit();
+            editor.putString(Notification_Title, title);
+            editor.putString(Notification_Body, body);
+            editor.putString(Notification_Image, image);
+            editor.apply();
+
         }
-
-
-        notificationManager.notify((int) System.currentTimeMillis(), notificaitonBuilder.build());
 
 
     }
