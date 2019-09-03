@@ -1,15 +1,20 @@
 package com.uvce.uvceconnect;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
@@ -29,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Constants;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -77,6 +83,12 @@ public class Admin_Add_Content extends AppCompatActivity {
     TextView file_text;
     String organ_spin_select = "-100";
 
+    private Button multipleimages;
+    List<Uri> imageList=new ArrayList<>();
+    int imagecount=0;
+    private RecyclerView recyclerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -84,7 +96,7 @@ public class Admin_Add_Content extends AppCompatActivity {
         setContentView(R.layout.activity_admin__add__content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mainref = FirebaseDatabase.getInstance().getReference().child("Main_Page");
+        mainref = FirebaseDatabase.getInstance().getReference("TestDatabase").child("Main_Page");
         preference = getSharedPreferences(PREFERENECE, MODE_PRIVATE);
 
         //name = getIntent().getStringExtra("Name");
@@ -114,11 +126,12 @@ public class Admin_Add_Content extends AppCompatActivity {
             }
         });
 
+        multipleimages=(Button) findViewById(R.id.addmultipleimages);
+        recyclerView=(RecyclerView) findViewById(R.id.addimagesrecycler);
+
         editclubs=(Button) findViewById(R.id.editclubs);
         details = (EditText) findViewById(R.id.news_details_add);
-        //link=(EditText) findViewById(R.id.link);
         file_text=(TextView) findViewById(R.id.file_text);
-        //filename=(EditText) findViewById(R.id.filename);
         organization = (Spinner) findViewById(R.id.organisation_news_add);
         picture = (Button) findViewById(R.id.choose_pic_news);
         addfile = (Button) findViewById(R.id.add_file_button);
@@ -200,6 +213,17 @@ public class Admin_Add_Content extends AppCompatActivity {
             }
         });
 
+        multipleimages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_REQUEST+1);
+            }
+        });
+
         add.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -240,7 +264,8 @@ public class Admin_Add_Content extends AppCompatActivity {
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
 
-                        Log.d("this","third");
+
+
                         Date date = new Date();
                         if(getIntent().getBooleanExtra("Edit", false)) {
                             if(getIntent().getStringExtra("Time").contains("(Edited)"))
@@ -351,7 +376,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
                         mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
 
-                        Log.d("this","third");
+
                         if(getIntent().getBooleanExtra("Edit", false))
                             mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue(Edit_ImageLink);
                         else
@@ -423,8 +448,31 @@ public class Admin_Add_Content extends AppCompatActivity {
 
                     /*if(getIntent().getBooleanExtra("Edit", false))
                         finish();*/
-                } else
+                }
+                else
                     Toast.makeText(getApplicationContext(), "Please Enter all the fields", Toast.LENGTH_SHORT).show();
+
+                if(!imageList.isEmpty()){
+                    mainref=mainref.child(String.valueOf(Integer.parseInt(newpos)-1)).child("images");
+                    mainref.setValue("1");
+                    for(int i=0;i<imageList.size();i++){
+
+                        storageReference=FirebaseStorage.getInstance().getReference("image/"+imageList.get(i).getLastPathSegment().substring(imageList.get(i).getLastPathSegment().lastIndexOf("/")+1)+"_"+ID);
+                        storageReference.putFile(imageList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                mainref.child(Integer.toString(imagecount++)).setValue("image/"+imageList.get(imagecount).getLastPathSegment().substring(imageList.get(imagecount).getLastPathSegment().lastIndexOf("/")+1)+"_"+ID);
+                            }
+                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+
+                            }
+                        });
+                    }
+                    imagecount=0;
+
+                }
             }
         });
 
@@ -466,6 +514,23 @@ public class Admin_Add_Content extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+
+        //For multiple images
+        if(requestCode==PICK_IMAGE_REQUEST+1&&resultCode==RESULT_OK &&data!=null && data.getClipData()!=null){
+            imageList.clear();
+
+            for(int i=0;i<data.getClipData().getItemCount();i++)
+                imageList.add(data.getClipData().getItemAt(i).getUri());
+
+            recyclerView.setLayoutManager(new GridLayoutManager(this,4));
+            ImagesSelectionAdmin imageadapter=new ImagesSelectionAdmin(imageList,this,this);
+            recyclerView.setAdapter(imageadapter);
+            recyclerView.setVisibility(View.VISIBLE);
+
+
+
         }
     }
 

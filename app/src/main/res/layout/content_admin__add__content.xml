@@ -121,6 +121,8 @@
                 android:id="@+id/add_file_button" />
 
 
+
+
         </LinearLayout>
 
         <ImageView
@@ -147,6 +149,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/buttonlinear"
             android:layout_centerHorizontal="true">
 
         <Button
@@ -173,7 +176,26 @@
                 android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:id="@+id/addmultipleimages"
+                android:text="Add multiple images"
+                android:background="@color/colorPrimary"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@id/buttonlinear"
+                android:visibility="gone"
+                android:id="@+id/addimagesrecycler"/>
+
         </RelativeLayout>
 
     </LinearLayout>

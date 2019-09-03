@@ -3,9 +3,14 @@ package com.uvce.uvceconnect;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,11 +20,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClubContent extends AppCompatActivity {
     String clubname,club="";
 
     TextView card1_content,card2_content,card3_content;
+    RecyclerView recyclerView;
+    Images_Adapter images_adapter;
+    List<StorageReference> imagelist=new ArrayList<>();
+    DatabaseReference imagereference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +49,34 @@ public class ClubContent extends AppCompatActivity {
 
         clubname=getIntent().getStringExtra("clubname");
         getSupportActionBar().setTitle(clubname);
+
+        recyclerView=findViewById(R.id.recyclerview);
+        images_adapter=new Images_Adapter(imagelist,this,this);
+        recyclerView.setOnFlingListener(null);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false));
+        recyclerView.setAdapter(images_adapter);
+        SnapHelper snapHelper=new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
+        recyclerView.addItemDecoration(new CirclePagerIndicatorDecoration());
+
+        imagereference=FirebaseDatabase.getInstance().getReference("Club_Content").child(clubname).child("images");
+        imagereference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                imagelist.clear();
+                for(DataSnapshot childsnapshot:dataSnapshot.getChildren())
+                    imagelist.add(FirebaseStorage.getInstance().getReference("clubs").child(childsnapshot.getValue().toString()));
+
+                recyclerView.setVisibility(View.VISIBLE);
+                images_adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 

@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -59,9 +61,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     private StorageReference FileRef;
     private String docid = "", fileid = "";
     StorageReference fileref;
-    List<StorageReference> imagelist=new ArrayList<>();
-    Images_Adapter images_adapter;
-    DatabaseReference databaseReference;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -119,14 +119,22 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.timesignature.setText(listitem.getTimesignature());
         holder.image.setMinimumWidth(holder.card.getWidth());
 
+        final List<StorageReference> imagelist=new ArrayList<>();
+        final Images_Adapter images_adapter;
+        DatabaseReference databaseReference;
+
 
         images_adapter=new Images_Adapter(imagelist,activity,context);
         RecyclerView.LayoutManager manager=new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
-        SnapHelper snapHelper=new LinearSnapHelper();
+        SnapHelper snapHelper=new PagerSnapHelper();
         holder.recyclerView.setLayoutManager(manager);
         holder.recyclerView.setAdapter(images_adapter);
         holder.recyclerView.setOnFlingListener(null);
+        holder.recyclerView.addItemDecoration(new CirclePagerIndicatorDecoration());
         snapHelper.attachToRecyclerView(holder.recyclerView);
+
+        /*RecyclerView.LayoutParams recyclerlayoutparams= holder.recyclerView.getLayoutParams();
+        recyclerlayoutparams.height= somebody's gotta do this somwday, gonna make it 35% of parent!*/
 
         Log.e("key",Integer.toString(listitem.getKey()));
 
