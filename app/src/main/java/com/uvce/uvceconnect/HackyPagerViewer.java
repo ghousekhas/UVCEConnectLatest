@@ -18,7 +18,7 @@ public class HackyPagerViewer extends ViewPager {
         super(context, attrs);
     }
 
-    /*@Override
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         try {
             super.onInterceptTouchEvent(ev);
@@ -29,7 +29,7 @@ public class HackyPagerViewer extends ViewPager {
 
         return true;
 
-    }*/
+    }
 
 
 }

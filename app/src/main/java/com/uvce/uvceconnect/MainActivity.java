@@ -46,7 +46,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar mToolbar;
-    DrawerLayout mDrawerLayout;
+    HackyDrawerView mDrawerLayout;
     NavigationView mNavigationView;
     RecyclerView recyclerView;
     View headerview;
@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Following lines are used to link navigation drawer
         mDrawerLayout=findViewById(R.id.navigation_drawer_main);
         mNavigationView=findViewById(R.id.navigation_view);
+
+        mDrawerLayout.requestDisallowInterceptTouchEvent(true);
 
         mNavigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open_navigation_drawer,R.string.close_navigation_drawer);

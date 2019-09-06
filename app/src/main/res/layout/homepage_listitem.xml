@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.uvce.uvceconnect.HackyCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginBottom="2dp"
     android:layout_marginTop="2dp"
@@ -118,5 +118,5 @@
          />
 
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</com.uvce.uvceconnect.HackyCardView>
 

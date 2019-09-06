@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,7 +86,7 @@ public class Admin_Add_Content extends AppCompatActivity {
 
     private Button multipleimages;
     List<Uri> imageList=new ArrayList<>();
-    int imagecount=0;
+    int imagecount=1;
     private RecyclerView recyclerView;
 
 
@@ -138,13 +139,10 @@ public class Admin_Add_Content extends AppCompatActivity {
         pictureshow = (ImageView) findViewById(R.id.news_imageview);
         add = (Button) findViewById(R.id.news_add_button);
         edit_add = findViewById(R.id.edit_delete_button);
-        edit_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Admin_Add_Delete.class);
-                intent.putExtra("Name",getIntent().getStringExtra("Name"));
-                startActivity(intent);
-            }
+        edit_add.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), Admin_Add_Delete.class);
+            intent.putExtra("Name",getIntent().getStringExtra("Name"));
+            startActivity(intent);
         });
 
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, organ);
@@ -177,154 +175,99 @@ public class Admin_Add_Content extends AppCompatActivity {
 
         organization.setAdapter(arrayAdapter);
 
-        editclubs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(Admin_Add_Content.this,EditCLubs.class);
-                startActivity(intent);
+        editclubs.setOnClickListener(v -> {
+            Intent intent=new Intent(Admin_Add_Content.this,EditCLubs.class);
+            startActivity(intent);
+        });
+
+        picture.setOnClickListener(v -> {
+
+            Intent intentfile = new Intent();
+            intentfile.setType("image/*");
+            intentfile.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intentfile, "Select Picture"), PICK_IMAGE_REQUEST);
+
+        });
+
+        addfile.setOnClickListener(view -> {
+            Intent intentfile = new Intent();
+            intentfile.setType("*/*");
+            intentfile.setAction(Intent.ACTION_GET_CONTENT);
+            try {
+                startActivityForResult(Intent.createChooser(intentfile, "Select File"), FILE_SELECT_CODE);
+            } catch (android.content.ActivityNotFoundException ex) {
+                // Potentially direct the user to the Market with a Dialog
+                Toast.makeText(getApplicationContext(), "Please install a File Manager.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
-        picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intentfile = new Intent();
-                intentfile.setType("image/*");
-                intentfile.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intentfile, "Select Picture"), PICK_IMAGE_REQUEST);
-
-            }
+        multipleimages.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_REQUEST+1);
         });
 
-        addfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentfile = new Intent();
-                intentfile.setType("*/*");
-                intentfile.setAction(Intent.ACTION_GET_CONTENT);
-                try {
-                    startActivityForResult(Intent.createChooser(intentfile, "Select File"), FILE_SELECT_CODE);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    // Potentially direct the user to the Market with a Dialog
-                    Toast.makeText(getApplicationContext(), "Please install a File Manager.",
-                            Toast.LENGTH_SHORT).show();
+
+        add.setOnClickListener(v -> {
+
+            if (!details.getText().toString().trim().equals("")) {
+
+
+                String organisation_name = organization.getItemAtPosition
+                        (organization.getSelectedItemPosition()).toString();
+                if(!organisation_name.equals("ಚೇತನ Club"))
+                    organization_image = "logo/" + organisation_name + ".jpg";
+                else
+                    organization_image = "logo/Chethana Club.jpg";
+
+                type = priority.getSelectedItem().toString().equals("Priority")?1:0;
+
+                if(getIntent().getBooleanExtra("Edit", false)) {
+                    newpos = Integer.toString(getIntent().getIntExtra("Key", Integer.parseInt(newpos)));
+                    newpos = Integer.toString(Integer.parseInt(newpos)+1);
                 }
-            }
-        });
 
-        multipleimages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_REQUEST+1);
-            }
-        });
+                if (filePath != null) {
+                    //displaying a progress dialog while upload is going on
+                    final ProgressDialog progressDialog = new ProgressDialog(Admin_Add_Content.this);
+                    progressDialog.setTitle("Updating");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
 
-        add.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                if (!details.getText().toString().trim().equals("")) {
+                    name = "Default_User";
+                    ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("image/" + filePath.getLastPathSegment() + "_" + ID);
+                    if(preference.contains(Admin_Name))
+                        name = preference.getString(Admin_Name, "Default_User");
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
 
 
-                    String organisation_name = organization.getItemAtPosition
-                            (organization.getSelectedItemPosition()).toString();
-                    if(!organisation_name.equals("ಚೇತನ Club"))
-                        organization_image = "logo/" + organisation_name + ".jpg";
-                    else
-                        organization_image = "logo/Chethana Club.jpg";
 
-                    type = priority.getSelectedItem().toString().equals("Priority")?1:0;
-
+                    Date date = new Date();
                     if(getIntent().getBooleanExtra("Edit", false)) {
-                        newpos = Integer.toString(getIntent().getIntExtra("Key", Integer.parseInt(newpos)));
-                        newpos = Integer.toString(Integer.parseInt(newpos)+1);
-                    }
-
-                    if (filePath != null) {
-                        //displaying a progress dialog while upload is going on
-                        final ProgressDialog progressDialog = new ProgressDialog(Admin_Add_Content.this);
-                        progressDialog.setTitle("Updating");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-
-                        name = "Default_User";
-                        ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("image/" + filePath.getLastPathSegment() + "_" + ID);
-                        if(preference.contains(Admin_Name))
-                            name = preference.getString(Admin_Name, "Default_User");
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
-
-
-
-                        Date date = new Date();
-                        if(getIntent().getBooleanExtra("Edit", false)) {
-                            if(getIntent().getStringExtra("Time").contains("(Edited)"))
-                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time"));
-                            else
-                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time") + " (Edited)");
-                        }
+                        if(getIntent().getStringExtra("Time").contains("(Edited)"))
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time"));
                         else
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
-                        StorageReference riversRef = storageReference.child("image/" + filePath.getLastPathSegment() + "_" + ID);
-                        if(getIntent().getBooleanExtra("Edit", false) && DocumentfilePath==null) {
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
-                        }else if(DocumentfilePath!=null) {
-                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1));
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
-                            fileref.putFile(DocumentfilePath)
-                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            //if the upload is successfull
-                                            //hiding the progress dialog
-                                            progressDialog.dismiss();
-
-                                            //and displaying a success toast
-                                            Toast.makeText(getApplicationContext(), "File Successfully Uploaded", Toast.LENGTH_LONG).show();
-
-
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception exception) {
-                                            //if the upload is not successfull
-                                            //hiding the progress dialog
-                                            progressDialog.dismiss();
-
-                                            //and displaying error message
-                                            Toast.makeText(getApplicationContext(), "File Upload failed", Toast.LENGTH_LONG).show();
-                                        }
-                                    })
-                                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                            //calculating progress percentage
-                                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                                            //displaying percentage in progress dialog
-                                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
-                                        }
-                                    });
-                        } else {
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
-                            Log.d("this","second");
-                        }
-
-                        riversRef.putFile(filePath)
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time") + " (Edited)");
+                    }
+                    else
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
+                    StorageReference riversRef = storageReference.child("image/" + filePath.getLastPathSegment() + "_" + ID);
+                    if(getIntent().getBooleanExtra("Edit", false) && DocumentfilePath==null) {
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
+                    }else if(DocumentfilePath!=null) {
+                        StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1));
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
+                        fileref.putFile(DocumentfilePath)
                                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -333,7 +276,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                                         progressDialog.dismiss();
 
                                         //and displaying a success toast
-                                        Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "File Successfully Uploaded", Toast.LENGTH_LONG).show();
 
 
                                     }
@@ -346,7 +289,7 @@ public class Admin_Add_Content extends AppCompatActivity {
                                         progressDialog.dismiss();
 
                                         //and displaying error message
-                                        Toast.makeText(getApplicationContext(), "Image Upload failed", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "File Upload failed", Toast.LENGTH_LONG).show();
                                     }
                                 })
                                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -359,120 +302,151 @@ public class Admin_Add_Content extends AppCompatActivity {
                                         progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                                     }
                                 });
-
-
-                    }
-                    //if there is not any file
-                    else {
-                        //displaying a progress dialog while upload is going on
-                        final ProgressDialog progressDialog = new ProgressDialog(Admin_Add_Content.this);
-                        progressDialog.setTitle("Updating");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-
-                        name = "Default_User";
-                        ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
-
-
-                        if(getIntent().getBooleanExtra("Edit", false))
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue(Edit_ImageLink);
-                        else
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("");
-                        if(preference.contains(Admin_Name))
-                            name = preference.getString(Admin_Name, "Default_User");
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
-                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
-                        Date date = new Date();
-                        if(getIntent().getBooleanExtra("Edit", false)){
-                            if(getIntent().getStringExtra("Time").contains("(Edited)"))
-                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time"));
-                            else
-                                mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time") + " (Edited)");
-                        }
-                        else
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
-                        progressDialog.dismiss();
-                        if(getIntent().getBooleanExtra("Edit", false) && DocumentfilePath==null) {
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
-                        }else if(DocumentfilePath!=null) {
-                            StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1));
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
-                            fileref.putFile(DocumentfilePath)
-                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            //if the upload is successfull
-                                            //hiding the progress dialog
-                                            progressDialog.dismiss();
-
-                                            //and displaying a success toast
-                                            Toast.makeText(getApplicationContext(), "File Successfully Uploaded", Toast.LENGTH_LONG).show();
-
-
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception exception) {
-                                            //if the upload is not successfull
-                                            //hiding the progress dialog
-                                            progressDialog.dismiss();
-
-                                            //and displaying error message
-                                            Toast.makeText(getApplicationContext(), "File Upload failed", Toast.LENGTH_LONG).show();
-                                        }
-                                    })
-                                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                            //calculating progress percentage
-                                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-
-                                            //displaying percentage in progress dialog
-                                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
-                                        }
-                                    });
-                        } else {
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
-                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
-                            Log.d("this","second");
-                        }
-                        Toast.makeText(getApplicationContext(), "Content Successfully Updated", Toast.LENGTH_LONG).show();
-
+                    } else {
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
+                        Log.d("this","second");
                     }
 
-                    /*if(getIntent().getBooleanExtra("Edit", false))
-                        finish();*/
-                }
-                else
-                    Toast.makeText(getApplicationContext(), "Please Enter all the fields", Toast.LENGTH_SHORT).show();
+                    riversRef.putFile(filePath)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    //if the upload is successfull
+                                    //hiding the progress dialog
+                                    progressDialog.dismiss();
 
-                if(!imageList.isEmpty()){
-                    mainref=mainref.child(String.valueOf(Integer.parseInt(newpos)-1)).child("images");
-                    mainref.setValue("1");
-                    for(int i=0;i<imageList.size();i++){
+                                    //and displaying a success toast
+                                    Toast.makeText(getApplicationContext(), "Image Successfully Uploaded", Toast.LENGTH_LONG).show();
 
-                        storageReference=FirebaseStorage.getInstance().getReference("image/"+imageList.get(i).getLastPathSegment().substring(imageList.get(i).getLastPathSegment().lastIndexOf("/")+1)+"_"+ID);
-                        storageReference.putFile(imageList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                mainref.child(Integer.toString(imagecount++)).setValue("image/"+imageList.get(imagecount).getLastPathSegment().substring(imageList.get(imagecount).getLastPathSegment().lastIndexOf("/")+1)+"_"+ID);
-                            }
-                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
 
-                            }
-                        });
-                    }
-                    imagecount=0;
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    //if the upload is not successfull
+                                    //hiding the progress dialog
+                                    progressDialog.dismiss();
+
+                                    //and displaying error message
+                                    Toast.makeText(getApplicationContext(), "Image Upload failed", Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                    //calculating progress percentage
+                                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                                    //displaying percentage in progress dialog
+                                    progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                                }
+                            });
+
 
                 }
+                //if there is not any file
+                else {
+                    //displaying a progress dialog while upload is going on
+                    final ProgressDialog progressDialog = new ProgressDialog(Admin_Add_Content.this);
+                    progressDialog.setTitle("Updating");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
+                    name = "Default_User";
+                    ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
+
+
+                    if(getIntent().getBooleanExtra("Edit", false))
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue(Edit_ImageLink);
+                    else
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Image").setValue("");
+                    if(preference.contains(Admin_Name))
+                        name = preference.getString(Admin_Name, "Default_User");
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Added_By").setValue(name);
+                    mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Type").setValue(type);
+                    Date date = new Date();
+                    if(getIntent().getBooleanExtra("Edit", false)){
+                        if(getIntent().getStringExtra("Time").contains("(Edited)"))
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time"));
+                        else
+                            mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(getIntent().getStringExtra("Time") + " (Edited)");
+                    }
+                    else
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Time_Signature").setValue(dateFormat.format(date));
+                    progressDialog.dismiss();
+                    if(getIntent().getBooleanExtra("Edit", false) && DocumentfilePath==null) {
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(Edit_FileName);
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue(Edit_FileLink);
+                    }else if(DocumentfilePath!=null) {
+                        StorageReference fileref = storageReference.child("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue(DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1));
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("file/" + DocumentfilePath.getLastPathSegment().substring(DocumentfilePath.getLastPathSegment().lastIndexOf("/") + 1) + "_" + ID);
+                        fileref.putFile(DocumentfilePath)
+                                .addOnSuccessListener(taskSnapshot -> {
+                                    //if the upload is successfull
+                                    //hiding the progress dialog
+                                    progressDialog.dismiss();
+
+                                    //and displaying a success toast
+                                    Toast.makeText(getApplicationContext(), "File Successfully Uploaded", Toast.LENGTH_LONG).show();
+
+
+                                })
+                                .addOnFailureListener(exception -> {
+                                    //if the upload is not successfull
+                                    //hiding the progress dialog
+                                    progressDialog.dismiss();
+
+                                    //and displaying error message
+                                    Toast.makeText(getApplicationContext(), "File Upload failed", Toast.LENGTH_LONG).show();
+                                })
+                                .addOnProgressListener(taskSnapshot -> {
+                                    //calculating progress percentage
+                                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                                    //displaying percentage in progress dialog
+                                    progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                                });
+                    } else {
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("filename").setValue("-1");
+                        mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("link").child("downloadurl").setValue("-1");
+                        Log.d("this","second");
+                    }
+                    Toast.makeText(getApplicationContext(), "Content Successfully Updated", Toast.LENGTH_LONG).show();
+
+                }
+
+                /*if(getIntent().getBooleanExtra("Edit", false))
+                    finish();*/
+            }
+            else
+                Toast.makeText(getApplicationContext(), "Please Enter all the fields", Toast.LENGTH_SHORT).show();
+
+            if(!imageList.isEmpty()){
+                mainref=mainref.child(String.valueOf(Integer.parseInt(newpos)-1)).child("images");
+                mainref.setValue("1");
+                for(int i=0;i<imageList.size();i++){
+
+                    storageReference=FirebaseStorage.getInstance().getReference("image/"+imageList.get(i).getLastPathSegment().substring(imageList.get(i).getLastPathSegment().lastIndexOf("/")+1)+"_"+ID);
+                    storageReference.putFile(imageList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mainref.child(Integer.toString(imagecount)).setValue("image/"+imageList.get(imagecount).getLastPathSegment().substring(imageList.get(imagecount++).getLastPathSegment().lastIndexOf("/")+1)+"_"+ID);
+                        }
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+
+                        }
+                    });
+                }
+                imagecount=0;
+
             }
         });
 

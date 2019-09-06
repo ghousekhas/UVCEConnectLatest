@@ -82,7 +82,7 @@
             android:gravity="center"
             android:layout_marginTop="30dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
@@ -94,7 +94,7 @@
                 android:fontFamily="@font/nunito_extrabold"
                 android:id="@+id/choose_pic_news" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -107,7 +107,7 @@
                 android:textAllCaps="false"
                 android:id="@+id/news_add_button" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -152,7 +152,7 @@
             android:id="@+id/buttonlinear"
             android:layout_centerHorizontal="true">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/edit_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
             android:textAllCaps="false"
             android:text="Delete / Edit" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -177,7 +177,7 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"

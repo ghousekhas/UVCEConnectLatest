@@ -61,8 +61,8 @@ public class Adhamya extends AppCompatActivity {
     }
 
     private void populateTheGrid(){
-        //clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
-        //clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
+        clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
+        clubs.add("spaceForLayoutThisIsn'taClubExactlyBut");
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("AdhamyaClubs");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -123,6 +124,11 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         final Images_Adapter images_adapter;
         DatabaseReference databaseReference;
 
+        ViewGroup.LayoutParams recyclerlayoutparams= holder.recyclerView.getLayoutParams();
+        recyclerlayoutparams.height= (Resources.getSystem().getDisplayMetrics().heightPixels/Resources.getSystem().getDisplayMetrics().densityDpi)*250;
+        recyclerlayoutparams.width=holder.card.getWidth();
+        holder.recyclerView.setLayoutParams(recyclerlayoutparams);
+
 
         images_adapter=new Images_Adapter(imagelist,activity,context);
         RecyclerView.LayoutManager manager=new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
@@ -133,8 +139,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.recyclerView.addItemDecoration(new CirclePagerIndicatorDecoration());
         snapHelper.attachToRecyclerView(holder.recyclerView);
 
-        /*RecyclerView.LayoutParams recyclerlayoutparams= holder.recyclerView.getLayoutParams();
-        recyclerlayoutparams.height= somebody's gotta do this somwday, gonna make it 35% of parent!*/
+
 
         Log.e("key",Integer.toString(listitem.getKey()));
 
