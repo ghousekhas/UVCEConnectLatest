@@ -27,6 +27,7 @@ public class AboutConnect extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true)?R.style.AppTheme:R.style.LightTheme);
         setContentView(R.layout.activity_about_connect);
 
         Toolbar toolbar=findViewById(R.id.toolbar_main);
@@ -35,6 +36,14 @@ public class AboutConnect extends AppCompatActivity implements OnMapReadyCallbac
 
         mMapView=findViewById(R.id.mapview);
         initGoogleMap(savedInstanceState);
+
+        toolbar.setContentDescription("About Connect");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
     }

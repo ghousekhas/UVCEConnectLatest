@@ -33,4 +33,9 @@
         android:id="@+id/menu_fest"
         android:title="Fest"
         android:icon="@drawable/icon_fest"/>
+
+    <item
+        android:id="@+id/settings"
+        android:title="Settings"
+        android:icon="@drawable/settingsnavigation_foreground"/>
 </menu>

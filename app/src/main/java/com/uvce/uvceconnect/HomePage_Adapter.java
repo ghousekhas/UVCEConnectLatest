@@ -6,6 +6,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -62,6 +63,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     private StorageReference FileRef;
     private String docid = "", fileid = "";
     StorageReference fileref;
+    SharedPreferences sharedPreferences;
+    int textSize;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -102,11 +105,15 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.homepage_listitem, parent, false);
 
+        sharedPreferences=context.getSharedPreferences("settings",Context.MODE_PRIVATE);
+        textSize=sharedPreferences.getInt("textsize",20);
+
+
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Homepage_ListItem listitem = homepagelist.get(position);
         if(!listitem.getLogo().isEmpty()) {
             StorageReference logoref = FirebaseStorage.getInstance().getReference().child(listitem.getLogo());
@@ -124,7 +131,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         final Images_Adapter images_adapter;
         DatabaseReference databaseReference;
 
-        ViewGroup.LayoutParams recyclerlayoutparams= holder.recyclerView.getLayoutParams();
+        final ViewGroup.LayoutParams recyclerlayoutparams= holder.recyclerView.getLayoutParams();
         recyclerlayoutparams.height= (Resources.getSystem().getDisplayMetrics().heightPixels/Resources.getSystem().getDisplayMetrics().densityDpi)*250;
         recyclerlayoutparams.width=holder.card.getWidth();
         holder.recyclerView.setLayoutParams(recyclerlayoutparams);
@@ -140,8 +147,9 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         snapHelper.attachToRecyclerView(holder.recyclerView);
 
 
-
-        Log.e("key",Integer.toString(listitem.getKey()));
+        //setting sizes
+        holder.content.setTextSize(textSize);
+        holder.name.setTextSize(textSize+5);
 
 
         databaseReference=FirebaseDatabase.getInstance().getReference().child("TestDatabase").child("Main_Page").child(Integer.toString(listitem.getKey())).child("images");
@@ -149,6 +157,10 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 imagelist.clear();
+                if(dataSnapshot.getValue()==null){
+                    recyclerlayoutparams.height=0;
+                    holder.recyclerView.setLayoutParams(recyclerlayoutparams);
+                }
                 for(DataSnapshot childsnapshot: dataSnapshot.getChildren())
                     imagelist.add(FirebaseStorage.getInstance().getReference().child(childsnapshot.getValue().toString()));
                 images_adapter.notifyDataSetChanged();
@@ -160,6 +172,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
             }
         });
+
 
 
 

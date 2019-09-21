@@ -23,6 +23,7 @@ public class associations extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true)?R.style.AppTheme:R.style.LightTheme);
         setContentView(R.layout.activity_associations);
         //toobar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

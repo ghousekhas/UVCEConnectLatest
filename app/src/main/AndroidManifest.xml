@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".MultiDex_Support"
@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AboutConnect"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".AboutConnect" />
         <activity android:name=".EditCLubs" />
         <activity
             android:name=".ClubContent"
@@ -112,12 +113,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBy4OJwcrYJWCqtC1m6I-ZQ3gJVN1Kumn4"/>
-
-
+            android:value="AIzaSyBy4OJwcrYJWCqtC1m6I-ZQ3gJVN1Kumn4" />
     </application>
 
 </manifest>

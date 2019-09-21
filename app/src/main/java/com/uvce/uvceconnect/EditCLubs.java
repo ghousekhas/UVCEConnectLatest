@@ -37,6 +37,7 @@ public class EditCLubs extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true)?R.style.AppTheme:R.style.LightTheme);
         setContentView(R.layout.activity_edit_clubs);
 
         editText1=findViewById(R.id.text1);

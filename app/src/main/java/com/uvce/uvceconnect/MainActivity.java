@@ -62,10 +62,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     final String askAgain = "Privacy";
     int count = 0;
 
+    boolean darktheme=true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        darktheme=getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true);
+        setTheme(darktheme ?R.style.AppTheme:R.style.LightTheme);
         setContentView(R.layout.navigation_drawer_main);
         //Loading Animation
         load_animation = findViewById(R.id.loading_animation);
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Any toolbar related code should be done after these lines
         mToolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
+
 
         //Notifications
         FirebaseMessaging.getInstance().subscribeToTopic("all");
@@ -261,6 +266,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 //Toast.makeText(this,"Placement Office",Toast.LENGTH_SHORT).show();
                 break;
+
+            case R.id.settings:
+                count=0;
+                startActivity(new Intent(this,SettingsActivity.class));
+                break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -279,6 +289,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        if(darktheme!=getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true)){
+            startActivity(new Intent(MainActivity.this,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            finish();
+        }
+        if(!getSharedPreferences("settings",MODE_PRIVATE).getBoolean("changesapplied",true)){
+            getSharedPreferences("settings",MODE_PRIVATE).edit().putBoolean("changesapplied",true).commit();
+            startActivity(new Intent(MainActivity.this,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+            finish();
+        }
 
         prepareHomePageData();
     }

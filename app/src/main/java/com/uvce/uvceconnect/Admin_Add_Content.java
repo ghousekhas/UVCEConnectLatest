@@ -94,6 +94,7 @@ public class Admin_Add_Content extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         storageReference = FirebaseStorage.getInstance().getReference();
         super.onCreate(savedInstanceState);
+        setTheme(getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true)?R.style.AppTheme:R.style.LightTheme);
         setContentView(R.layout.activity_admin__add__content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

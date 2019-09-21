@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2196F3</color>
-    <color name="colorPrimaryDark">#1565c0</color>
-    <color name="colorAccent">#78B9DF</color>
+    <color name="colorPrimary">#808080</color>
+    <color name="colorPrimaryDark">#5E5E5E</color>
+    <color name="colorAccent">#000000</color>
     <color name="Black">#000000</color>
     <color name="Grey">#8b8b8b</color>
     <color name="Tab_underline">#9C27B0</color>

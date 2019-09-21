@@ -47,6 +47,7 @@ public class Academic extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true)?R.style.AppTheme:R.style.LightTheme);
         setContentView(R.layout.activity_academics);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

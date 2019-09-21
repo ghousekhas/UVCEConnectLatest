@@ -22,6 +22,7 @@ public class about_uvce extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getSharedPreferences("settings",MODE_PRIVATE).getBoolean("dark",true)?R.style.AppTheme:R.style.LightTheme);
         setContentView(R.layout.activity_about_uvce);
 
          card1_content =(TextView)findViewById(R.id.card1_content);
