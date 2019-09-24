@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.List;
 
 public class Homepage_ListItem {
-    private String name, logo, content, timesignature, image, admin,link,filename;
+    private String name, logo, content, timesignature, image, admin,link,filename,videolink;
     int type; //0-normal priority, 1-high priority
     int key;
 

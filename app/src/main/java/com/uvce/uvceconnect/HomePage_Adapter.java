@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaDataSource;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -32,9 +33,25 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ads.AdsMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,6 +90,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         public ImageView image, logo;
         public CardView card;
         public RecyclerView recyclerView;
+        private MaterialButton share,forum;
+        private PlayerView videoplayer;
 
         //public HackyPagerViewer pagerViewer;
 
@@ -88,6 +107,9 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             card = view.findViewById(R.id.listitem_card);
             link= view.findViewById(R.id.linktodownload);
             recyclerView=view.findViewById(R.id.recyclerview_for_images);
+            share=view.findViewById(R.id.share);
+            forum=view.findViewById(R.id.forum);
+            videoplayer=view.findViewById(R.id.exoplayer);
         }
 
     }
@@ -151,6 +173,13 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.content.setTextSize(textSize);
         holder.name.setTextSize(textSize+5);
 
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(Intent.createChooser(new Intent().setAction(Intent.ACTION_SEND).putExtra(Intent.EXTRA_TEXT,holder.name.getText().toString()+"\n\n"+holder.content.getText().toString()).setType("text/plain"),null));
+            }
+        });
+
 
         databaseReference=FirebaseDatabase.getInstance().getReference().child("TestDatabase").child("Main_Page").child(Integer.toString(listitem.getKey())).child("images");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -172,6 +201,15 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
             }
         });
+
+        //exo
+        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context),new DefaultTrackSelector(),new DefaultLoadControl());
+        MediaSource mediaSource=new ExtractorMediaSource(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4"),
+                new DefaultDataSourceFactory(context,Util.getUserAgent(context, "mediaPlayerSample"),new DefaultBandwidthMeter()), new DefaultExtractorsFactory(), null, null);
+        holder.videoplayer.setPlayer(player);
+        player.prepare(mediaSource);
+        player.setPlayWhenReady(false);
+        
 
 
 
@@ -260,7 +298,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         }
         else
              holder.image.setVisibility(View.GONE);
-        if(listitem.getType()==1) {
+        /*if(listitem.getType()==1) {
             holder.card.setCardBackgroundColor(Color.parseColor("#1565C0"));
             holder.name.setTextColor(Color.parseColor("White"));
             holder.content.setTextColor(Color.parseColor("White"));
@@ -271,7 +309,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             holder.name.setTextColor(Color.parseColor("Black"));
             holder.content.setTextColor(Color.parseColor("Black"));
             holder.timesignature.setTextColor(Color.parseColor("#8b8b8b"));
-        }
+        }*/
 
         //For Admin Page
         if(!listitem.getAdmin().isEmpty())

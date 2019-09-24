@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -72,51 +73,12 @@ public class Images_Adapter extends RecyclerView.Adapter<Images_Adapter.MyViewHo
                 AlertDialog.Builder builder=new AlertDialog.Builder(context);
                 builder.setCancelable(true);
                 builder.setTitle("Download Image");
-                builder.setMessage("Do you want to save this image?");
-                builder.setView(v);
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder.setMessage("Save image to storage??");
+                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (!editText.getText().toString().isEmpty()) {
-                                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            try {
-                                                File directory = new File(Environment.getExternalStorageDirectory() + "/UVCE-Connect");
+                                downloadImage(storageReference);
 
-                                                if (!directory.exists()) {
-                                                    directory.mkdirs();
-                                                }
-
-
-                                                DownloadManager.Request request = new DownloadManager.Request(uri);
-                                                String fileName = editText.getText().toString();
-                                                request.setDescription("Image")
-                                                        .setTitle(fileName)
-                                                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                                        .setDestinationInExternalPublicDir("/UVCE-Connect/Images", fileName + ".jpg")
-                                                        .allowScanningByMediaScanner();
-
-                                                DownloadManager manager = (DownloadManager)
-                                                        context.getSystemService(Context.DOWNLOAD_SERVICE);
-                                                manager.enqueue(request);
-                                                Toast.makeText(context, "Downloading.....", Toast.LENGTH_SHORT).show();
-
-                                            } catch (Exception e) {
-                                                Toast.makeText(context, "Permission not granted to read External storage. Please grant permission and try again.", Toast.LENGTH_SHORT).show();
-                                            }
-
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(context, "Please specify a filename", Toast.LENGTH_LONG).show();
-                                }
 
                             }
                         }).show();
@@ -125,6 +87,37 @@ public class Images_Adapter extends RecyclerView.Adapter<Images_Adapter.MyViewHo
         });
 
 
+    }
+    public void downloadImage(StorageReference storageReference){
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    File directory = new File(Environment.getExternalStorageDirectory() + "/UVCE-Connect");
+
+                    if (!directory.exists()) {
+                        directory.mkdirs();
+                    }
+
+
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setDescription("Image")
+                            .setTitle(storageReference.getName())
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setDestinationInExternalPublicDir("/UVCE-Connect/Images", storageReference.getName() + ".jpg")
+                            .allowScanningByMediaScanner();
+
+                    DownloadManager manager = (DownloadManager)
+                            context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    manager.enqueue(request);
+                    Toast.makeText(context, "Downloading.....", Toast.LENGTH_SHORT).show();
+
+                } catch (Exception e) {
+                    Toast.makeText(context, "Permission not granted to read External storage. Please grant permission and try again.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 
     @Override

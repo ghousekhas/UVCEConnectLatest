@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<com.uvce.uvceconnect.HackyCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<com.uvce.uvceconnect.HackyCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginBottom="2dp"
     android:layout_marginTop="2dp"
@@ -11,7 +11,8 @@
     app:cardCornerRadius="10dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
     android:elevation="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
@@ -19,12 +20,148 @@
     android:clickable="true"
     android:focusable="true"
     app:cardPreventCornerOverlap="true"
-    android:id="@+id/listitem_card">
+    android:id="@+id/listitem_card"> -->
 
-    <RelativeLayout
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_medium"
+    android:layout_marginLeft="@dimen/spacing_middle"
+    android:layout_marginRight="@dimen/spacing_middle"
+    android:layout_marginTop="@dimen/spacing_medium"
+    android:visibility="visible"
+    android:id="@+id/listitem_card"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="2dp"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:id="@+id/listitem_logo"
+                    android:layout_marginLeft="@dimen/spacing_medium"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:src="@color/cardview_dark_background"
+                    android:scaleType="centerCrop"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/spacing_large"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/listitem_logo"
+                    android:id="@+id/listitem_name"
+                    android:text="Quisque Sapien Lorem"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listitem_content"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:layout_marginLeft="@dimen/spacing_large"
+                android:layout_marginRight="@dimen/spacing_large"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_60" />
+
+
+            <TextView
+                android:id="@+id/linktodownload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@string/click_here_to_download"
+                android:textColor="@color/Grey_layout"
+                android:gravity="left"
+                android:layout_marginRight="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listitem_image"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="10sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerview_for_images"
+                android:layout_below="@id/linktodownload"
+                android:layout_marginTop="10sp"/>
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/exoplayer"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_below="@id/linktodownload" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/share"
+                    android:text="SHARE" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/forum"
+                    android:gravity="center"
+                    android:text="FORUM" />
+
+                <TextView
+                    android:id="@+id/listitem_timesignature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:fontFamily="@font/nunito_extralight"
+                    android:gravity="right"
+                    android:text="Example"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10sp">
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -35,6 +172,7 @@
         android:layout_width="50sp"
         android:layout_height="50sp"
         android:id="@+id/listitem_logo"
+        android:layout_marginLeft="5dp"
         android:src="@color/cardview_dark_background"
         android:scaleType="centerCrop"/>
 
@@ -62,6 +200,7 @@
             android:autoLink="all"
             android:fontFamily="@font/nunito_semibold"
             android:text="Example"
+            android:textAlignment="center"
             android:textColor="@color/Black"
             android:textIsSelectable="true"
             android:textSize="20sp" />
@@ -101,6 +240,12 @@
             android:layout_below="@id/linktodownload"
             android:layout_marginTop="10sp"/>
 
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_below="@id/linktodownload"
+            android:id="@+id/exoplayer"/>
+
 
         <TextView
             android:id="@+id/listitem_timesignature"
@@ -118,6 +263,6 @@
 
 
 
-    </RelativeLayout>
-</com.uvce.uvceconnect.HackyCardView>
+    </RelativeLayout>-->
+<!--</com.uvce.uvceconnect.HackyCardView>-->
 
