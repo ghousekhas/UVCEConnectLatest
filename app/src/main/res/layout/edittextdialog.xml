@@ -6,7 +6,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Filename"
+        android:hint="Link"
         android:id="@+id/text"
         android:padding="10dp"
         android:layout_margin="10dp"/>

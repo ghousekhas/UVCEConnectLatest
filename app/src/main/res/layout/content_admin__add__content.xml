@@ -198,5 +198,18 @@
 
         </RelativeLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Video"
+            android:id="@+id/video"
+            android:padding="@dimen/spacing_medium"/>
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            android:id="@+id/exoplayer"/>
+
     </LinearLayout>
 </ScrollView>

@@ -82,6 +82,78 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     StorageReference fileref;
     SharedPreferences sharedPreferences;
     int textSize;
+    private SimpleExoPlayer[] player;
+    private MediaSource mediaSource;
+    private int playernum=0;
+
+
+
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull MyViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.videoplayer.getPlayer().setPlayWhenReady(false);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull MyViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        if(holder.videoplayer.getPlayer()==null&&!homepagelist.get(holder.getAdapterPosition()).getVideolink().equals("-1")) {
+
+            holder.videoplayer.setVisibility(View.VISIBLE);
+
+            /*final ViewGroup.LayoutParams exoplayerparams= holder.videoplayer.getLayoutParams();
+            exoplayerparams.height= (Resources.getSystem().getDisplayMetrics().heightPixels/Resources.getSystem().getDisplayMetrics().densityDpi)*250;
+            exoplayerparams.width=holder.card.getWidth();
+            holder.videoplayer.setLayoutParams(exoplayerparams);*/
+
+
+            if(playernum>5)
+                playernum=0;
+
+
+                Log.e("playernum",Integer.toString(playernum));
+         //pause all other
+            for(int i=0;i<6;i++)
+                if(playernum!=i)
+                    player[i].setPlayWhenReady(false);
+
+
+            player[playernum].stop(true);
+
+
+            mediaSource = new ExtractorMediaSource(Uri.parse(homepagelist.get(holder.getAdapterPosition()).getVideolink()),
+                    new DefaultDataSourceFactory(context, Util.getUserAgent(context, "mediaPlayerSample"), new DefaultBandwidthMeter()), new DefaultExtractorsFactory(), null, null);
+
+
+            holder.videoplayer.setPlayer(player[playernum]);
+            player[playernum].prepare(mediaSource);
+
+            player[playernum].setPlayWhenReady(true);
+            playernum++;
+        }
+        else
+            holder.videoplayer.getPlayer().setPlayWhenReady(true);
+
+        //holder.videoplayer.getPlayer().setPlayWhenReady(true);
+    }
+
+    /*@Override
+    public void onViewRecycled(@NonNull MyViewHolder holder) {
+        if(holder.getAdapterPosition()==-1){
+            player.release();
+        }
+        try {
+            if (homepagelist.get(holder.getAdapterPosition()) != null)
+                player.release();
+        }
+        catch (IndexOutOfBoundsException e){}
+        super.onViewRecycled(holder);
+    }*/
+
+
+
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -92,6 +164,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         public RecyclerView recyclerView;
         private MaterialButton share,forum;
         private PlayerView videoplayer;
+
+
 
         //public HackyPagerViewer pagerViewer;
 
@@ -114,12 +188,13 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
     }
 
-    public HomePage_Adapter(List<Homepage_ListItem> homepagelist, Activity activity, Context context)
+    public HomePage_Adapter(List<Homepage_ListItem> homepagelist, Activity activity, Context context,SimpleExoPlayer player[])
     {
         this.homepagelist = homepagelist;
         this.mycustomfont = Typeface.createFromAsset(activity.getAssets(),  "fonts/adobe_font.otf");
         this.activity = activity;
         this.context = context;
+        this.player=player;
     }
 
     @Override
@@ -129,6 +204,9 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
 
         sharedPreferences=context.getSharedPreferences("settings",Context.MODE_PRIVATE);
         textSize=sharedPreferences.getInt("textsize",20);
+
+         mediaSource=new ExtractorMediaSource(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4"),
+                new DefaultDataSourceFactory(context,Util.getUserAgent(context, "mediaPlayerSample"),new DefaultBandwidthMeter()), new DefaultExtractorsFactory(), null, null);
 
 
         return new MyViewHolder(itemView);
@@ -180,6 +258,13 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             }
         });
 
+        holder.forum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(activity,VideoPlayer.class));
+            }
+        });
+
 
         databaseReference=FirebaseDatabase.getInstance().getReference().child("TestDatabase").child("Main_Page").child(Integer.toString(listitem.getKey())).child("images");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -203,12 +288,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         });
 
         //exo
-        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context),new DefaultTrackSelector(),new DefaultLoadControl());
-        MediaSource mediaSource=new ExtractorMediaSource(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4"),
-                new DefaultDataSourceFactory(context,Util.getUserAgent(context, "mediaPlayerSample"),new DefaultBandwidthMeter()), new DefaultExtractorsFactory(), null, null);
-        holder.videoplayer.setPlayer(player);
-        player.prepare(mediaSource);
-        player.setPlayWhenReady(false);
+
+
         
 
 

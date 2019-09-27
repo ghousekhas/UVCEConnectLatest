@@ -1,7 +1,9 @@
 package com.uvce.uvceconnect;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +29,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -41,6 +57,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -85,9 +102,14 @@ public class Admin_Add_Content extends AppCompatActivity {
     String organ_spin_select = "-100";
 
     private Button multipleimages;
+    private MaterialButton addvideo;
     List<Uri> imageList=new ArrayList<>();
     int imagecount=1;
     private RecyclerView recyclerView;
+    String videolink="";
+    SimpleExoPlayer player;
+    PlayerView playerView;
+    MediaSource mediaSource;
 
 
     @Override
@@ -140,10 +162,57 @@ public class Admin_Add_Content extends AppCompatActivity {
         pictureshow = (ImageView) findViewById(R.id.news_imageview);
         add = (Button) findViewById(R.id.news_add_button);
         edit_add = findViewById(R.id.edit_delete_button);
+        addvideo=findViewById(R.id.video);
+        playerView=findViewById(R.id.exoplayer);
+        player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this),new DefaultTrackSelector(),new DefaultLoadControl());
         edit_add.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Admin_Add_Delete.class);
             intent.putExtra("Name",getIntent().getStringExtra("Name"));
             startActivity(intent);
+        });
+
+        addvideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view= getLayoutInflater().inflate(R.layout.edittextdialog,null,false);
+                EditText link=view.findViewById(R.id.text);
+                new AlertDialog.Builder(Admin_Add_Content.this).setView(view).setTitle("Add Video Link").setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!link.getText().toString().isEmpty()){
+                                videolink = link.getText().toString();
+                                mediaSource = new ExtractorMediaSource(Uri.parse(videolink),
+                                        new DefaultDataSourceFactory(Admin_Add_Content.this, Util.getUserAgent(Admin_Add_Content.this, "mediaPlayerSample"), new DefaultBandwidthMeter()), new DefaultExtractorsFactory(), null, null);
+                                player.prepare(mediaSource);
+                                playerView.setPlayer(player);
+                                playerView.setVisibility(View.VISIBLE);
+                                player.setPlayWhenReady(true);
+
+                                player.addListener(new SimpleExoPlayer.DefaultEventListener(){
+                                    @Override
+                                    public void onPlayerError(ExoPlaybackException error) {
+                                        Toast.makeText(Admin_Add_Content.this,"Link not valid, try direct mp4 streaming link",Toast.LENGTH_LONG).show();
+                                        videolink="";
+                                        playerView.setVisibility(View.GONE);
+                                    }
+
+                                    @Override
+                                    public void onLoadingChanged(boolean isLoading) {
+                                        //playerView.setVisibility(View.VISIBLE);
+                                    }
+                                });
+
+
+                        }
+
+                    }
+                }).show();
+            }
         });
 
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, organ);
@@ -240,6 +309,7 @@ public class Admin_Add_Content extends AppCompatActivity {
 
                     name = "Default_User";
                     ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
+                    mainref.child(String.valueOf(Integer.parseInt(newpos)-1)).child("Video").setValue(videolink.isEmpty()?"-1":videolink);
                     mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
                     mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
                     mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
@@ -357,6 +427,7 @@ public class Admin_Add_Content extends AppCompatActivity {
 
                     name = "Default_User";
                     ID = organization.getItemAtPosition(organization.getSelectedItemPosition()).toString();
+                    mainref.child(String.valueOf(Integer.parseInt(newpos)-1)).child("Video").setValue(videolink.isEmpty()?"-1":videolink);
                     mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Content").setValue(details.getText().toString());
                     mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Logo").setValue(organization_image);
                     mainref.child(String.valueOf(Integer.parseInt(newpos) - 1)).child("Name").setValue(organisation_name);
@@ -530,6 +601,25 @@ public class Admin_Add_Content extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        player.setPlayWhenReady(false);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        player.setPlayWhenReady(true);
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        player.stop();
+        player.release();
+        super.onStop();
     }
 
 }

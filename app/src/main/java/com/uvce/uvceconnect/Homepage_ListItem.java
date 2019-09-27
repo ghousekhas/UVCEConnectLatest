@@ -12,7 +12,7 @@ public class Homepage_ListItem {
     int key;
 
 
-    public Homepage_ListItem(String logo, String name, String content, String image, String timesignature, int type, String admin, int key, String link, String filename) {
+    public Homepage_ListItem(String logo, String name, String content, String image, String timesignature, int type, String admin, int key, String link, String filename,String videolink) {
         this.logo = logo;
         this.name = name;
         this.content = content;
@@ -23,7 +23,16 @@ public class Homepage_ListItem {
         this.key = key;
         this.link=link;
         this.filename=filename;
+        this.videolink=videolink;
 
+    }
+
+    public String getVideolink() {
+        return videolink;
+    }
+
+    public void setVideolink(String videolink) {
+        this.videolink = videolink;
     }
 
     public String getContent() {

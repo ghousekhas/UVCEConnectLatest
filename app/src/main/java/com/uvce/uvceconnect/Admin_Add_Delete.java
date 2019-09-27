@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +26,7 @@ public class Admin_Add_Delete extends AppCompatActivity {
     AVLoadingIndicatorView load_animation;
     RecyclerView recyclerView;
     ValueEventListener eventlistener;
+    SimpleExoPlayer[] player=new SimpleExoPlayer[6];
 
 
     @Override
@@ -41,7 +43,7 @@ public class Admin_Add_Delete extends AppCompatActivity {
 
         //Following Lines used to populate the recycler list
         recyclerView = findViewById(R.id.admin_recycler_view);
-        adapter = new HomePage_Adapter(list, this, this);
+        adapter = new HomePage_Adapter(list, this, this,player);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -58,7 +60,7 @@ public class Admin_Add_Delete extends AppCompatActivity {
                 try {
                     list.clear();
                     for (DataSnapshot childsnapshot : dataSnapshot.getChildren()) {
-                        Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "Admin", Integer.parseInt(childsnapshot.getKey()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString());
+                        Homepage_ListItem item = new Homepage_ListItem(childsnapshot.child("Logo").getValue().toString(), childsnapshot.child("Name").getValue().toString(), childsnapshot.child("Content").getValue().toString(), childsnapshot.child("Image").getValue().toString(), childsnapshot.child("Time_Signature").getValue().toString(), Integer.parseInt(childsnapshot.child("Type").getValue().toString()), "Admin", Integer.parseInt(childsnapshot.getKey()),childsnapshot.child("link").child("downloadurl").getValue().toString(),childsnapshot.child("link").child("filename").getValue().toString(),childsnapshot.child("Video").getValue().toString());
                         list.add(item);
                     }
                     adapter.notifyDataSetChanged();

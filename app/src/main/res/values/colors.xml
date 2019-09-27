@@ -340,4 +340,6 @@
         <item type="color">#607d8b</item>
         <item type="color">#ff9800</item>
     </array>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
