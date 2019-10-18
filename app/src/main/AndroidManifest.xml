@@ -22,11 +22,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ForumActivity"></activity>
         <activity
             android:name=".VideoPlayer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_video_player"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".AboutConnect" />
         <activity android:name=".EditCLubs" />

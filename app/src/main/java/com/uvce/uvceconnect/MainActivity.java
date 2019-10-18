@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
 
+        //startActivity(new Intent(this,ForumActivity.class));
+
         //exobabe
         player[0] = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this),new DefaultTrackSelector(),new DefaultLoadControl());
         player[1] = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this),new DefaultTrackSelector(),new DefaultLoadControl());

@@ -92,6 +92,7 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
     @Override
     public void onViewDetachedFromWindow(@NonNull MyViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
+        if(holder.videoplayer.getPlayer()!=null)
         holder.videoplayer.getPlayer().setPlayWhenReady(false);
     }
 
@@ -133,8 +134,8 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
             player[playernum].setPlayWhenReady(true);
             playernum++;
         }
-        else
-            holder.videoplayer.getPlayer().setPlayWhenReady(true);
+        //else
+            //holder.videoplayer.getPlayer().setPlayWhenReady(true);
 
         //holder.videoplayer.getPlayer().setPlayWhenReady(true);
     }
@@ -261,7 +262,9 @@ public class HomePage_Adapter extends RecyclerView.Adapter<HomePage_Adapter.MyVi
         holder.forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(activity,VideoPlayer.class));
+                Intent intent=new Intent(activity,ForumActivity.class);
+                intent.putExtra("postno",listitem.getKey());
+                context.startActivity(intent);
             }
         });
 
